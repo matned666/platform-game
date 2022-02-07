@@ -1,70 +1,73 @@
 package eu.mrndesign.matned.client.view.screenmanager;
 
-import eu.mrndesign.matned.client.view.core.aboutscreen.AboutScreen;
-import eu.mrndesign.matned.client.view.core.aboutscreen.AboutScreenInterface;
-import eu.mrndesign.matned.client.view.core.contactscreen.ContactScreen;
-import eu.mrndesign.matned.client.view.core.contactscreen.ContactScreenInterface;
-import eu.mrndesign.matned.client.view.core.indexscreen.IndexScreen;
-import eu.mrndesign.matned.client.view.core.indexscreen.IndexScreenInterface;
-import eu.mrndesign.matned.client.view.core.ordersscreen.OrdersScreen;
+import eu.mrndesign.matned.client.view.screenmanager.screencontent.*;
 
-public class ScreenManager implements
-        ScreenManagerInterface,
-        AboutScreenInterface.ScreenListener,
-        IndexScreenInterface.ScreenListener,
-        ContactScreenInterface.ScreenListener
+import java.util.Arrays;
+import java.util.List;
 
-{
+public class ScreenManager implements ScreenManagerInterface {
 
-    private ScreenType screenType;
-    private ScreenInterface screen;
+    private final ScreenInterface screen = new Screen(this, ScreenType.OPTIONS, new OptionsContent());;
 
-    public ScreenManager() {
-        screenType = ScreenType.INDEX;
-    }
-
-    //    on start game we have menu
     @Override
     public void start() {
-        initializeScreen(ScreenType.INDEX);
+        initializeScreen(ScreenType.START_SCREEN);
     }
 
-    //    initializes a screen according to a screen type
     @Override
     public void initializeScreen(ScreenType screenType) {
-        if (screen != null) screen.hide();
+        screen.hide();
         switch (screenType) {
             case ABOUT: {
-                this.screenType = ScreenType.ABOUT;
-                screen = new AboutScreen(this);
+                screen.setContent(new AboutContent());
                 break;
             }
-            case CONTACT: {
-                this.screenType = ScreenType.CONTACT;
-                screen = new ContactScreen(this);
+            case QUIT: {
+                screen.setContent(new QuitContent());
                 break;
             }
-            case ORDERS: {
-                this.screenType = ScreenType.ORDERS;
-                screen = new OrdersScreen(this);
+            case NEW_GAME: {
+                screen.setContent(new GameContent());
+                break;
+            }
+            case OPTIONS: {
+                screen.setContent(new OptionsContent());
                 break;
             }
             default: {
-                this.screenType = ScreenType.INDEX;
-                screen = new IndexScreen(this);
+                screen.setContent(new StartContent());
             }
         }
         screen.show();
     }
 
     @Override
-    public ScreenType screenType(){
-        return screenType;
+    public void onMenuButtonClick(ScreenType screenType) {
+        initializeScreen(screenType);
     }
 
 
     public enum ScreenType {
-        INDEX, ABOUT, CONTACT, ORDERS
+        START_SCREEN,
+        NEW_GAME,
+        OPTIONS,
+        ABOUT,
+        QUIT;
+
+        public static List<ScreenType> buttons(){
+            return Arrays.asList(NEW_GAME, OPTIONS, ABOUT, QUIT);
+        }
+
+        public String getName(){
+            switch (this) {
+                case NEW_GAME: return "New";
+                case OPTIONS: return "Options";
+                case ABOUT: return "About";
+                case QUIT: return "Quit";
+                default: return "Home page";
+            }
+
+        }
     }
 
 }

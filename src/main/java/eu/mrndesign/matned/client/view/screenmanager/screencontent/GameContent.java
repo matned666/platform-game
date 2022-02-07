@@ -1,19 +1,20 @@
-package eu.mrndesign.matned.client.view.core.contactscreen;
+package eu.mrndesign.matned.client.view.screenmanager.screencontent;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import eu.mrndesign.matned.client.view.screenmanager.screencontent.BaseContent;
+import eu.mrndesign.matned.client.view.screenmanager.ScreenManager;
 
-public class Content extends BaseContent {
+public class GameContent extends Content {
 
-    public Content() {
+    public GameContent() {
+        super(ScreenManager.ScreenType.NEW_GAME);
         initTitle();
         initDescription();
     }
 
     private void initTitle(){
         Label title = new Label();
-        title.setText("CONTACT SCREEN");
+        title.setText("GAME SCREEN");
         title.getElement().setClassName("title");
         this.add(title);
     }
@@ -21,10 +22,9 @@ public class Content extends BaseContent {
     private void initDescription(){
         HTML html = new HTML();
         html.setHTML("<br>" +
-                "<p>Developer address and contact</p> " +
-                "<p>+48 666 666 666</p>" +
-                "<p>info@info-mail.com</p>" +
-                "<p>Wrocław</p> <br>" +
+                "<p>WE WILL PLAY OUR GAME HERE !!!!</p> <br>" +
+                "<br>" +
+                "<p></p> <br>" +
                 "");
         html.getElement().setClassName("simple-centered-text");
         this.add(html);

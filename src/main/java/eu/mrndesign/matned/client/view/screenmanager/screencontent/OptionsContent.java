@@ -1,19 +1,20 @@
-package eu.mrndesign.matned.client.view.core.indexscreen;
+package eu.mrndesign.matned.client.view.screenmanager.screencontent;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import eu.mrndesign.matned.client.view.screenmanager.screencontent.BaseContent;
+import eu.mrndesign.matned.client.view.screenmanager.ScreenManager;
 
-public class Content extends BaseContent {
+public class OptionsContent extends Content {
 
-    public Content() {
+    public OptionsContent() {
+        super(ScreenManager.ScreenType.OPTIONS);
         initTitle();
         initDescription();
     }
 
     private void initTitle(){
         Label title = new Label();
-        title.setText("HOME SCREEN");
+        title.setText("OPTIONS SCREEN");
         title.getElement().setClassName("title");
         this.add(title);
     }
@@ -21,7 +22,8 @@ public class Content extends BaseContent {
     private void initDescription(){
         HTML html = new HTML();
         html.setHTML("" +
-                "<p>This a sample Home page</p>" +
+                "<p>VOICE OPTIONS</p>" +
+                "<p>GRAPHIC OPTIONS</p>" +
                 "<p>Change whatever you wish.</p>" +
                 "<br>" +
                 "<p>Enjoy.</p> <br>" +
