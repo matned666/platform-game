@@ -12,11 +12,11 @@ public class ScreenManager implements ScreenManagerInterface {
     @Override
     public void start() {
         initializeScreen(ScreenType.START_SCREEN);
+        screen.show();
     }
 
     @Override
     public void initializeScreen(ScreenType screenType) {
-        screen.hide();
         switch (screenType) {
             case ABOUT: {
                 screen.setContent(new AboutContent());
@@ -38,7 +38,6 @@ public class ScreenManager implements ScreenManagerInterface {
                 screen.setContent(new StartContent());
             }
         }
-        screen.show();
     }
 
     @Override
@@ -55,7 +54,7 @@ public class ScreenManager implements ScreenManagerInterface {
         QUIT;
 
         public static List<ScreenType> buttons(){
-            return Arrays.asList(NEW_GAME, OPTIONS, ABOUT, QUIT);
+            return Arrays.asList(NEW_GAME, OPTIONS, ABOUT);
         }
 
         public String getName(){
