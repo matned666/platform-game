@@ -68,24 +68,20 @@
       <artifactId>rxjava2-gwt</artifactId>
       <version>2.2.10-gwt1</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.intendia.gwt/rxjava-gwt -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13</version>
-      <scope>test</scope>
+      <groupId>com.intendia.gwt</groupId>
+      <artifactId>rxjava-gwt</artifactId>
+      <version>1.3.4-gwt1</version>
     </dependency>
+
       <dependency>
           <groupId>org.junit.jupiter</groupId>
           <artifactId>junit-jupiter</artifactId>
           <version>RELEASE</version>
           <scope>test</scope>
       </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>RELEASE</version>
-      <scope>compile</scope>
-    </dependency>
+
   </dependencies>
 
   <build>
