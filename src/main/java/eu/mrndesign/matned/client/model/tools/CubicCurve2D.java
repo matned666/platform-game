@@ -27,12 +27,19 @@ public class CubicCurve2D {
     private Point2D intersPt2;
 
     public double calculateLength(int samples) {
-        if (samples <=0) {
+        if (samples <= 0) {
             return 0;
         }
-        if (samples >= 1 && samples <=2){
-
+        if (samples <= 2){
+            l1 = new Line(start, ctrl2);
+            l2 = new Line(end, ctrl1);
+            Point2D intersectionPt = l1.lineLineIntersection(l2);
+            return start.distanceFrom(intersectionPt) + end.distanceFrom(intersectionPt);
         }
+        return lengthCalculator(samples);
+    }
+
+    private double lengthCalculator(int samples) {
         this.samples = samples;
         startCopy = new Point2D[]{new Point2D(start), new Point2D(start)};
         ctrl2Copy = new Point2D[]{new Point2D(ctrl2), new Point2D(ctrl2)};
@@ -40,7 +47,7 @@ public class CubicCurve2D {
         intersPt2 = new Point2D(start);
         l1 = new Line(startCopy[0], ctrl2Copy[0]);
         l2 = new Line(startCopy[1], ctrl2Copy[1]);
-        spanLengths = new double[]{start.distanceFrom(ctrl1) / (this.samples), end.distanceFrom(ctrl2) / (this.samples)};
+        spanLengths = new double[]{start.distanceFrom(ctrl1) / this.samples, end.distanceFrom(ctrl2) / this.samples};
         vectors = new Vector2D[]{new Vector2D(start, ctrl1), new Vector2D(ctrl2, end)};
         moveLines(0);
         return recurveLengthCalculator(0, 0);
