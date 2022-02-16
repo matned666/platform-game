@@ -1,22 +1,15 @@
-package eu.mrndesign.matned.client.view.screenmanager.screencontent;
+package eu.mrndesign.matned.client.view.screencontent;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import eu.mrndesign.matned.client.view.screenmanager.ScreenManager;
+import com.google.gwt.user.client.ui.Widget;
+import eu.mrndesign.matned.client.view.ScreenManager;
 
-public class QuitContent extends Content {
+public class QuitContent extends Content implements IContent{
 
     public QuitContent() {
         super(ScreenManager.ScreenType.QUIT);
-        initTitle();
         initDescription();
-    }
-
-    private void initTitle(){
-        Label title = new Label();
-        title.setText("QUIT SCREEN");
-        title.getElement().setClassName("title");
-        this.add(title);
     }
 
     private void initDescription(){
@@ -24,5 +17,10 @@ public class QuitContent extends Content {
         html.setHTML("Return some day");
         html.getElement().setClassName("simple-centered-text");
         this.add(html);
+    }
+
+    @Override
+    public Widget getWidget() {
+        return this;
     }
 }

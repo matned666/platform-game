@@ -13,7 +13,8 @@ public class ControllerImpl implements Controller{
         this.game = new Game(this);
     }
 
-    private DrawingArea getActiveDrawingArea() {
+    @Override
+    public DrawingArea getActiveDrawingArea() {
         return game.getMapIdToDrawingArea().get(activeDrawingAreaId);
     }
 

@@ -1,6 +1,8 @@
-package eu.mrndesign.matned.client.view.screenmanager;
+package eu.mrndesign.matned.client.view;
 
-import eu.mrndesign.matned.client.view.screenmanager.screencontent.*;
+import eu.mrndesign.matned.client.controller.Controller;
+import eu.mrndesign.matned.client.controller.ControllerImpl;
+import eu.mrndesign.matned.client.view.screencontent.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -8,11 +10,13 @@ import java.util.List;
 public class ScreenManager implements ScreenManagerInterface {
 
     private final ScreenInterface screen = new Screen(this, ScreenType.OPTIONS, new OptionsContent());;
+    private Controller controller;
 
     @Override
     public void start() {
         initializeScreen(ScreenType.START_SCREEN);
         screen.show();
+        controller = new ControllerImpl();
     }
 
     @Override
@@ -27,7 +31,7 @@ public class ScreenManager implements ScreenManagerInterface {
                 break;
             }
             case NEW_GAME: {
-                screen.setContent(new GameContent());
+                screen.setContent(new GameContent(controller));
                 break;
             }
             case OPTIONS: {

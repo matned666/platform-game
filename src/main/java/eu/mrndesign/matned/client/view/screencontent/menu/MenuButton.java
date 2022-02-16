@@ -1,8 +1,8 @@
-package eu.mrndesign.matned.client.view.screenmanager.menu;
+package eu.mrndesign.matned.client.view.screencontent.menu;
 
 import com.google.gwt.user.client.ui.Button;
-import eu.mrndesign.matned.client.view.screenmanager.ScreenManager;
-import eu.mrndesign.matned.client.view.screenmanager.ScreenManagerInterface;
+import eu.mrndesign.matned.client.view.ScreenManager;
+import eu.mrndesign.matned.client.view.ScreenManagerInterface;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -19,6 +19,7 @@ public class MenuButton extends Button {
             getElement().setClassName(selected?"button selected":"button not-selected");
             return selected;
         }).subscribe();
+        setWidth("100%");
         selectedObservable.onNext(false);
         addClickHandler(event -> {
             selectedObservable.onNext(true);

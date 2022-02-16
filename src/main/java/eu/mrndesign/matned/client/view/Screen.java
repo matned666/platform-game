@@ -1,8 +1,9 @@
-package eu.mrndesign.matned.client.view.screenmanager;
+package eu.mrndesign.matned.client.view;
 
 import com.google.gwt.user.client.ui.*;
-import eu.mrndesign.matned.client.view.screenmanager.menu.MenuButton;
-import eu.mrndesign.matned.client.view.screenmanager.screencontent.Content;
+import eu.mrndesign.matned.client.view.screencontent.IContent;
+import eu.mrndesign.matned.client.view.screencontent.menu.MenuButton;
+import eu.mrndesign.matned.client.view.screencontent.Content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,29 +11,32 @@ import java.util.List;
 public class Screen extends Composite implements ScreenInterface {
 
     protected ScreenManagerInterface screenManager;
-    private final HorizontalPanel mainGrid;
+    private final VerticalPanel mainGrid;
     protected ScreenManager.ScreenType screenType;
 
-    private VerticalPanel menuPanel;
+    private HorizontalPanel menuPanel;
     private final List<MenuButton> widgets = new ArrayList<>();
 
-    private Content actualContent;
+    private IContent actualContent;
 
-    public Screen(ScreenManagerInterface screenManager, ScreenManager.ScreenType screenType, Content content) {
+    public Screen(ScreenManagerInterface screenManager, ScreenManager.ScreenType screenType, IContent content) {
         this.screenManager = screenManager;
         this.screenType = screenType;
         actualContent = content;
-        mainGrid = new HorizontalPanel();
-        mainGrid.getElement().setClassName("menu-bar left");
-        menuPanel = new VerticalPanel();
-        menuPanel.getElement().setClassName("menu-bar buttons-bar");
+        mainGrid = new VerticalPanel();
+        mainGrid.setHeight("100%");
+        mainGrid.setWidth("100%");
+        menuPanel = new HorizontalPanel();
+        menuPanel.setWidth("100%");
+        menuPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+        menuPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_TOP);
         ScreenManager.ScreenType.buttons().forEach(type -> {
             MenuButton menuButton = new MenuButton(screenManager, type);
             widgets.add(menuButton);
             menuPanel.add(menuButton);
         });
         mainGrid.add(menuPanel);
-        mainGrid.add(content);
+        mainGrid.add(content.getWidget());
         initWidget(mainGrid);
     }
 
@@ -47,10 +51,10 @@ public class Screen extends Composite implements ScreenInterface {
     }
 
     @Override
-    public void setContent(Content content) {
-        mainGrid.remove(actualContent);
+    public void setContent(IContent content) {
+        mainGrid.remove(actualContent.getWidget());
         actualContent = content;
-        mainGrid.add(content);
+        mainGrid.add(content.getWidget());
         screenType = content.getScreenType();
         widgets.forEach(w -> w.setSelected(false));
         widgets.stream().filter(w -> w.getScreenType() == screenType).forEach(w -> w.setSelected(true));

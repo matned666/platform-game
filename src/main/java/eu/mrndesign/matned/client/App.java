@@ -1,8 +1,8 @@
 package eu.mrndesign.matned.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import eu.mrndesign.matned.client.view.screenmanager.ScreenManager;
-import eu.mrndesign.matned.client.view.screenmanager.ScreenManagerInterface;
+import eu.mrndesign.matned.client.view.ScreenManager;
+import eu.mrndesign.matned.client.view.ScreenManagerInterface;
 
 
 public class App implements EntryPoint

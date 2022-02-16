@@ -51,7 +51,4 @@ class Point2DTest {
     }
 
 
-
-
-
 }

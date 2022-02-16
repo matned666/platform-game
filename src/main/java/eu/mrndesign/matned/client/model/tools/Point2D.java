@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Point2D {
 
-    private double x;
-    private double y;
+    double x;
+    double y;
 
     public Point2D(double x, double y) {
         this.x = x;
@@ -22,7 +22,7 @@ public class Point2D {
      * @return distance double value
      */
     public double distanceFrom(Point2D point){
-        return Math.abs(Math.sqrt((point.getX() - x)*(point.getX() - x) + (point.getY() - y)*(point.getY() - y)) );
+        return Math.sqrt((point.getX() - x)*(point.getX() - x) + (point.getY() - y)*(point.getY() - y));
     }
 
     /**
@@ -78,5 +78,10 @@ public class Point2D {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public void copy(Point2D b) {
+        x = b.x;
+        y = b.y;
     }
 }

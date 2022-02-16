@@ -1,22 +1,15 @@
-package eu.mrndesign.matned.client.view.screenmanager.screencontent;
+package eu.mrndesign.matned.client.view.screencontent;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
-import eu.mrndesign.matned.client.view.screenmanager.ScreenManager;
+import com.google.gwt.user.client.ui.Widget;
+import eu.mrndesign.matned.client.view.ScreenManager;
 
-public class StartContent extends Content {
+public class StartContent extends Content implements IContent{
 
     public StartContent() {
         super(ScreenManager.ScreenType.START_SCREEN);
-        initTitle();
         initDescription();
-    }
-
-    private void initTitle(){
-        Label title = new Label();
-        title.setText("START SCREEN");
-        title.getElement().setClassName("title");
-        this.add(title);
     }
 
     private void initDescription(){
@@ -25,5 +18,10 @@ public class StartContent extends Content {
                 "");
         html.getElement().setClassName("simple-centered-text");
         this.add(html);
+    }
+
+    @Override
+    public Widget getWidget() {
+        return this;
     }
 }

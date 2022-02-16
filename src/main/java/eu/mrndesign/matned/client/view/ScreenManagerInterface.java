@@ -1,4 +1,4 @@
-package eu.mrndesign.matned.client.view.screenmanager;
+package eu.mrndesign.matned.client.view;
 
 public interface ScreenManagerInterface {
 
