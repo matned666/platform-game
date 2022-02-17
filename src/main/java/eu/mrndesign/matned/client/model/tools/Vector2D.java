@@ -22,11 +22,11 @@ public class Vector2D {
         double dot = x*v.x + y*v.y;
         double det = x*v.y - y*v.x;
         double result = Math.toDegrees(Math.atan2(det, dot));
-        if (result >= 0) {
+//        if (result >= 0) {
             return result;
-        } else {
-            return 360 + result;
-        }
+//        } else {
+//            return 360 + result;
+//        }
     }
 
     public void normalize(){

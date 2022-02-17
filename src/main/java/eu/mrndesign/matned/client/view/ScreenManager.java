@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ScreenManager implements ScreenManagerInterface {
 
-    private final ScreenInterface screen = new Screen(this, ScreenType.OPTIONS, new OptionsContent());;
+    private final ScreenInterface screen = new Screen(this, ScreenType.START_SCREEN, OptionsContent.getInstance());
     private Controller controller;
 
     @Override
@@ -23,23 +23,23 @@ public class ScreenManager implements ScreenManagerInterface {
     public void initializeScreen(ScreenType screenType) {
         switch (screenType) {
             case ABOUT: {
-                screen.setContent(new AboutContent());
+                screen.setContent(AboutContent.getInstance());
                 break;
             }
             case QUIT: {
-                screen.setContent(new QuitContent());
+                screen.setContent(QuitContent.getInstance());
                 break;
             }
             case NEW_GAME: {
-                screen.setContent(new GameContent(controller));
+                screen.setContent(GameContent.getInstance(controller));
                 break;
             }
             case OPTIONS: {
-                screen.setContent(new OptionsContent());
+                screen.setContent(OptionsContent.getInstance());
                 break;
             }
             default: {
-                screen.setContent(new StartContent());
+                screen.setContent(StartContent.getInstance());
             }
         }
     }

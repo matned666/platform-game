@@ -29,11 +29,13 @@ public abstract class GameElement {
         move(speed);
     }
 
-    public void rotate(double x, double y) {
+    public double rotate(double x, double y) {
         Vector2D v = new Vector2D(bounds.getCenter(), new Point2D(x,y));
         vector.normalize();
         v.normalize();
-        vector.rotate(vector.angleTo(v));
+        double angleDegrees = vector.angleTo(v);
+        vector.rotate(angleDegrees);
+        return angleDegrees;
     }
 
     public void move(double dist) {

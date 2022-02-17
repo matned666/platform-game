@@ -7,7 +7,20 @@ import eu.mrndesign.matned.client.view.ScreenManager;
 
 public class StartContent extends Content implements IContent{
 
-    public StartContent() {
+    private static volatile StartContent instance;
+
+    public static StartContent getInstance(){
+        if (instance == null) {
+            synchronized (StartContent.class){
+                if (instance == null) {
+                    instance = new StartContent();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private StartContent() {
         super(ScreenManager.ScreenType.START_SCREEN);
         initDescription();
     }

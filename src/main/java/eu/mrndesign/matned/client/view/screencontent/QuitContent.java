@@ -7,7 +7,20 @@ import eu.mrndesign.matned.client.view.ScreenManager;
 
 public class QuitContent extends Content implements IContent{
 
-    public QuitContent() {
+    private static QuitContent instance;
+
+    public static QuitContent getInstance(){
+        if (instance == null) {
+            synchronized (QuitContent.class){
+                if (instance == null) {
+                    instance = new QuitContent();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private QuitContent() {
         super(ScreenManager.ScreenType.QUIT);
         initDescription();
     }

@@ -7,7 +7,20 @@ import eu.mrndesign.matned.client.view.ScreenManager;
 
 public class OptionsContent extends Content implements IContent{
 
-    public OptionsContent() {
+    private static volatile OptionsContent instance;
+
+    public static OptionsContent getInstance(){
+        if (instance == null) {
+            synchronized (OptionsContent.class){
+                if (instance == null) {
+                    instance = new OptionsContent();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private OptionsContent() {
         super(ScreenManager.ScreenType.OPTIONS);
         initDescription();
     }

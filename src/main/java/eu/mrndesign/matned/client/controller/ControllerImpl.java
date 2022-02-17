@@ -15,7 +15,7 @@ public class ControllerImpl implements Controller{
 
     @Override
     public DrawingArea getActiveDrawingArea() {
-        return game.getMapIdToDrawingArea().get(activeDrawingAreaId);
+        return game.getDrawingAreas().get(0);
     }
 
     @Override

@@ -3,11 +3,25 @@ package eu.mrndesign.matned.client.view.screencontent;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.view.ScreenManager;
 
 public class AboutContent extends Content implements IContent {
 
-    public AboutContent() {
+    private static volatile AboutContent instance;
+
+    public static AboutContent getInstance(){
+        if (instance == null) {
+            synchronized (AboutContent.class){
+                if (instance == null) {
+                    instance = new AboutContent();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private AboutContent() {
         super(ScreenManager.ScreenType.ABOUT);
         initDescription();
     }

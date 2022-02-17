@@ -2,14 +2,15 @@ package eu.mrndesign.matned.client.model.game.object;
 
 import eu.mrndesign.matned.client.controller.Controller;
 
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Game {
 
     protected final String id = "Game-" + System.currentTimeMillis();
 
-    private final Map<String, DrawingArea> mapIdToDrawingArea = new TreeMap<>();
+    private final List<DrawingArea> drawingAreas = new LinkedList<>();
     private final Controller controller;
 
     public Game(Controller controller) {
@@ -18,18 +19,18 @@ public class Game {
 
     public void add(double width, double height) {
         DrawingArea drawingArea = new DrawingArea(width, height, this);
-        mapIdToDrawingArea.put(drawingArea.id, drawingArea);
+        drawingAreas.add(drawingArea);
     }
 
     public void remove(String id) {
-        mapIdToDrawingArea.remove(id);
+        drawingAreas.remove(drawingAreas.stream().filter(da->da.id.equals(id)).findFirst().orElse(null));
     }
 
     public String getId() {
         return id;
     }
 
-    public Map<String, DrawingArea> getMapIdToDrawingArea() {
-        return mapIdToDrawingArea;
+    public List<DrawingArea> getDrawingAreas() {
+        return drawingAreas;
     }
 }
