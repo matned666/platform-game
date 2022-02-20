@@ -2,13 +2,18 @@ package eu.mrndesign.matned.client.view;
 
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.ControllerImpl;
+import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.view.screencontent.*;
 import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ScreenManager implements ScreenManagerInterface {
+
+    Logger logger = Logger.getLogger("ScreenManager");
 
     private Controller controller;
     private ScreenInterface screen;
@@ -72,6 +77,10 @@ public class ScreenManager implements ScreenManagerInterface {
                 case QUIT: return "Quit";
                 default: return "Home page";
             }
+        }
+
+        public boolean timerStop() {
+            return this != NEW_GAME;
         }
     }
 

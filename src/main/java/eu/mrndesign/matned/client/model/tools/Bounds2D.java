@@ -26,8 +26,13 @@ public class Bounds2D {
     }
 
     public boolean touchedBy(Bounds2D bounds2D) {
-        return ((topBorder() <= bounds2D.bottomBorder() || bottomBorder() >= bounds2D.topBorder()) && (rightBorder() >= bounds2D.leftBorder() && leftBorder() <= bounds2D.rightBorder()))
-                || ((leftBorder() <= bounds2D.rightBorder() || rightBorder() >= bounds2D.leftBorder()) && (topBorder() <= bounds2D.bottomBorder() && bottomBorder() >= bounds2D.topBorder()));
+        boolean inX = leftBorder() >= bounds2D.leftBorder() && leftBorder() <= bounds2D.rightBorder()
+                || rightBorder() >= bounds2D.leftBorder() && leftBorder() <= bounds2D.rightBorder()
+                || rightBorder() >= bounds2D.rightBorder() && leftBorder() <= bounds2D.leftBorder();
+        boolean inY = topBorder() >= bounds2D.topBorder() && topBorder() <= bounds2D.bottomBorder()
+                || bottomBorder() >= bounds2D.topBorder() && topBorder() <= bounds2D.bottomBorder()
+                || bottomBorder() >= bounds2D.bottomBorder() && topBorder() <= bounds2D.topBorder();
+        return inY && inX;
     }
 
     public double leftBorder() {

@@ -3,7 +3,6 @@ package eu.mrndesign.matned.client.view.screencontent.game;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -13,7 +12,6 @@ import eu.mrndesign.matned.client.controller.Constants;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
-import eu.mrndesign.matned.client.model.tools.Vector2D;
 import eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView;
 
 import java.util.ArrayList;
@@ -31,9 +29,12 @@ public class DrawingCanvas extends AbsolutePanel {
     private final Controller controller;
 
     private final Map<String, GameObjView> mapIdToGameObjects = new HashMap<>();
-    private final Label degreeLabel;
     private final Label mousePosLabel;
     private final Label mouseActionPosLabel;
+    private final Label additionalLabel;
+
+    private int actualX;
+    private int actualY;
 
     private boolean dragging = false;
 
@@ -43,6 +44,8 @@ public class DrawingCanvas extends AbsolutePanel {
         this.controller = controller;
         drawingCanvas = Canvas.createIfSupported();
         Image background = new Image(controller.getActiveBackGroundImage());
+        background.setHeight(PANEL_HEIGHT);
+        background.setWidth(PANEL_WIDTH);
         add(background, 0, 0);
         getElement().setClassName("drawingArea");
         setWidth(PANEL_WIDTH);
@@ -52,28 +55,24 @@ public class DrawingCanvas extends AbsolutePanel {
         initGameObjects();
         mousePosLabel = new Label();
         mouseActionPosLabel = new Label();
-        degreeLabel = new Label();
+        additionalLabel = new Label();
         mousePosLabel.setStyleName("infoLabel");
         mouseActionPosLabel.setStyleName("infoLabel");
-        degreeLabel.setStyleName("infoLabel");
+        additionalLabel.setStyleName("infoLabel");
         add(mousePosLabel, PANEL_WIDTH_INT / 4, 0);
         add(mouseActionPosLabel, PANEL_WIDTH_INT * 2 / 4, 0);
-        add(degreeLabel, PANEL_WIDTH_INT * 3 / 4, 0);
+        add(additionalLabel, PANEL_WIDTH_INT * 3 / 4, 0);
         initListeners();
         setTimer();
-        TimeWrapper.getInstance().runTimer();
 
     }
 
     private void initListeners() {
         drawingCanvas.addMouseMoveHandler(event -> {
-            if (dragging) {
-                controller.onCanvasMouseDown(event.getX(), event.getY());
-                mouseActionPosLabel.setText("mouseDown->x:" + event.getX() + ",y:" + event.getY());
-            }
             controller.onCanvasMouseMove(event.getX(), event.getY());
             mousePosLabel.setText("mouseMove->x:" + event.getX() + ",y:" + event.getY());
-            degreeLabel.setText("angle->" + actualAngle +"deg");
+            actualX = event.getX();
+            actualY = event.getY();
         });
         drawingCanvas.addMouseDownHandler(e -> dragging = true);
         drawingCanvas.addMouseUpHandler(e -> dragging = false);
@@ -105,6 +104,11 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     public void refreshDrawingCanvas() {
+        controller.onCanvasRefresh();
+        if (dragging) {
+            controller.onCanvasMouseDown(actualX, actualY);
+        }
+        additionalLabel.setText("timer->" + TimeWrapper.getInstance().getFrameNo());
         drawingCanvasContext.clearRect(0, 0, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
         if (!controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
             List<GameElement> newValues = controller.getNewValues(mapIdToGameObjects.keySet());

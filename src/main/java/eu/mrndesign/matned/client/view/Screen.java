@@ -1,6 +1,7 @@
 package eu.mrndesign.matned.client.view;
 
 import com.google.gwt.user.client.ui.*;
+import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.view.screencontent.IContent;
 import eu.mrndesign.matned.client.view.screencontent.menu.MenuButton;
 

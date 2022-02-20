@@ -18,6 +18,8 @@ public interface Controller {
 
     boolean gameObjectsStateIsActual(Set<String> keySet);
 
+    void onCanvasRefresh();
+
     void onCanvasMouseMove(int x, int y);
 
     void onCanvasMouseDown(int x, int y);

@@ -16,22 +16,54 @@ public class Point2D {
         this(copy.x, copy.y);
     }
 
+    public static Point2D zero() {
+        return new Point2D(0, 0);
+    }
+
+    public static Point2D one() {
+        return new Point2D(1,1);
+    }
+
+    public static Point2D randomPoint(int panelWidthInt, int panelHeightInt) {
+        int x = (int) (Math.random() * panelWidthInt);
+        int y = (int) (Math.random() * panelHeightInt);
+        return new Point2D(x, y);
+    }
+
+    public static Point2D randomPointOnEdge(int widthInt, int panelWidthInt, int panelHeightInt) {
+        int lottery = (int) (Math.random() * 3);
+        int x = (int) (Math.random() * panelWidthInt);
+        int y = (int) (Math.random() * panelHeightInt);
+        switch (lottery) {
+            case 0:
+                return new Point2D(widthInt, y);
+            case 1:
+                return new Point2D(panelWidthInt - widthInt, y);
+            case 2:
+                return new Point2D(x, panelHeightInt - widthInt);
+            default:
+                return new Point2D(x, widthInt);
+        }
+    }
+
     /**
      * distance between points
+     *
      * @param point second point
      * @return distance double value
      */
-    public double distanceFrom(Point2D point){
-        return Math.sqrt((point.getX() - x)*(point.getX() - x) + (point.getY() - y)*(point.getY() - y));
+    public double distanceFrom(Point2D point) {
+        return Math.sqrt((point.getX() - x) * (point.getX() - x) + (point.getY() - y) * (point.getY() - y));
     }
 
     /**
      * angle between points on center point
+     *
      * @param center reference point
-     * @param point second pt
+     * @param point  second pt
      * @return angle degree value
      */
-    public double angle(Point2D center, Point2D point){
+    public double angle(Point2D center, Point2D point) {
         Vector2D v1 = new Vector2D(center, this);
         Vector2D v2 = new Vector2D(center, point);
         return v1.angleTo(v2);
@@ -44,8 +76,8 @@ public class Point2D {
 
     public void move(Vector2D v, double d) {
         v.normalize();
-        x += v.getX()*d;
-        y += v.getY()*d;
+        x += v.getX() * d;
+        y += v.getY() * d;
     }
 
     public double getX() {

@@ -20,4 +20,6 @@ public interface GameModel {
     void onCanvasMouseDown(int x, int y);
 
     String getActiveBackgroundImage();
+
+    void onCanvasRefresh();
 }

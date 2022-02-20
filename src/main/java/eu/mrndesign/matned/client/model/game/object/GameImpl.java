@@ -72,5 +72,10 @@ public class GameImpl implements GameModel {
         return activeDrawingArea.getBackgroundImage();
     }
 
+    @Override
+    public void onCanvasRefresh() {
+        activeDrawingArea.canvasRefresh();
+    }
+
 
 }

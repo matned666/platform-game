@@ -15,7 +15,11 @@ public class DrawingArea extends Bounds2D {
 
     public DrawingArea(double width, double height) {
         super(width, height, new Point2D(0,0));
-        GameElement hero = GameElementsFactory.hero();
+        GameElement hero = GameElementsFactory.addHero();
+        GameElement rock1 = GameElementsFactory.addNewEnemy(hero);
+        GameElement rock2 = GameElementsFactory.addNewEnemy(hero);
+        mapIdToGameElement.put(rock1.getId(), rock1);
+        mapIdToGameElement.put(rock2.getId(), rock2);
         mapIdToGameElement.put(hero.getId(), hero);
     }
 
@@ -40,7 +44,7 @@ public class DrawingArea extends Bounds2D {
     }
 
     public void mouseMoveEvent(int x, int y) {
-        mapIdToGameElement.values().forEach(gameElement -> gameElement.refresh(x,y));
+        mapIdToGameElement.values().forEach(gameElement -> gameElement.mouseMove(x,y));
     }
 
     public String getBackgroundImage() {
@@ -48,5 +52,7 @@ public class DrawingArea extends Bounds2D {
     }
 
 
-
+    public void canvasRefresh() {
+        mapIdToGameElement.values().forEach(GameElement::refresh);
+    }
 }

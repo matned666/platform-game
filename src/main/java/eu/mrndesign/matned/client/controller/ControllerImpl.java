@@ -49,6 +49,11 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
+    public void onCanvasRefresh() {
+        game.onCanvasRefresh();
+    }
+
+    @Override
     public void onCanvasMouseMove(int x, int y) {
         game.onCanvasMouseMove(x, y);
     }

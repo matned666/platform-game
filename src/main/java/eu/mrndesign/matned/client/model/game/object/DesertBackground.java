@@ -1,7 +1,5 @@
 package eu.mrndesign.matned.client.model.game.object;
 
-import eu.mrndesign.matned.client.model.tools.Bounds2D;
-
 public class DesertBackground extends GameElement {
 
 
@@ -15,7 +13,12 @@ public class DesertBackground extends GameElement {
     }
 
     @Override
-    public void refresh(int x, int y) {
+    public void refresh() {
+
+    }
+
+    @Override
+    public void mouseMove(int x, int y) {
 
     }
 

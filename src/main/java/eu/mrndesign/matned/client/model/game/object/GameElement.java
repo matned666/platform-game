@@ -4,7 +4,12 @@ import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public abstract class GameElement {
+
+    protected final Logger logger;
 
     private final Vector2D referenceVector = new Vector2D(0,-10);
 
@@ -15,12 +20,19 @@ public abstract class GameElement {
     private Vector2D vector;
     private final String name;
     private double actualAngle;
+    protected GameElement referenceElement;
 
     public GameElement(String name, double speed, Vector2D vector, Bounds2D bounds) {
         this.name = name;
         this.speed = speed;
         this.vector = vector;
         this.bounds = bounds;
+        logger = Logger.getLogger(name);
+    }
+
+    public GameElement(String name, double speed, Vector2D vector, Bounds2D bounds, GameElement referenceElement) {
+        this(name, speed, vector, bounds);
+        this.referenceElement = referenceElement;
     }
 
     public GameElement(GameElement element) {
@@ -38,6 +50,10 @@ public abstract class GameElement {
         Vector2D newVector = new Vector2D(bounds.getCenter(), x, y);
         actualAngle = vector.angleTo(newVector);
         this.vector = newVector;
+    }
+
+    protected boolean isInBounds(GameElement gameElement) {
+        return bounds.touchedBy(gameElement.bounds);
     }
 
     public void move() {
@@ -76,7 +92,9 @@ public abstract class GameElement {
         return name;
     }
 
-    public abstract void refresh(int x, int y);
+    public abstract void refresh();
+
+    public abstract void mouseMove(int x, int y);
 
     public abstract void action(int x, int y);
 

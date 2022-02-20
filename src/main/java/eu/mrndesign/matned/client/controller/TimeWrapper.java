@@ -39,6 +39,10 @@ public class TimeWrapper {
         timer.run();
     }
 
+    public void stopTimer() {
+        timer.cancel();
+    }
+
     public void resetFrame() {
         frameNo = 0;
     }
