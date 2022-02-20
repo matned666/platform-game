@@ -4,6 +4,9 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
@@ -18,10 +21,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static eu.mrndesign.matned.client.controller.Constants.*;
 
 public class DrawingCanvas extends AbsolutePanel {
+
+    protected final Logger logger;
 
     private final Canvas drawingCanvas;
 
@@ -38,10 +45,9 @@ public class DrawingCanvas extends AbsolutePanel {
 
     private boolean dragging = false;
 
-    private double actualAngle;
-
     public DrawingCanvas(Controller controller) {
         this.controller = controller;
+        logger = Logger.getLogger("DrawingCanvas:");
         drawingCanvas = Canvas.createIfSupported();
         Image background = new Image(controller.getActiveBackGroundImage());
         background.setHeight(PANEL_HEIGHT);
@@ -51,8 +57,9 @@ public class DrawingCanvas extends AbsolutePanel {
         setWidth(PANEL_WIDTH);
         setHeight(Constants.PANEL_HEIGHT);
         drawingCanvasContext = drawingCanvas.getContext2d();
+        drawingCanvas.setStyleName("gameObject");
         createDrawingCanvas();
-        initGameObjects();
+        addGameObjects();
         mousePosLabel = new Label();
         mouseActionPosLabel = new Label();
         additionalLabel = new Label();
@@ -76,9 +83,12 @@ public class DrawingCanvas extends AbsolutePanel {
         });
         drawingCanvas.addMouseDownHandler(e -> dragging = true);
         drawingCanvas.addMouseUpHandler(e -> dragging = false);
+        drawingCanvas.addMouseOutHandler(e -> dragging = false);
+        drawingCanvas.addMouseOverHandler(e -> dragging = false);
+        drawingCanvas.addKeyDownHandler(event -> controller.onKeyPressed(event.getNativeKeyCode()));
     }
 
-    private void initGameObjects() {
+    private void addGameObjects() {
         List<GameElement> allValues = controller.getGameElement();
         manageGameObjectsMap(allValues, new ArrayList<>());
     }
@@ -120,25 +130,27 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void addAllMappedToCanvas() {
+        log("size:" + mapIdToGameObjects.size());
         mapIdToGameObjects.values().forEach(value -> {
-            actualAngle = Math.toRadians(value.getRotationValue());
+            double actualAngle = Math.toRadians(value.getRotationValue());
             double rx = value.getCenterX();
             double ry = value.getCenterY();
             ImageElement img = ImageElement.as(new Image(value.getImageUrl()).getElement());
-            drawImageElement(value, rx, ry, img);
+            drawImageElement(value, rx, ry, actualAngle, img);
         });
     }
 
-    private void drawImageElement(GameObjView value, double rx, double ry, ImageElement img) {
+    private void drawImageElement(GameObjView value, double rx, double ry, double actualAngle, ImageElement img) {
         drawingCanvasContext.translate(rx, ry);
         drawingCanvasContext.rotate(actualAngle);
-        drawingCanvasContext.drawImage(img, -value.getWidth()/2, -value.getHeight()/2, value.getWidth(), value.getHeight());
+        drawingCanvasContext.drawImage(img, -value.getWidth() / 2, -value.getHeight() / 2, value.getWidth(), value.getHeight());
         drawingCanvasContext.rotate(-actualAngle);
         drawingCanvasContext.translate(-rx, -ry);
     }
 
     private void manageGameObjectsMap(List<GameElement> newValues, List<String> removedKeys) {
         if (removedKeys.size() > 0) {
+            log("size:" + mapIdToGameObjects.size());
             removeGameObjects(removedKeys);
         }
         if (newValues.size() > 0) {
@@ -155,6 +167,10 @@ public class DrawingCanvas extends AbsolutePanel {
             GameObjView obj = new GameObjView(gameElement);
             mapIdToGameObjects.put(obj.getId(), obj);
         });
+    }
+
+    private void log(String message) {
+        logger.log(Level.SEVERE, message);
     }
 
 }

@@ -7,7 +7,7 @@ public interface GameModel {
 
     void addNewDrawingArea(double width, double height);
 
-    DrawingArea getDrawingArea();
+    CanvasModel getDrawingArea();
 
     List<GameElement> getNewValues(Set<String> keySet);
 
@@ -22,4 +22,6 @@ public interface GameModel {
     String getActiveBackgroundImage();
 
     void onCanvasRefresh();
+
+    void onKeyPressed(int keyCode);
 }

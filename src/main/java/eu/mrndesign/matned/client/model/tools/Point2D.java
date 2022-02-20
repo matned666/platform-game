@@ -53,7 +53,7 @@ public class Point2D {
      * @return distance double value
      */
     public double distanceFrom(Point2D point) {
-        return Math.sqrt((point.getX() - x) * (point.getX() - x) + (point.getY() - y) * (point.getY() - y));
+        return distanceFrom(point.x, point.y);
     }
 
     /**
@@ -120,5 +120,9 @@ public class Point2D {
     public void copy(Point2D b) {
         x = b.x;
         y = b.y;
+    }
+
+    public double distanceFrom(double x, double y) {
+        return Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y));
     }
 }

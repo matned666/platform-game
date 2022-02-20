@@ -23,4 +23,6 @@ public interface Controller {
     void onCanvasMouseMove(int x, int y);
 
     void onCanvasMouseDown(int x, int y);
+
+    void onKeyPressed(int keyCode);
 }

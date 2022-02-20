@@ -8,44 +8,41 @@ public class GameImpl implements GameModel {
 
     protected final String id = "Game-" + System.currentTimeMillis();
 
-    private final Map<String, DrawingArea> mapIdToDrawingArea = new HashMap<>();
+    private final Map<String, CanvasModel> mapIdToDrawingArea = new HashMap<>();
     private final Controller controller;
-    private DrawingArea activeDrawingArea;
+    private CanvasModel activeCanvasModel;
 
     public GameImpl(Controller controller) {
         this.controller = controller;
     }
 
     public void addNewDrawingArea(double width, double height) {
-        DrawingArea drawingArea = new DrawingArea(width, height);
-        mapIdToDrawingArea.put(drawingArea.id, drawingArea);
-        activeDrawingArea = drawingArea;
+        CanvasModel canvasModel = new CanvasModel(width, height, this);
+        mapIdToDrawingArea.put(canvasModel.id, canvasModel);
+        activeCanvasModel = canvasModel;
     }
 
     @Override
-    public DrawingArea getDrawingArea() {
-        return activeDrawingArea;
+    public CanvasModel getDrawingArea() {
+        return activeCanvasModel;
     }
 
     @Override
     public List<GameElement> getNewValues(Set<String> keySet) {
-        Map<String, GameElement> mapIdToGameElement = activeDrawingArea.getMapIdToGameElement();
+        Map<String, GameElement> mapIdToGameElement = activeCanvasModel.getMapIdToGameElement();
         List<GameElement> newValues = new LinkedList<>();
-        keySet.stream().filter(mapIdToGameElement::containsKey).forEach(key -> newValues.add(mapIdToGameElement.get(key)));
+        mapIdToGameElement.keySet().stream().filter(key -> !keySet.contains(key)).forEach(key -> newValues.add(mapIdToGameElement.get(key)));
         return newValues;
     }
 
     @Override
     public List<String> getAllRemovedKeys(Set<String> keySet) {
-        Map<String, GameElement> mapIdToGameElement = activeDrawingArea.getMapIdToGameElement();
-        List<String> removedKeys = new LinkedList<>();
-        keySet.stream().filter(mapIdToGameElement::containsKey).forEach(removedKeys::add);
-        return removedKeys;
+        return activeCanvasModel.getRemovedGameElements();
     }
 
     @Override
     public boolean gameObjectsStateIsActual(Set<String> keySet) {
-        Map<String, GameElement> mapIdToGameElement = activeDrawingArea.getMapIdToGameElement();
+        Map<String, GameElement> mapIdToGameElement = activeCanvasModel.getMapIdToGameElement();
         for (String key : keySet) {
             if (!mapIdToGameElement.containsKey(key)) {
                 return false;
@@ -59,22 +56,27 @@ public class GameImpl implements GameModel {
 
     @Override
     public void onCanvasMouseMove(int x, int y) {
-        activeDrawingArea.mouseMoveEvent(x,y);
+        activeCanvasModel.mouseMoveEvent(x,y);
     }
 
     @Override
     public void onCanvasMouseDown(int x, int y) {
-        activeDrawingArea.mouseDownEvent(x,y);
+        activeCanvasModel.mouseDownEvent(x,y);
     }
 
     @Override
     public String getActiveBackgroundImage() {
-        return activeDrawingArea.getBackgroundImage();
+        return activeCanvasModel.getBackgroundImage();
     }
 
     @Override
     public void onCanvasRefresh() {
-        activeDrawingArea.canvasRefresh();
+        activeCanvasModel.canvasRefresh();
+    }
+
+    @Override
+    public void onKeyPressed(int keyCode) {
+        activeCanvasModel.onKeyPressed(keyCode);
     }
 
 
