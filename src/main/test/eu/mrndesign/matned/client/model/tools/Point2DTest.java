@@ -33,6 +33,23 @@ class Point2DTest {
     }
 
     @Test
+    void givenPoints_DistanceShouldBeProper(){
+        Point2D p1 = new Point2D(5,5);
+        Point2D p2 = new Point2D(0,0);
+
+        assertEquals(7.0710678, p1.distanceFrom(p2), 0.000001);
+    }
+
+    @Test
+    void movePointByVector(){
+        Point2D p = new Point2D(2, 2);
+        Vector2D v = new Vector2D(3,2);
+        p.move(v);
+        assertEquals(new Point2D(5,4), p);
+    }
+
+
+    @Test
     void movingPoint() {
         Point2D p = new Point2D(2, 2);
         Vector2D v = new Vector2D(5,0);

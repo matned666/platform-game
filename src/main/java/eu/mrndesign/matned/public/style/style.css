@@ -23,3 +23,11 @@
 .drawingArea {
     background-color: #dddddd;
 }
+
+.gameObject {
+    drop-shadow(30px 10px 4px #eeeeee);
+}
+
+.infoLabel {
+    text-color: #ffffff;
+}

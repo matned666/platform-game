@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Point2D {
 
-    double x;
-    double y;
+    protected double x;
+    protected double y;
 
     public Point2D(double x, double y) {
         this.x = x;
@@ -35,6 +35,11 @@ public class Point2D {
         Vector2D v1 = new Vector2D(center, this);
         Vector2D v2 = new Vector2D(center, point);
         return v1.angleTo(v2);
+    }
+
+    public void move(Vector2D v) {
+        x += v.getX();
+        y += v.getY();
     }
 
     public void move(Vector2D v, double d) {

@@ -6,12 +6,15 @@ import eu.mrndesign.matned.client.model.tools.Vector2D;
 
 public abstract class GameElement {
 
-    protected final String id = "GameElement-" + System.currentTimeMillis();
+    private final Vector2D referenceVector = new Vector2D(0,-10);
 
-    protected double speed;
-    protected final Bounds2D bounds;
-    protected final Vector2D vector;
-    protected final String name;
+    private final String id = "GameElement-" + System.currentTimeMillis();
+    private GameElementType type;
+    private double speed;
+    private final Bounds2D bounds;
+    private Vector2D vector;
+    private final String name;
+    private double actualAngle;
 
     public GameElement(String name, double speed, Vector2D vector, Bounds2D bounds) {
         this.name = name;
@@ -24,22 +27,21 @@ public abstract class GameElement {
         this(element.name, element.speed, new Vector2D(element.vector), new Bounds2D(element.bounds));
     }
 
+    public abstract String getUrl();
+
     public void moveTo(double x, double y){
         rotate(x,y);
-        move(speed);
+        move();
     }
 
-    public double rotate(double x, double y) {
-        Vector2D v = new Vector2D(bounds.getCenter(), new Point2D(x,y));
-        vector.normalize();
-        v.normalize();
-        double angleDegrees = vector.angleTo(v);
-        vector.rotate(angleDegrees);
-        return angleDegrees;
+    public void rotate(double x, double y) {
+        Vector2D newVector = new Vector2D(bounds.getCenter(), x, y);
+        actualAngle = vector.angleTo(newVector);
+        this.vector = newVector;
     }
 
-    public void move(double dist) {
-        bounds.getCenter().move(vector, dist);
+    public void move() {
+        bounds.getCenter().move(vector, speed);
     }
 
     public double getSpeed() {
@@ -48,5 +50,37 @@ public abstract class GameElement {
 
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public GameElementType getType() {
+        return type;
+    }
+
+    public Bounds2D getBounds() {
+        return bounds;
+    }
+
+    public Vector2D getVector() {
+        return vector;
+    }
+
+    public void setVector(Vector2D vector) {
+        this.vector = vector;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract void refresh(int x, int y);
+
+    public abstract void action(int x, int y);
+
+    public double getAngle() {
+        return referenceVector.angleTo(vector);
     }
 }

@@ -1,52 +1,60 @@
 package eu.mrndesign.matned.client.controller;
 
 import eu.mrndesign.matned.client.model.game.object.DrawingArea;
-import eu.mrndesign.matned.client.model.game.object.Game;
+import eu.mrndesign.matned.client.model.game.object.GameModel;
+import eu.mrndesign.matned.client.model.game.object.GameImpl;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 
-public class ControllerImpl implements Controller{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-    private Game game;
-    private String activeDrawingAreaId;
+public class ControllerImpl implements Controller {
+
+    private final GameModel game;
 
     public ControllerImpl() {
-        this.game = new Game(this);
+        this.game = new GameImpl(this);
     }
 
-    @Override
-    public DrawingArea getActiveDrawingArea() {
-        return game.getDrawingAreas().get(0);
-    }
-
-    @Override
-    public void move(String id, double x, double y) {
-        GameElement gameElement = getActiveDrawingArea().getMapIdToGameElement().get(id);
-        gameElement.moveTo(x, y);
-    }
-
-    @Override
-    public void rotate(String id, double x, double y) {
-        GameElement gameElement = getActiveDrawingArea().getMapIdToGameElement().get(id);
-        gameElement.rotate(x, y);
-    }
-
-    @Override
-    public String getActiveDrawingAreaId() {
-        return activeDrawingAreaId;
-    }
-
-    @Override
-    public void setActiveDrawingAreaId(String id) {
-        this.activeDrawingAreaId = id;
-    }
 
     @Override
     public void addNewDrawingArea(double width, double height) {
-        game.add(width, height);
+        game.addNewDrawingArea(width, height);
     }
 
     @Override
-    public void removeDrawingArea(String id) {
-        game.remove(id);
+    public String getActiveBackGroundImage() {
+        return game.getActiveBackgroundImage();
+    }
+
+    @Override
+    public List<GameElement> getGameElement() {
+        DrawingArea drawingArea = game.getDrawingArea();
+        return new ArrayList<>(drawingArea.getMapIdToGameElement().values());
+    }
+    @Override
+    public List<GameElement> getNewValues(Set<String> keySet) {
+        return game.getNewValues(keySet);
+    }
+
+    @Override
+    public List<String> getRemovedKeys(Set<String> keySet) {
+        return game.getAllRemovedKeys(keySet);
+    }
+
+    @Override
+    public boolean gameObjectsStateIsActual(Set<String> keySet) {
+        return game.gameObjectsStateIsActual(keySet);
+    }
+
+    @Override
+    public void onCanvasMouseMove(int x, int y) {
+        game.onCanvasMouseMove(x, y);
+    }
+
+    @Override
+    public void onCanvasMouseDown(int x, int y) {
+        game.onCanvasMouseDown(x, y);
     }
 }

@@ -3,7 +3,6 @@ package eu.mrndesign.matned.client.view;
 import com.google.gwt.user.client.ui.*;
 import eu.mrndesign.matned.client.view.screencontent.IContent;
 import eu.mrndesign.matned.client.view.screencontent.menu.MenuButton;
-import eu.mrndesign.matned.client.view.screencontent.Content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ public class Screen extends Composite implements ScreenInterface {
     private final VerticalPanel mainGrid;
     protected ScreenManager.ScreenType screenType;
 
-    private HorizontalPanel menuPanel;
+    private final HorizontalPanel menuPanel;
     private final List<MenuButton> widgets = new ArrayList<>();
 
     private IContent actualContent;

@@ -3,20 +3,24 @@ package eu.mrndesign.matned.client.view;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.ControllerImpl;
 import eu.mrndesign.matned.client.view.screencontent.*;
+import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ScreenManager implements ScreenManagerInterface {
 
-    private final ScreenInterface screen = new Screen(this, ScreenType.START_SCREEN, OptionsContent.getInstance());
     private Controller controller;
+    private ScreenInterface screen;
 
     @Override
     public void start() {
-        initializeScreen(ScreenType.START_SCREEN);
-        screen.show();
         controller = new ControllerImpl();
+        if (screen == null) {
+            screen = new Screen(this, ScreenType.NEW_GAME, GameContent.getInstance(controller));
+        }
+        initializeScreen(ScreenType.NEW_GAME);
+        screen.show();
     }
 
     @Override
@@ -49,7 +53,6 @@ public class ScreenManager implements ScreenManagerInterface {
         initializeScreen(screenType);
     }
 
-
     public enum ScreenType {
         START_SCREEN,
         NEW_GAME,
@@ -69,7 +72,6 @@ public class ScreenManager implements ScreenManagerInterface {
                 case QUIT: return "Quit";
                 default: return "Home page";
             }
-
         }
     }
 

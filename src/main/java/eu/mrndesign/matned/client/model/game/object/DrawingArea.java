@@ -10,16 +10,17 @@ public class DrawingArea extends Bounds2D {
 
     protected final String id = "DrawingArea-" + System.currentTimeMillis();
 
-    private final Game game;
     private final Map<String, GameElement> mapIdToGameElement = new TreeMap<>();
+    private final GameElement background = new DesertBackground();
 
-    public DrawingArea(double width, double height, Game game) {
+    public DrawingArea(double width, double height) {
         super(width, height, new Point2D(0,0));
-        this.game = game;
+        GameElement hero = GameElementsFactory.hero();
+        mapIdToGameElement.put(hero.getId(), hero);
     }
 
     public void add(GameElement gameElement) {
-        mapIdToGameElement.put(gameElement.id, gameElement);
+        mapIdToGameElement.put(gameElement.getId(), gameElement);
     }
 
     public void remove(String id) {
@@ -30,11 +31,22 @@ public class DrawingArea extends Bounds2D {
         return mapIdToGameElement;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
     public String getId() {
         return id;
     }
+
+    public void mouseDownEvent(int x, int y) {
+        mapIdToGameElement.values().forEach(gameElement -> gameElement.action(x,y));
+    }
+
+    public void mouseMoveEvent(int x, int y) {
+        mapIdToGameElement.values().forEach(gameElement -> gameElement.refresh(x,y));
+    }
+
+    public String getBackgroundImage() {
+        return background.getUrl();
+    }
+
+
+
 }

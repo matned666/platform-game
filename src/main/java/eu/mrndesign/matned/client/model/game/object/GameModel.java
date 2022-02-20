@@ -1,24 +1,23 @@
-package eu.mrndesign.matned.client.controller;
-
-import eu.mrndesign.matned.client.model.game.object.GameElement;
+package eu.mrndesign.matned.client.model.game.object;
 
 import java.util.List;
 import java.util.Set;
 
-public interface Controller {
+public interface GameModel {
 
     void addNewDrawingArea(double width, double height);
 
-    String getActiveBackGroundImage();
+    DrawingArea getDrawingArea();
 
-    List<GameElement> getGameElement();
     List<GameElement> getNewValues(Set<String> keySet);
 
-    List<String> getRemovedKeys(Set<String> keySet);
+    List<String> getAllRemovedKeys(Set<String> keySet);
 
     boolean gameObjectsStateIsActual(Set<String> keySet);
 
     void onCanvasMouseMove(int x, int y);
 
     void onCanvasMouseDown(int x, int y);
+
+    String getActiveBackgroundImage();
 }
