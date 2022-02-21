@@ -34,4 +34,9 @@ public class DesertBackground extends GameElement {
     public GameElementType getType() {
         return GameElementType.BACKGROUND;
     }
+
+    @Override
+    public boolean isToRemove() {
+        return false;
+    }
 }

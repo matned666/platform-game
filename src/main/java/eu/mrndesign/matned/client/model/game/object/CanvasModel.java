@@ -58,7 +58,12 @@ public class CanvasModel extends Bounds2D {
 
 
     public void canvasRefresh() {
-        mapIdToGameElement.values().forEach(GameElement::refresh);
+        mapIdToGameElement.forEach((key, gameElement) -> {
+            gameElement.refresh();
+            if ((gameElement.isToRemove())) {
+                remove(key);
+            }
+        });
     }
 
     public List<String> getRemovedGameElements() {
@@ -89,5 +94,9 @@ public class CanvasModel extends Bounds2D {
         GameElement bullet = GameElementsFactory.bullet(hero.getVector(), hero.getBounds(), this);
         add(bullet);
         logger.log(Level.SEVERE, "set new bullet");
+    }
+
+    public void clearRemoved() {
+        removedGameElements.forEach(mapIdToGameElement::remove);
     }
 }

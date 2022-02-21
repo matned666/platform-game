@@ -1,5 +1,8 @@
 package eu.mrndesign.matned.client.model.tools;
 
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
+
 public class Bounds2D {
 
     protected double width;
@@ -16,6 +19,10 @@ public class Bounds2D {
         width = bounds2D.width;
         height = bounds2D.height;
         center = new Point2D(bounds2D.center);
+    }
+
+    public boolean isOutOfView(){
+        return center.x < 0 || center.x > PANEL_WIDTH_INT || center.y < 0 || center.y > PANEL_HEIGHT_INT;
     }
 
     public boolean isIn(Bounds2D bounds2D) {

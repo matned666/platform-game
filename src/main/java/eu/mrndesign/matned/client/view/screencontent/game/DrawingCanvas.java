@@ -4,9 +4,6 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.ImageElement;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
@@ -114,6 +111,7 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     public void refreshDrawingCanvas() {
+        List<String> removedKeys = controller.getRemovedKeys(mapIdToGameObjects.keySet());
         controller.onCanvasRefresh();
         if (dragging) {
             controller.onCanvasMouseDown(actualX, actualY);
@@ -122,7 +120,6 @@ public class DrawingCanvas extends AbsolutePanel {
         drawingCanvasContext.clearRect(0, 0, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
         if (!controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
             List<GameElement> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
-            List<String> removedKeys = controller.getRemovedKeys(mapIdToGameObjects.keySet());
             manageGameObjectsMap(newValues, removedKeys);
         }
         addAllMappedToCanvas();
@@ -150,8 +147,8 @@ public class DrawingCanvas extends AbsolutePanel {
 
     private void manageGameObjectsMap(List<GameElement> newValues, List<String> removedKeys) {
         if (removedKeys.size() > 0) {
-            log("size:" + mapIdToGameObjects.size());
             removeGameObjects(removedKeys);
+            log("size:" + mapIdToGameObjects.size());
         }
         if (newValues.size() > 0) {
             addNewGameObjects(newValues);

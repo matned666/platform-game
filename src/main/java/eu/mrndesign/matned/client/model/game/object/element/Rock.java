@@ -43,4 +43,9 @@ public class Rock extends GameElement {
     public GameElementType getType() {
         return GameElementType.ROCK;
     }
+
+    @Override
+    public boolean isToRemove() {
+        return false;
+    }
 }

@@ -37,4 +37,9 @@ public class Bullet extends GameElement {
     public GameElementType getType() {
         return GameElementType.BULLET;
     }
+
+    @Override
+    public boolean isToRemove() {
+        return bounds.isOutOfView();
+    }
 }

@@ -72,6 +72,7 @@ public class GameImpl implements GameModel {
     @Override
     public void onCanvasRefresh() {
         activeCanvasModel.canvasRefresh();
+        activeCanvasModel.clearRemoved();
     }
 
     @Override

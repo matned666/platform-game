@@ -89,4 +89,7 @@ public abstract class GameElement {
     }
 
     public abstract GameElementType getType();
+
+    public abstract boolean isToRemove();
+
 }

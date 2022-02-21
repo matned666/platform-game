@@ -49,4 +49,9 @@ public class StarShip extends GameElement {
     public GameElementType getType() {
         return GameElementType.HERO;
     }
+
+    @Override
+    public boolean isToRemove() {
+        return false;
+    }
 }
