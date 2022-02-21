@@ -1,6 +1,6 @@
-### Simple GWT games model
+# Simple GWT games model
 
-more information later<br>
+###more information later<br>
 it will be something like this:
 
 ![img.png](img.png)
