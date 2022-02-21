@@ -1,5 +1,9 @@
 package eu.mrndesign.matned.client.model.game.object;
 
-public enum GameElementType {
-    HERO, ROCK, BULLET, BACKGROUND
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+import java.io.Serializable;
+
+public enum GameElementType  implements Serializable, IsSerializable {
+    HERO, ROCK, BULLET, BACKGROUND, BLOW
 }

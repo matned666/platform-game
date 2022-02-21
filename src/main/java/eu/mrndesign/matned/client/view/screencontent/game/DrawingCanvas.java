@@ -68,7 +68,6 @@ public class DrawingCanvas extends AbsolutePanel {
         add(additionalLabel, PANEL_WIDTH_INT * 3 / 4, 0);
         initListeners();
         setTimer();
-
     }
 
     private void initListeners() {
@@ -127,7 +126,6 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void addAllMappedToCanvas() {
-        log("size:" + mapIdToGameObjects.size());
         mapIdToGameObjects.values().forEach(value -> {
             double actualAngle = Math.toRadians(value.getRotationValue());
             double rx = value.getCenterX();
@@ -148,7 +146,6 @@ public class DrawingCanvas extends AbsolutePanel {
     private void manageGameObjectsMap(List<GameElement> newValues, List<String> removedKeys) {
         if (removedKeys.size() > 0) {
             removeGameObjects(removedKeys);
-            log("size:" + mapIdToGameObjects.size());
         }
         if (newValues.size() > 0) {
             addNewGameObjects(newValues);
@@ -166,8 +163,5 @@ public class DrawingCanvas extends AbsolutePanel {
         });
     }
 
-    private void log(String message) {
-        logger.log(Level.SEVERE, message);
-    }
 
 }

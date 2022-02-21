@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object;
 
+import eu.mrndesign.matned.client.model.game.object.element.Blow;
 import eu.mrndesign.matned.client.model.game.object.element.Bullet;
 import eu.mrndesign.matned.client.model.game.object.element.Rock;
 import eu.mrndesign.matned.client.model.game.object.element.StarShip;
@@ -31,4 +32,13 @@ public class GameElementsFactory {
         Vector2D v = new Vector2D(vector);
         return new Bullet(v, bounds2D, canvasModel);
     }
+
+    public static GameElement blow(Vector2D vector, Bounds2D bounds, CanvasModel canvasModel) {
+        Bounds2D bounds2D = new Bounds2D(20,30, new Point2D(bounds.getCenter()));
+        Vector2D v = new Vector2D(vector);
+        return new Blow(v, bounds2D, canvasModel);
+    }
+
+
+
 }

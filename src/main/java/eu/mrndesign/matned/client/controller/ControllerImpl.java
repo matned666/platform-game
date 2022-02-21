@@ -69,7 +69,6 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void onKeyPressed(int keyCode) {
-        logger.log(Level.SEVERE, ""+keyCode+" was hit");
         game.onKeyPressed(keyCode);
     }
 }

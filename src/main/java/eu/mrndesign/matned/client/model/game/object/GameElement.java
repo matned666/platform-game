@@ -3,6 +3,8 @@ package eu.mrndesign.matned.client.model.game.object;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class GameElement {
@@ -76,6 +78,10 @@ public abstract class GameElement {
 
     public void setVector(Vector2D vector) {
         this.vector = vector;
+    }
+
+    public List<String> frames() {
+        return Collections.emptyList();
     }
 
     public abstract void refresh();

@@ -42,4 +42,7 @@ public class Bullet extends GameElement {
     public boolean isToRemove() {
         return bounds.isOutOfView();
     }
+
+
+
 }
