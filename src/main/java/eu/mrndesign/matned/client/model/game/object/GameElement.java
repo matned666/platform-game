@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object;
 
+import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
@@ -12,6 +13,8 @@ public abstract class GameElement {
     protected final Logger logger;
 
     protected final Vector2D referenceVector = new Vector2D(0, -10);
+
+    protected int startFrame;
 
     protected String id;
     protected final CanvasModel canvasModel;
@@ -40,13 +43,13 @@ public abstract class GameElement {
     public GameElement(String name, double speed, Vector2D vector, Bounds2D bounds, GameElement referenceElement, CanvasModel canvasModel) {
         this(name, speed, vector, bounds, canvasModel);
         this.referenceElement = referenceElement;
+        startFrame = (int) TimeWrapper.getInstance().getFrameNo();
+
     }
 
     public GameElement(GameElement element) {
         this(element.name, element.speed, new Vector2D(element.vector), new Bounds2D(element.bounds), element.canvasModel);
     }
-
-    public abstract String getUrl();
 
     public void moveTo(double x, double y) {
         rotate(x, y);
@@ -81,9 +84,7 @@ public abstract class GameElement {
         this.vector = vector;
     }
 
-    public List<String> frames() {
-        return Collections.emptyList();
-    }
+    public abstract List<String> frames();
 
     public abstract void refresh();
 

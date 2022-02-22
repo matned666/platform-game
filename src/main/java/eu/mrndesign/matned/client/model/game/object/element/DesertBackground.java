@@ -3,6 +3,9 @@ package eu.mrndesign.matned.client.model.game.object.element;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.GameElementType;
 
+import java.util.Collections;
+import java.util.List;
+
 public class DesertBackground extends GameElement {
 
 
@@ -11,8 +14,8 @@ public class DesertBackground extends GameElement {
     }
 
     @Override
-    public String getUrl() {
-        return "img/desert-background.jpg";
+    public List<String> frames() {
+        return Collections.singletonList("img/desert-background.jpg");
     }
 
     @Override

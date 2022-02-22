@@ -14,18 +14,11 @@ import static eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView.A
 
 public class Blow extends GameElement {
 
-    private final int frame;
     private List<String> frames;
 
     public Blow(Vector2D vector, Bounds2D bounds, CanvasModel canvasModel) {
         super("Blow", 0, vector, bounds, null, canvasModel);
         frames = Arrays.asList("img/blow1.png", "img/blow2.png", "img/blow3.png", "img/blow4.png", "img/blow5.png", "img/blow6.png");
-        frame = (int) TimeWrapper.getInstance().getFrameNo();
-    }
-
-    @Override
-    public String getUrl() {
-        return "img/blow1.png";
     }
 
     @Override
@@ -55,7 +48,7 @@ public class Blow extends GameElement {
 
     @Override
     public boolean isToRemove() {
-        return (TimeWrapper.getInstance().getFrameNo() - frame )/ ANIMATION_FRAME_RATE> frames.size() || toRemove;
+        return (TimeWrapper.getInstance().getFrameNo() - startFrame)/ ANIMATION_FRAME_RATE> frames.size() || toRemove;
     }
 
 

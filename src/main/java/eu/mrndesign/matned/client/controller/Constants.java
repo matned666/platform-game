@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.client.controller;
 
 public class Constants {
-    public static final int PERIOD_MILLIS = 30;
+    public static final int PERIOD_MILLIS = 28;
     public static final int ONE_SECOND_IN_MILLIS = 1000;
 
 

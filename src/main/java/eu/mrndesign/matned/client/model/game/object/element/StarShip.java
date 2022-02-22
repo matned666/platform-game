@@ -7,6 +7,9 @@ import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
+import java.util.Collections;
+import java.util.List;
+
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
@@ -18,12 +21,13 @@ public class StarShip extends GameElement {
         super("StarShip", 5, new Vector2D(0, 100), new Bounds2D(50, 80, new Point2D(PANEL_WIDTH_INT / 2, PANEL_HEIGHT_INT / 2)), canvasModel);
     }
 
+
     @Override
-    public String getUrl() {
+    public List<String> frames() {
         if (launched) {
-            return "img/starship-fly.png";
+            return Collections.singletonList("img/starship-fly.png");
         }
-        return "img/starship.png";
+        return Collections.singletonList("img/starship.png");
     }
 
     @Override
