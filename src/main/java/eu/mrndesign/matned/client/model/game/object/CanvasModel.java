@@ -94,8 +94,6 @@ public class CanvasModel extends Bounds2D {
 			addNewEnemy();
 			newEnemy = false;
 		}
-		Log.log("wewer:"+getMapIdToGameElement().values());
-
 	}
 
 	private void blow(GameElement ge) {
