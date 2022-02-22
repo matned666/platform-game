@@ -1,9 +1,8 @@
 package eu.mrndesign.matned.client.controller;
 
-import com.google.gwt.user.client.Timer;
-
-import static eu.mrndesign.matned.client.controller.Constants.ONE_SECOND_IN_MILLIS;
 import static eu.mrndesign.matned.client.controller.Constants.PERIOD_MILLIS;
+
+import com.google.gwt.user.client.Timer;
 
 /**
  * Prosty singleton kolekcjonujący dane dla całego programu. Dzięki temu mam do

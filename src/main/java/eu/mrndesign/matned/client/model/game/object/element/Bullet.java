@@ -7,6 +7,9 @@ import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Bullet extends GameElement {
 
     public Bullet(Vector2D vector, Bounds2D bounds, CanvasModel canvasModel) {
@@ -14,8 +17,8 @@ public class Bullet extends GameElement {
     }
 
     @Override
-    public String getUrl() {
-        return "img/bullet1.png";
+    public List<String> frames() {
+        return Collections.singletonList("img/bullet1.png");
     }
 
     @Override

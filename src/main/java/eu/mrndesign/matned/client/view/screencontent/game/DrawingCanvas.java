@@ -130,7 +130,7 @@ public class DrawingCanvas extends AbsolutePanel {
             double actualAngle = Math.toRadians(value.getRotationValue());
             double rx = value.getCenterX();
             double ry = value.getCenterY();
-            ImageElement img = ImageElement.as(new Image(value.getImageUrl()).getElement());
+            ImageElement img = value.getImage();
             drawImageElement(value, rx, ry, actualAngle, img);
         });
     }

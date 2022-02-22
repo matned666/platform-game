@@ -59,7 +59,7 @@ public class CanvasModel extends Bounds2D {
 	}
 
 	public String getBackgroundImage() {
-		return background.getUrl();
+		return background.frames().get(0);
 	}
 
 	public void canvasRefresh() {

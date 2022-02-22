@@ -7,6 +7,8 @@ import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 
 public class Rock extends GameElement {
@@ -16,8 +18,8 @@ public class Rock extends GameElement {
     }
 
     @Override
-    public String getUrl() {
-        return "img/stone1.png";
+    public List<String> frames() {
+        return Collections.singletonList("img/stone1.png");
     }
 
     @Override
