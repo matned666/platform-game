@@ -103,6 +103,13 @@ public abstract class GameElement {
         toRemove = true;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "GameElement{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", referenceVector=" + referenceVector +
+                ", bounds=" + bounds +
+                '}';
+    }
 }
