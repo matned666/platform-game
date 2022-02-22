@@ -46,6 +46,6 @@ public class Rock extends GameElement {
 
     @Override
     public boolean isToRemove() {
-        return false;
+        return toRemove;
     }
 }

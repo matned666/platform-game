@@ -17,6 +17,7 @@ public abstract class GameElement {
     protected final CanvasModel canvasModel;
     protected final Bounds2D bounds;
     protected final String name;
+    protected boolean toRemove = false;
 
     private double speed;
     protected Vector2D vector;
@@ -98,4 +99,17 @@ public abstract class GameElement {
 
     public abstract boolean isToRemove();
 
+    public void setToRemove(){
+        toRemove = true;
+    }
+
+    @Override
+    public String toString() {
+        return "GameElement{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", referenceVector=" + referenceVector +
+                ", bounds=" + bounds +
+                '}';
+    }
 }

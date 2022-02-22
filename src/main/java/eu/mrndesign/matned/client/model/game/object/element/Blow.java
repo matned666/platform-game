@@ -55,7 +55,7 @@ public class Blow extends GameElement {
 
     @Override
     public boolean isToRemove() {
-        return (TimeWrapper.getInstance().getFrameNo() - frame )/ ANIMATION_FRAME_RATE> frames.size();
+        return (TimeWrapper.getInstance().getFrameNo() - frame )/ ANIMATION_FRAME_RATE> frames.size() || toRemove;
     }
 
 
