@@ -1,17 +1,17 @@
 package eu.mrndesign.matned.client.model.game.object.element;
 
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
+
+import java.util.Arrays;
+import java.util.List;
+
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.GameElementType;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
-
-import java.util.Collections;
-import java.util.List;
-
-import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
-import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
 public class StarShip extends GameElement {
 
@@ -21,13 +21,9 @@ public class StarShip extends GameElement {
         super("StarShip", 5, new Vector2D(0, 100), new Bounds2D(50, 80, new Point2D(PANEL_WIDTH_INT / 2, PANEL_HEIGHT_INT / 2)), canvasModel);
     }
 
-
     @Override
     public List<String> frames() {
-        if (launched) {
-            return Collections.singletonList("img/starship-fly.png");
-        }
-        return Collections.singletonList("img/starship.png");
+        return Arrays.asList("img/starship.png", "img/starship-fly.png");
     }
 
     @Override
@@ -58,4 +54,13 @@ public class StarShip extends GameElement {
     public boolean isToRemove() {
         return false;
     }
+
+    public int actualImageIndex(){
+        if (launched) {
+            return 1;
+        }
+        return 0;
+    }
+
+
 }

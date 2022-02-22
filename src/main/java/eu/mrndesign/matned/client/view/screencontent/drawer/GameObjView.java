@@ -4,14 +4,13 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
-import eu.mrndesign.matned.client.model.tools.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameObjView extends Image {
+import static eu.mrndesign.matned.client.controller.Constants.ANIMATION_FRAME_RATE;
 
-    public static final int ANIMATION_FRAME_RATE = 2;
+public class GameObjView extends Image {
 
     private final GameElement gameElement;
     private final String id;
@@ -42,16 +41,7 @@ public class GameObjView extends Image {
             frameNo = TimeWrapper.getInstance().getFrameNo();
             frame = (int) (TimeWrapper.getInstance().getFrameNo() - frameNo) - 1;
         }
-        Log.log("file:"+frames.get(frame/ANIMATION_FRAME_RATE) + ", frame:" + TimeWrapper.getInstance().getFrameNo());
         return  frames.get(frame/ANIMATION_FRAME_RATE);
-    }
-
-    public double getULCornerX() {
-        return gameElement.getBounds().leftBorder();
-    }
-
-    public double getULCornerY() {
-        return gameElement.getBounds().topBorder();
     }
 
     public double getRotationValue() {
@@ -67,10 +57,10 @@ public class GameObjView extends Image {
     }
 
     public ImageElement getImage() {
-        if (frames.size() > 1) {
+        if (gameElement.isAnimation()) {
             return animationRun();
         } else {
-            return frames.get(0);
+            return frames.get(gameElement.actualImageIndex());
         }
     }
 }

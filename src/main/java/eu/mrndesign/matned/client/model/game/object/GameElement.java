@@ -104,6 +104,14 @@ public abstract class GameElement {
         toRemove = true;
     }
 
+    public int actualImageIndex(){
+        return 0;
+    }
+
+    public boolean isAnimation(){
+        return false;
+    }
+
     @Override
     public String toString() {
         return "GameElement{" +

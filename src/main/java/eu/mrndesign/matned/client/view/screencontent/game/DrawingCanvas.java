@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static eu.mrndesign.matned.client.controller.Constants.*;
@@ -34,13 +33,12 @@ public class DrawingCanvas extends AbsolutePanel {
 
     private final Map<String, GameObjView> mapIdToGameObjects = new HashMap<>();
     private final Label mousePosLabel;
-    private final Label mouseActionPosLabel;
     private final Label additionalLabel;
 
     private int actualX;
     private int actualY;
 
-    private boolean dragging = false;
+    private boolean dragging;
 
     public DrawingCanvas(Controller controller) {
         this.controller = controller;
@@ -58,7 +56,7 @@ public class DrawingCanvas extends AbsolutePanel {
         createDrawingCanvas();
         addGameObjects();
         mousePosLabel = new Label();
-        mouseActionPosLabel = new Label();
+        Label mouseActionPosLabel = new Label();
         additionalLabel = new Label();
         mousePosLabel.setStyleName("infoLabel");
         mouseActionPosLabel.setStyleName("infoLabel");
@@ -77,10 +75,10 @@ public class DrawingCanvas extends AbsolutePanel {
             actualX = event.getX();
             actualY = event.getY();
         });
-        drawingCanvas.addMouseDownHandler(e -> dragging = true);
-        drawingCanvas.addMouseUpHandler(e -> dragging = false);
-        drawingCanvas.addMouseOutHandler(e -> dragging = false);
-        drawingCanvas.addMouseOverHandler(e -> dragging = false);
+        drawingCanvas.addMouseDownHandler(e -> dragging=true);
+        drawingCanvas.addMouseUpHandler(e -> dragging=false);
+        drawingCanvas.addMouseOutHandler(e -> dragging=false);
+        drawingCanvas.addMouseOverHandler(e -> dragging=false);
         drawingCanvas.addKeyDownHandler(event -> controller.onKeyPressed(event.getNativeKeyCode()));
     }
 

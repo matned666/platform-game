@@ -1,40 +1,36 @@
 package eu.mrndesign.matned.client.view.screencontent.menu;
 
 import com.google.gwt.user.client.ui.Button;
-import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.view.ScreenManager;
 import eu.mrndesign.matned.client.view.ScreenManagerInterface;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MenuButton extends Button {
 
-    Logger logger = Logger.getLogger("MenuButton:");
-
     private final ScreenManager.ScreenType screenType;
-    private final Subject<Boolean> selectedObservable = PublishSubject.create();
+    private final Subject<Boolean> selectSubject = PublishSubject.create();
 
     public MenuButton(ScreenManagerInterface screenManager, ScreenManager.ScreenType screenType) {
         this.screenType = screenType;
         setText(screenType.getName());
             getElement().setClassName("button not-selected");
-        selectedObservable.map(selected -> {
+        selectSubject.map(selected -> {
             getElement().setClassName(selected?"button selected":"button not-selected");
             return selected;
         }).subscribe();
         setWidth("100%");
-        selectedObservable.onNext(false);
+        selectSubject.onNext(false);
         addClickHandler(event -> {
-            selectedObservable.onNext(true);
+            selectSubject.onNext(true);
             screenManager.onMenuButtonClick(this.screenType);
         });
     }
 
     public void setSelected(boolean status){
-        selectedObservable.onNext(status);
+        selectSubject.onNext(status);
     }
 
     public ScreenManager.ScreenType getScreenType() {

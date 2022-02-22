@@ -10,7 +10,7 @@ import eu.mrndesign.matned.client.model.tools.Vector2D;
 import java.util.Arrays;
 import java.util.List;
 
-import static eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView.ANIMATION_FRAME_RATE;
+import static eu.mrndesign.matned.client.controller.Constants.ANIMATION_FRAME_RATE;
 
 public class Blow extends GameElement {
 
@@ -50,6 +50,11 @@ public class Blow extends GameElement {
     public boolean isToRemove() {
         return (TimeWrapper.getInstance().getFrameNo() - startFrame)/ ANIMATION_FRAME_RATE> frames.size() || toRemove;
     }
+
+    public boolean isAnimation(){
+        return true;
+    }
+
 
 
 

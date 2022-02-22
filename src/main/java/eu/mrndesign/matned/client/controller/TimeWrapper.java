@@ -1,6 +1,6 @@
 package eu.mrndesign.matned.client.controller;
 
-import static eu.mrndesign.matned.client.controller.Constants.PERIOD_MILLIS;
+import static eu.mrndesign.matned.client.controller.Constants.FRAME_RATE_PERIOD_MILLIS;
 
 import com.google.gwt.user.client.Timer;
 
@@ -61,7 +61,7 @@ public class TimeWrapper {
     public void setTimer(Timer timer) {
         if (frameNo == 0) {
             this.timer = timer;
-            timer.scheduleRepeating(PERIOD_MILLIS);
+            timer.scheduleRepeating(FRAME_RATE_PERIOD_MILLIS);
         }
     }
 }
