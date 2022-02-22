@@ -17,6 +17,7 @@ public abstract class GameElement {
     protected final CanvasModel canvasModel;
     protected final Bounds2D bounds;
     protected final String name;
+    protected boolean toRemove = false;
 
     private double speed;
     protected Vector2D vector;
@@ -97,5 +98,11 @@ public abstract class GameElement {
     public abstract GameElementType getType();
 
     public abstract boolean isToRemove();
+
+    public void setToRemove(){
+        toRemove = true;
+    }
+
+
 
 }

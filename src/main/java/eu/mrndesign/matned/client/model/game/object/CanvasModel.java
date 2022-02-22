@@ -25,10 +25,13 @@ public class CanvasModel extends Bounds2D {
     private final List<String> removedGameElements = new LinkedList<>();
     private final GameElement background = new DesertBackground();
     private final Map<String, GameElement> mapIdToBullet = new HashMap<>();
+    private final Map<String, GameElement> mapIdToRock = new HashMap<>();
 
     private final GameModel gameModel;
     private GameElement hero;
     private long activatedFrameNo = 0;
+
+    private boolean newEnemy = false;
 
     public CanvasModel(double width, double height, GameModel gameModel) {
         super(width, height, new Point2D(0,0));
@@ -67,21 +70,38 @@ public class CanvasModel extends Bounds2D {
             gameElement.refresh();
             if ((gameElement.isToRemove())) {
                 remove(key);
+                if (gameElement.getType() == GameElementType.ROCK) {
+                    newEnemy = true;
+                }
             }
         });
         bulletsCheck();
     }
 
     private void bulletsCheck() {
+        mapIdToBullet.values().forEach(bullet -> mapIdToRock.values().forEach(rock -> {
+            if (rock.bounds.touchedBy(bullet.bounds)) {
+                bullet.setToRemove();
+                rock.setToRemove();
+            }
+        }));
         removedGameElements.forEach(key -> {
             if (mapIdToBullet.containsKey(key)){
                 mapIdToBullet.remove(key);
                 GameElement ge = mapIdToGameElement.get(key);
-                GameElement blow = GameElementsFactory.blow(ge.getVector(), ge.getBounds(), this);
-                add(blow);
+                blow(ge);
             }
         });
+        if (newEnemy){
+            addNewEnemy();
+            newEnemy = false;
+        }
 
+    }
+
+    private void blow(GameElement ge) {
+        GameElement blow = GameElementsFactory.blow(ge.getVector(), ge.getBounds(), this);
+        add(blow);
     }
 
     public List<String> getRemovedGameElements() {
@@ -106,6 +126,7 @@ public class CanvasModel extends Bounds2D {
     public void addNewEnemy() {
         GameElement rock1 = GameElementsFactory.enemy(1, hero, this);
         add(rock1);
+        mapIdToRock.put(rock1.getId(), rock1);
     }
 
     private void fireBullet() {

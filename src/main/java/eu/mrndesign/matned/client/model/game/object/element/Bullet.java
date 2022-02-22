@@ -40,7 +40,7 @@ public class Bullet extends GameElement {
 
     @Override
     public boolean isToRemove() {
-        return bounds.isOutOfView();
+        return bounds.isOutOfView() || toRemove;
     }
 
 
