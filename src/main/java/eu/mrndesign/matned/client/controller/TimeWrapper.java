@@ -35,11 +35,25 @@ public class TimeWrapper {
     }
 
     public void runTimer() {
-        timer.run();
+        if (!timer.isRunning()) {
+            timer.scheduleRepeating(FRAME_RATE_PERIOD_MILLIS);
+        } else {
+            timer.cancel();
+        }
     }
 
     public void stopTimer() {
         timer.cancel();
+    }
+
+    public boolean startStop() {
+        if (!timer.isRunning()) {
+            timer.scheduleRepeating(FRAME_RATE_PERIOD_MILLIS);
+            return false;
+        } else {
+            timer.cancel();
+            return true;
+        }
     }
 
     public void resetFrame() {

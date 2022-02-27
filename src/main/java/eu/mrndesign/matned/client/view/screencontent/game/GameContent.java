@@ -15,6 +15,7 @@ public class GameContent extends Content implements IContent {
 
 
     private static volatile GameContent instance;
+    private DrawingCanvas canvas;
 
     public static GameContent getInstance(Controller controller) {
         if (instance == null) {
@@ -41,7 +42,7 @@ public class GameContent extends Content implements IContent {
         Label label = new Label("GAME");
         add(label);
         controller.addNewDrawingArea(PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
-        DrawingCanvas canvas = new DrawingCanvas(controller);
+        canvas = new DrawingCanvas(controller);
         add(canvas);
     }
 

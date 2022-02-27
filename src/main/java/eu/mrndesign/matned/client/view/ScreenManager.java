@@ -8,7 +8,6 @@ import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ScreenManager implements ScreenManagerInterface {
@@ -20,7 +19,7 @@ public class ScreenManager implements ScreenManagerInterface {
 
     @Override
     public void start() {
-        controller = new ControllerImpl();
+        controller = new ControllerImpl(screen);
         if (screen == null) {
             screen = new Screen(this, ScreenType.NEW_GAME, GameContent.getInstance(controller));
         }
@@ -56,6 +55,11 @@ public class ScreenManager implements ScreenManagerInterface {
     @Override
     public void onMenuButtonClick(ScreenType screenType) {
         initializeScreen(screenType);
+        if (screenType.timerStop()) {
+            TimeWrapper.getInstance().stopTimer();
+        } else {
+            TimeWrapper.getInstance().runTimer();
+        }
     }
 
     public enum ScreenType {

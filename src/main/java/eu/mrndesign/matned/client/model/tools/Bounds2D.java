@@ -9,10 +9,10 @@ public class Bounds2D {
     protected double height;
     protected final Point2D center;
 
-    public Bounds2D(double width, double height, Point2D point2D) {
+    public Bounds2D(double width, double height, Point2D center) {
         this.width = width;
         this.height = height;
-        center = point2D;
+        this.center = center;
     }
 
     public Bounds2D(Bounds2D bounds2D) {

@@ -1,24 +1,28 @@
 package eu.mrndesign.matned.client.controller;
 
-import eu.mrndesign.matned.client.model.game.object.CanvasModel;
-import eu.mrndesign.matned.client.model.game.object.GameModel;
-import eu.mrndesign.matned.client.model.game.object.GameImpl;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import eu.mrndesign.matned.client.model.game.object.CanvasModel;
+import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.model.game.object.GameImpl;
+import eu.mrndesign.matned.client.model.game.object.GameModel;
+import eu.mrndesign.matned.client.view.ScreenInterface;
+import eu.mrndesign.matned.client.view.screencontent.game.DrawingCanvas;
 
 public class ControllerImpl implements Controller {
 
     Logger logger = Logger.getLogger("Controller:");
 
     private final GameModel game;
+    private final ScreenInterface screen;
+    private DrawingCanvas drawingCanvas;
 
-    public ControllerImpl() {
+    public ControllerImpl(ScreenInterface screen) {
         this.game = new GameImpl(this);
+        this.screen = screen;
     }
 
 
@@ -70,5 +74,15 @@ public class ControllerImpl implements Controller {
     @Override
     public void onKeyPressed(int keyCode) {
         game.onKeyPressed(keyCode);
+    }
+
+    @Override
+    public void setDrawingCanvas(DrawingCanvas drawingCanvas) {
+        this.drawingCanvas = drawingCanvas;
+    }
+
+    @Override
+    public void pause(boolean pause) {
+        drawingCanvas.breakAction(pause);
     }
 }

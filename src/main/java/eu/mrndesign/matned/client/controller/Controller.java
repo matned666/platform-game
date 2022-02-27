@@ -1,6 +1,7 @@
 package eu.mrndesign.matned.client.controller;
 
 import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.view.screencontent.game.DrawingCanvas;
 
 import java.util.List;
 import java.util.Set;
@@ -25,4 +26,8 @@ public interface Controller {
     void onCanvasMouseDown(int x, int y);
 
     void onKeyPressed(int keyCode);
+
+    void setDrawingCanvas(DrawingCanvas widgets);
+
+    void pause(boolean pause);
 }

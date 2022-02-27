@@ -4,6 +4,8 @@ import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
@@ -12,7 +14,11 @@ import eu.mrndesign.matned.client.controller.Constants;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.model.game.object.element.BreakBear;
+import eu.mrndesign.matned.client.model.tools.Log;
 import eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +45,13 @@ public class DrawingCanvas extends AbsolutePanel {
     private int actualY;
 
     private boolean dragging;
+    private GameObjView breakBear;
+
+    private final Subject<Boolean> pauseSubject = PublishSubject.create();
 
     public DrawingCanvas(Controller controller) {
         this.controller = controller;
+        controller.setDrawingCanvas(this);
         logger = Logger.getLogger("DrawingCanvas:");
         drawingCanvas = Canvas.createIfSupported();
         Image background = new Image(controller.getActiveBackGroundImage());
@@ -65,6 +75,7 @@ public class DrawingCanvas extends AbsolutePanel {
         add(mouseActionPosLabel, PANEL_WIDTH_INT * 2 / 4, 0);
         add(additionalLabel, PANEL_WIDTH_INT * 3 / 4, 0);
         initListeners();
+        initPauseImage();
         setTimer();
     }
 
@@ -79,7 +90,32 @@ public class DrawingCanvas extends AbsolutePanel {
         drawingCanvas.addMouseUpHandler(e -> dragging=false);
         drawingCanvas.addMouseOutHandler(e -> dragging=false);
         drawingCanvas.addMouseOverHandler(e -> dragging=false);
-        drawingCanvas.addKeyDownHandler(event -> controller.onKeyPressed(event.getNativeKeyCode()));
+        drawingCanvas.addKeyDownHandler(this::onKeyDown);
+        pauseSubject.map(pause -> {
+            boolean b = TimeWrapper.getInstance().startStop();
+            breakAction(b);
+            return b;
+        }).subscribe();
+    }
+
+    private void initPauseImage() {
+        breakBear = new GameObjView(new BreakBear(null));
+    }
+
+    private void onKeyDown(KeyDownEvent event) {
+        switch (event.getNativeKeyCode()) {
+            case KeyCodes.KEY_P:
+                Log.log("sdsd");
+                pauseSubject.onNext(true);
+            default:
+                controller.onKeyPressed(event.getNativeKeyCode());
+        }
+    }
+
+    public void breakAction(boolean pause) {
+        if (pause) {
+            drawImageElement(breakBear);
+        }
     }
 
     private void addGameObjects() {
@@ -124,16 +160,14 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void addAllMappedToCanvas() {
-        mapIdToGameObjects.values().forEach(value -> {
-            double actualAngle = Math.toRadians(value.getRotationValue());
-            double rx = value.getCenterX();
-            double ry = value.getCenterY();
-            ImageElement img = value.getImage();
-            drawImageElement(value, rx, ry, actualAngle, img);
-        });
+        mapIdToGameObjects.values().forEach(this::drawImageElement);
     }
 
-    private void drawImageElement(GameObjView value, double rx, double ry, double actualAngle, ImageElement img) {
+    private void drawImageElement(GameObjView value) {
+        double actualAngle = Math.toRadians(value.getRotationValue());
+        double rx = value.getCenterX();
+        double ry = value.getCenterY();
+        ImageElement img = value.getImage();
         drawingCanvasContext.translate(rx, ry);
         drawingCanvasContext.rotate(actualAngle);
         drawingCanvasContext.drawImage(img, -value.getWidth() / 2, -value.getHeight() / 2, value.getWidth(), value.getHeight());

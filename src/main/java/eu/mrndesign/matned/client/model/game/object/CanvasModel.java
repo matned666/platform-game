@@ -1,17 +1,17 @@
 package eu.mrndesign.matned.client.model.game.object;
 
-import com.google.gwt.event.dom.client.KeyCodes;
-import eu.mrndesign.matned.client.controller.TimeWrapper;
-import eu.mrndesign.matned.client.model.game.object.element.DesertBackground;
-import eu.mrndesign.matned.client.model.tools.Bounds2D;
-import eu.mrndesign.matned.client.model.tools.Log;
-import eu.mrndesign.matned.client.model.tools.Point2D;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.google.gwt.event.dom.client.KeyCodes;
+
+import eu.mrndesign.matned.client.controller.TimeWrapper;
+import eu.mrndesign.matned.client.model.game.object.element.DesertBackground;
+import eu.mrndesign.matned.client.model.tools.Bounds2D;
+import eu.mrndesign.matned.client.model.tools.Point2D;
 
 public class CanvasModel extends Bounds2D {
 
@@ -110,8 +110,12 @@ public class CanvasModel extends Bounds2D {
 	}
 
 	public void onKeyPressed(int keyCode) {
-		if (keyCode == KeyCodes.KEY_SPACE) {
-			fireBullet();
+		switch (keyCode) {
+			case KeyCodes.KEY_SPACE :
+				fireBullet();
+				break;
+			default :
+				break;
 		}
 	}
 
