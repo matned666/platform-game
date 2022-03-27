@@ -20,6 +20,10 @@ public class Vector2D extends Point2D{
         super(x - center.x, y - center.y);
     }
 
+    public Vector2D(Point2D end) {
+        super(end.x, end.y);
+    }
+
     public double angleTo(Vector2D v) {
         double dot = x*v.x + y*v.y;
         double det = x*v.y - y*v.x;
@@ -54,6 +58,12 @@ public class Vector2D extends Point2D{
         double oldX = x;
         x = (oldX * Math.cos(Math.toRadians(angleDegrees)) + y * Math.sin(Math.toRadians(angleDegrees)));
         y = (oldX * Math.sin(Math.toRadians(angleDegrees)) + y * Math.cos(Math.toRadians(angleDegrees)));
+    }
+
+    public Vector2D rotated(double angleDegrees){
+        Vector2D v = new Vector2D(this);
+        v.rotate(angleDegrees);
+        return v;
     }
 
     public void add(Vector2D v) {
@@ -107,5 +117,36 @@ public class Vector2D extends Point2D{
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public Vector2D withLength(double length) {
+        normalize();
+        Point2D end = Point2D.zero();
+        end.move(this, length);
+        return new Vector2D(end);
+    }
+
+    public Vector2D added(Vector2D added) {
+        Vector2D result = new Vector2D(this);
+        result.add(added);
+        return result;
+    }
+
+    public Vector2D newNormalized() {
+        Vector2D result = new Vector2D(this);
+        result.normalize();
+        return result;
+    }
+
+    public Vector2D magnituded(double v) {
+        Point2D point = Point2D.zero();
+        point.move(this, v);
+        return new Vector2D(point);
+    }
+
+    public Vector2D multiplied(Vector2D vNorm) {
+        Vector2D v = new Vector2D(this);
+        v.multiply(vNorm);
+        return v;
     }
 }

@@ -3,7 +3,6 @@ package eu.mrndesign.matned.client.model.game.object.element;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.gwt.event.dom.client.KeyCodes;
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.GameElementType;
@@ -20,7 +19,7 @@ public class BreakBear extends GameElement {
     private static final int WIDTH = 400;
 
     public BreakBear(CanvasModel canvasModel) {
-        super("Break bear", 2, new Vector2D(0,-1), new Bounds2D(WIDTH, HEIGHT, new Point2D(PANEL_WIDTH_INT/2, PANEL_HEIGHT_INT-HEIGHT/2)), canvasModel);
+        super("Break bear", 2, new Bounds2D(new Vector2D(0,-1), WIDTH, HEIGHT, new Point2D(PANEL_WIDTH_INT/2, PANEL_HEIGHT_INT-HEIGHT/2)), canvasModel, 1, 0);
     }
 
     @Override

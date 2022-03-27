@@ -18,7 +18,7 @@ public class StarShip extends GameElement {
     private boolean launched;
 
     public StarShip(CanvasModel canvasModel) {
-        super("StarShip", 5, new Vector2D(0, 100), new Bounds2D(50, 80, new Point2D(PANEL_WIDTH_INT / 2, PANEL_HEIGHT_INT / 2)), canvasModel);
+        super("StarShip", 5,  new Bounds2D(new Vector2D(0, 100),50, 80, new Point2D(PANEL_WIDTH_INT / 2, PANEL_HEIGHT_INT / 2)), canvasModel, 40, 5);
     }
 
     @Override

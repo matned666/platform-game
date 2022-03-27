@@ -11,8 +11,8 @@
     text-align: center;
     text-transform: uppercase;
     color: #444444;
-    padding-left: 10px
-    padding-right: 10px
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .button:active {
@@ -29,5 +29,5 @@
 }
 
 .infoLabel {
-    text-color: #ffffff;
+    text-overline-color: #ffffff;
 }

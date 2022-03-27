@@ -4,7 +4,6 @@ import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.GameElementType;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
-import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
 import java.util.Collections;
@@ -12,8 +11,8 @@ import java.util.List;
 
 public class Bullet extends GameElement {
 
-    public Bullet(Vector2D vector, Bounds2D bounds, CanvasModel canvasModel) {
-        super("Bullet", 10, vector, bounds, null, canvasModel);
+    public Bullet(Bounds2D bounds, CanvasModel canvasModel) {
+        super("Bullet", 10, bounds, null, canvasModel, 10, 1);
     }
 
     @Override

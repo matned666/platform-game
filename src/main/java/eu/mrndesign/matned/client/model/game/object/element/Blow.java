@@ -16,8 +16,8 @@ public class Blow extends GameElement {
 
     private List<String> frames;
 
-    public Blow(Vector2D vector, Bounds2D bounds, CanvasModel canvasModel) {
-        super("Blow", 0, vector, bounds, null, canvasModel);
+    public Blow(Bounds2D bounds, CanvasModel canvasModel) {
+        super("Blow", 0, bounds, null, canvasModel, 1, 1);
         frames = Arrays.asList("img/blow1.png", "img/blow2.png", "img/blow3.png", "img/blow4.png", "img/blow5.png", "img/blow6.png");
     }
 

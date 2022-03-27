@@ -10,7 +10,7 @@ public class DesertBackground extends GameElement {
 
 
     public DesertBackground() {
-        super("Background", 0, null, null, null);
+        super("Background", 0, null, null, null, 1, 0);
     }
 
     @Override

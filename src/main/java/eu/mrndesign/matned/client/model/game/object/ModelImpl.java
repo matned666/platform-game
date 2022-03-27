@@ -1,25 +1,21 @@
 package eu.mrndesign.matned.client.model.game.object;
 
 import eu.mrndesign.matned.client.controller.Controller;
+import eu.mrndesign.matned.client.model.Model;
 
 import java.util.*;
 
-public class GameImpl implements GameModel {
+public class ModelImpl implements Model {
 
-    protected final String id = "Game-" + System.currentTimeMillis();
-
-    private final Map<String, CanvasModel> mapIdToDrawingArea = new HashMap<>();
     private final Controller controller;
     private CanvasModel activeCanvasModel;
 
-    public GameImpl(Controller controller) {
+    public ModelImpl(Controller controller) {
         this.controller = controller;
     }
 
     public void addNewDrawingArea(double width, double height) {
-        CanvasModel canvasModel = new CanvasModel(width, height, this);
-        mapIdToDrawingArea.put(canvasModel.id, canvasModel);
-        activeCanvasModel = canvasModel;
+        activeCanvasModel = new CanvasModel(width, height, this);
     }
 
     @Override

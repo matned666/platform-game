@@ -7,21 +7,19 @@ import java.util.logging.Logger;
 
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
-import eu.mrndesign.matned.client.model.game.object.GameImpl;
-import eu.mrndesign.matned.client.model.game.object.GameModel;
+import eu.mrndesign.matned.client.model.game.object.ModelImpl;
+import eu.mrndesign.matned.client.model.Model;
 import eu.mrndesign.matned.client.view.ScreenInterface;
 import eu.mrndesign.matned.client.view.screencontent.game.DrawingCanvas;
 
 public class ControllerImpl implements Controller {
 
-    Logger logger = Logger.getLogger("Controller:");
-
-    private final GameModel game;
+    private final Model game;
     private final ScreenInterface screen;
     private DrawingCanvas drawingCanvas;
 
     public ControllerImpl(ScreenInterface screen) {
-        this.game = new GameImpl(this);
+        this.game = new ModelImpl(this);
         this.screen = screen;
     }
 

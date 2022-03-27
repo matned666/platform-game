@@ -4,7 +4,6 @@ import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,21 +17,35 @@ public abstract class GameElement {
 
     protected String id;
     protected final CanvasModel canvasModel;
-    protected final Bounds2D bounds;
+    protected Bounds2D bounds;
     protected final String name;
     protected boolean toRemove = false;
 
-    private double speed;
-    protected Vector2D vector;
+    protected int hP;
+    protected final int hit;
+    private final double speed;
+
     protected GameElement referenceElement;
 
-    public GameElement(String name, double speed, Vector2D vector, Bounds2D bounds, CanvasModel canvasModel) {
+    public GameElement(String name, double speed, Bounds2D bounds, CanvasModel canvasModel, int hP, int hit) {
         this.name = name;
         this.speed = speed;
-        this.vector = vector;
         this.bounds = bounds;
         this.canvasModel = canvasModel;
         logger = Logger.getLogger(name);
+        this.hP = hP;
+        this.hit = hit;
+        id = generateId();
+    }
+
+    public GameElement(String name, double speed, GameElement referenceElement , CanvasModel canvasModel, int hP, int hit) {
+        this.name = name;
+        this.speed = speed;
+        this.referenceElement = referenceElement;
+        this.canvasModel = canvasModel;
+        logger = Logger.getLogger(name);
+        this.hP = hP;
+        this.hit = hit;
         id = generateId();
     }
 
@@ -40,15 +53,11 @@ public abstract class GameElement {
         return  name + System.currentTimeMillis();
     }
 
-    public GameElement(String name, double speed, Vector2D vector, Bounds2D bounds, GameElement referenceElement, CanvasModel canvasModel) {
-        this(name, speed, vector, bounds, canvasModel);
+    public GameElement(String name, double speed, Bounds2D bounds, GameElement referenceElement, CanvasModel canvasModel, int hit, int hP) {
+        this(name, speed, bounds, canvasModel, hP, hit);
         this.referenceElement = referenceElement;
         startFrame = (int) TimeWrapper.getInstance().getFrameNo();
 
-    }
-
-    public GameElement(GameElement element) {
-        this(element.name, element.speed, new Vector2D(element.vector), new Bounds2D(element.bounds), element.canvasModel);
     }
 
     public void moveTo(double x, double y) {
@@ -57,7 +66,7 @@ public abstract class GameElement {
     }
 
     public void rotate(double x, double y) {
-        this.vector = new Vector2D(bounds.getCenter(), x, y);
+        bounds.rotate(x,y);
     }
 
     protected boolean isInBounds(GameElement gameElement) {
@@ -65,11 +74,11 @@ public abstract class GameElement {
     }
 
     public void move() {
-        bounds.getCenter().move(vector, speed);
+        bounds.getCenter().move(bounds.getVector(), speed);
     }
 
     public Vector2D getVector() {
-        return vector;
+        return bounds.getVector();
     }
 
     public String getId() {
@@ -81,7 +90,7 @@ public abstract class GameElement {
     }
 
     public void setVector(Vector2D vector) {
-        this.vector = vector;
+        bounds.setVector(vector);
     }
 
     public abstract List<String> frames();
@@ -93,7 +102,7 @@ public abstract class GameElement {
     public abstract void action(int x, int y);
 
     public double getAngle() {
-        return referenceVector.angleTo(vector);
+        return referenceVector.angleTo(bounds.getVector());
     }
 
     public abstract GameElementType getType();
@@ -110,6 +119,25 @@ public abstract class GameElement {
 
     public boolean isAnimation(){
         return false;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public int getHP() {
+        return hP;
+    }
+
+    public int getHit() {
+        return hit;
+    }
+
+    public void hit(int pts){
+        hP -= pts;
+        if (hP <= 0) {
+            setToRemove();
+        }
     }
 
     @Override

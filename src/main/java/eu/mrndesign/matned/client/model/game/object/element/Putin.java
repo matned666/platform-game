@@ -7,19 +7,28 @@ import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 
-public class Rock extends GameElement {
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
-    public Rock(String name, double speed, Vector2D vector, Bounds2D bounds, GameElement referenceElement, CanvasModel canvasModel) {
-        super(name, 2, vector, bounds, referenceElement, canvasModel);
+public class Putin extends GameElement {
+
+    private List<String> frames;
+
+    public Putin(double speed, GameElement referenceElement, CanvasModel canvasModel, int hp, int hit) {
+        super("Putin", speed, referenceElement, canvasModel, hp, hit);
+        frames = Arrays.asList("img/stone1.png", "img/stone2.png", "img/stone3.png", "img/stone4.png", "img/stone5.png", "img/stone4.png", "img/stone3.png", "img/stone2.png");
+        Point2D point2D = Point2D.randomPointOnEdge(30, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
+        Vector2D v = new Vector2D(point2D, Point2D.zero());
+        bounds = new Bounds2D(v, 30, 80, point2D);
     }
 
     @Override
     public List<String> frames() {
-        return Collections.singletonList("img/stone1.png");
+        return frames;
     }
 
     @Override
@@ -49,5 +58,10 @@ public class Rock extends GameElement {
     @Override
     public boolean isToRemove() {
         return toRemove;
+    }
+
+    @Override
+    public boolean isAnimation(){
+        return true;
     }
 }
