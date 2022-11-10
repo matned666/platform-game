@@ -86,6 +86,11 @@ public class Vector2D extends Point2D{
         return v.x * x / magnitude + v.y * y / magnitude;
     }
 
+    public double realDot(Point2D v) {
+        double magnitude = magnitude();
+        return v.x * x / magnitude + v.y * y / magnitude;
+    }
+
     public double dot(Vector2D v) {
         double magnitude = magnitude();
         return Math.abs(v.x * x / magnitude + v.y * y / magnitude);
@@ -113,10 +118,7 @@ public class Vector2D extends Point2D{
 
     @Override
     public String toString() {
-        return "Vector2D{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return x + "," + y;
     }
 
     public Vector2D withLength(double length) {
@@ -148,5 +150,9 @@ public class Vector2D extends Point2D{
         Vector2D v = new Vector2D(this);
         v.multiply(vNorm);
         return v;
+    }
+
+    public Vector2D getPerpVector() {
+        return new Vector2D(y, -x);
     }
 }

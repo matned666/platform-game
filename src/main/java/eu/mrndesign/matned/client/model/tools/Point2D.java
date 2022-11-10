@@ -74,10 +74,11 @@ public class Point2D {
         y += v.getY();
     }
 
-    public void move(Vector2D v, double d) {
+    public Point2D move(Vector2D v, double d) {
         v.normalize();
         x += v.getX() * d;
         y += v.getY() * d;
+        return this;
     }
 
     public double getX() {
@@ -111,10 +112,7 @@ public class Point2D {
 
     @Override
     public String toString() {
-        return "Point2D{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return x + "," + y;
     }
 
     public void copy(Point2D b) {
@@ -124,5 +122,9 @@ public class Point2D {
 
     public double distanceFrom(double x, double y) {
         return Math.sqrt((x - this.x) * (x - this.x) + (y - this.y) * (y - this.y));
+    }
+
+    public Vector2D moved(Vector2D vector, double v) {
+        return new Vector2D(new Point2D(0,0).move(new Vector2D(vector), v));
     }
 }

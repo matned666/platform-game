@@ -15,7 +15,7 @@ public class ModelImpl implements Model {
     }
 
     public void addNewDrawingArea(double width, double height) {
-        activeCanvasModel = new CanvasModel(width, height, this);
+        activeCanvasModel = new CanvasModel(width, height);
     }
 
     @Override

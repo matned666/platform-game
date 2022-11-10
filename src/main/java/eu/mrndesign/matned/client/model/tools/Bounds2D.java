@@ -1,7 +1,6 @@
 package eu.mrndesign.matned.client.model.tools;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
@@ -20,7 +19,7 @@ public class Bounds2D {
         this.vector = vector;
     }
 
-    public boolean isOutOfView(){
+    public boolean isOutOfView() {
         return center.x < 0 || center.x > PANEL_WIDTH_INT || center.y < 0 || center.y > PANEL_HEIGHT_INT;
     }
 
@@ -32,65 +31,89 @@ public class Bounds2D {
     }
 
     public boolean touchedBy(Bounds2D b) {
-//        boolean inX = leftBorder() >= bounds2D.leftBorder() && leftBorder() <= bounds2D.rightBorder()
-//                || rightBorder() >= bounds2D.leftBorder() && leftBorder() <= bounds2D.rightBorder()
-//                || rightBorder() >= bounds2D.rightBorder() && leftBorder() <= bounds2D.leftBorder();
-//        boolean inY = topBorder() >= bounds2D.topBorder() && topBorder() <= bounds2D.bottomBorder()
-//                || bottomBorder() >= bounds2D.topBorder() && topBorder() <= bounds2D.bottomBorder()
-//                || bottomBorder() >= bounds2D.bottomBorder() && topBorder() <= bounds2D.topBorder();
-//        return inY && inX;
+        return isNoGapBetweenBounds(b) && b.isNoGapBetweenBounds(this);
+    }
 
-//v2
-//        Vector2D aToBVector = new Vector2D(center, b.center);
-//        Vector2D aPerpendicularVector = vector.rotated(90).newNormalized().magnituded(width/2);
-//        Vector2D bPerpendicularVector = b.vector.rotated(90).newNormalized().magnituded(b.width/2);
-//
-//        Vector2D aToBNorm = aToBVector.newNormalized();
-//
-//        Vector2D aPerpMultiplyAToBNorm = aPerpendicularVector.multiplied(aToBNorm);
-//        Vector2D bPerpMultiplyAToBNorm = bPerpendicularVector.multiplied(aToBNorm);
-//        Vector2D aMultiplyAToBNorm = vector.multiplied(aToBNorm);
-//        Vector2D bMultiplyAToBNorm = b.vector.multiplied(aToBNorm);
-//
-//        List<Double> results = new LinkedList<>();
-//        results.add(aPerpMultiplyAToBNorm.magnitude() + bPerpMultiplyAToBNorm.magnitude());
-//        results.add(aMultiplyAToBNorm.magnitude() + bMultiplyAToBNorm.magnitude());
-//        results.add(aPerpMultiplyAToBNorm.magnitude() + aMultiplyAToBNorm.magnitude());
-//        results.add(bPerpMultiplyAToBNorm.magnitude() + aMultiplyAToBNorm.magnitude());
-//        results.add(aPerpMultiplyAToBNorm.magnitude() + bMultiplyAToBNorm.magnitude());
-//        results.add(bPerpMultiplyAToBNorm.magnitude() + bMultiplyAToBNorm.magnitude());
-//
-//        return results.stream().anyMatch(r -> r <= aToBVector.magnitude());
+    private boolean isNoGapBetweenBounds(Bounds2D b) {
+        Point2D thisBottomLeft = getCorner(CornerType.BOTTOM_LEFT);
+        Point2D thisTopLeft = getCorner(CornerType.TOP_LEFT);
+        Point2D thisTopRight = getCorner(CornerType.TOP_RIGHT);
+        Point2D thisBottomRight = getCorner(CornerType.BOTTOM_RIGHT);
+        System.out.println();
+        return isNoGapBetweenBoundsOnVector(thisTopLeft, thisTopRight, b) &&
+                isNoGapBetweenBoundsOnVector(thisBottomLeft, thisTopLeft, b) &&
+                isNoGapBetweenBoundsOnVector(thisTopRight, thisBottomRight, b) &&
+                isNoGapBetweenBoundsOnVector(thisBottomRight, thisBottomLeft, b);
+    }
 
-        final double[] vLength = {0};
-        Vector2D connectVector = new Vector2D(center, b.center);
-
-        Map<Double, Vector2D> map = new HashMap<>();
-        map.putAll(minAngleAndVector(connectVector, this));
-        map.putAll(minAngleAndVector(connectVector, b));
-        map.forEach((angle, vector) -> {
-            vLength[0] += vector.magnitude() / Math.cos(angle);
+    private boolean isNoGapBetweenBoundsOnVector(Point2D origin, Point2D secondary, Bounds2D b) {
+        Vector2D vector2D = new Vector2D(origin, secondary);
+        vector2D.normalize();
+        double dotOrigin = vector2D.realDot(origin);
+        double dotSecondary = vector2D.realDot(secondary);
+        return Arrays.stream(CornerType.values()).anyMatch(cornerType -> {
+            double dot1 = vector2D.realDot(b.getCorner(cornerType));
+            return dot1 >= dotOrigin && dot1 <= dotSecondary || dot1 >= dotSecondary && dot1 <= dotOrigin;
+        }) || Arrays.stream(b.borders()).anyMatch(border ->{
+            double dot1 = vector2D.realDot(border.p1);
+            double dot2 = vector2D.realDot(border.p2);
+            boolean bool1 = dotOrigin >= dot1 &&  dotOrigin <= dot2 && dotSecondary >= dot1 &&  dotSecondary <= dot2;
+            boolean bool2 = dotOrigin >= dot2 &&  dotOrigin <= dot1 && dotSecondary >= dot2 &&  dotSecondary <= dot1;
+            return bool1 || bool2;
         });
-
-        return vLength[0] < connectVector.magnitude();
-
     }
 
-    public Map<Double, Vector2D> minAngleAndVector(Vector2D connectVector, Bounds2D bounds) {
-
-        Vector2D aV90 = bounds.vector.rotated(90);
-
-        Map<Double, Vector2D> results = new HashMap<>();
-        double a = bounds.vector.angleTo(connectVector);
-        results.put(a, bounds.vector);
-        double b = aV90.angleTo(connectVector);
-        results.put(b, aV90);
-
-        Map<Double, Vector2D> result = new HashMap<>();
-        double min = Math.min(a, b);
-        result.put(min, results.get(min));
-        return result;
+    public Border[] borders(){
+        return new Border[]{left(),right(), top(),bottom()};
     }
+
+    public Point2D getCorner(CornerType cornerType) {
+        Vector2D vPerp = vector.getPerpVector();
+        return new Point2D(center).move(vPerp, cornerType.wMod * width*3/4).move(vector, cornerType.hMod * height*3/4);
+    }
+
+    private Border right() {
+        return new Border(getCorner(CornerType.BOTTOM_RIGHT), getCorner(CornerType.TOP_RIGHT));
+    }
+
+    private Border left() {
+        return new Border(getCorner(CornerType.TOP_LEFT), getCorner(CornerType.BOTTOM_LEFT));
+    }
+
+    private Border top() {
+        return new Border(getCorner(CornerType.TOP_LEFT), getCorner(CornerType.TOP_RIGHT));
+    }
+
+    private Border bottom() {
+        return new Border(getCorner(CornerType.BOTTOM_LEFT), getCorner(CornerType.BOTTOM_RIGHT));
+    }
+
+
+    private static class Border{
+        private final Point2D p1;
+        private final Point2D p2;
+
+        public Border(Point2D p1, Point2D p2) {
+            this.p1 = p1;
+            this.p2 = p2;
+        }
+    }
+
+    public enum CornerType {
+        BOTTOM_LEFT(-1, -1),
+        BOTTOM_RIGHT(1, -1),
+        TOP_LEFT(-1, 1),
+        TOP_RIGHT(1, 1);
+
+        private final int wMod;
+        private final int hMod;
+
+        CornerType(int wMod, int hMod) {
+            this.wMod = wMod;
+            this.hMod = hMod;
+        }
+    }
+
 
     public double leftBorder() {
         return center.getX() - width / 2;
@@ -136,10 +159,7 @@ public class Bounds2D {
 
     @Override
     public String toString() {
-        return "Bounds2D{" +
-                "width=" + width +
-                ", height=" + height +
-                '}';
+        return center + ", " + vector.moved(vector, height / 2) + ", " + vector.moved(vector, height / 2).getPerpVector();
     }
 
     public Vector2D getVector() {

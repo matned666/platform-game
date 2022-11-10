@@ -1,6 +1,8 @@
 package eu.mrndesign.matned.client.model.tools;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,35 +37,44 @@ class Bounds2DTest {
                 assertTrue(box.touchedBy(touch), "try 1");
     }
 
-    @Test
-    void  anotherTouchedTest() {
-        Point2D aCenter = new Point2D(3, 8);
-        Vector2D vAHeight = new Vector2D(aCenter, new Point2D(0,11));
-        Vector2D aPerp = new Vector2D(aCenter, new Point2D(5,10));
+    @ParameterizedTest
+    @CsvSource({
+            "3,8, 0,11, 5,10, 6,2, 2,2, 6,4",
+            "845.2942769857734,603.1531305628457, -15.979279783347234,-36.66964163453892, -36.66964163453892,15.979279783347234, 809.2875789334909,509.55944572572236, 6.588801632815572,13.475447786378265, 13.475447786378265,-6.588801632815572",
+            "0,0, 0,5, 2,0, 0,4, 0,-5, -2,0"
+    })
+    void  anotherTouchedTest(double aCenterX, double aCenterY, double vAHX, double vAHY, double aPerpX, double aPerpY, double bCenterX, double bCenterY, double vBHX, double vBHY, double bPerpX, double bPerpY) {
+        Point2D aCenter = new Point2D(aCenterX, aCenterY);
+        Vector2D vAHeight = new Vector2D(aCenter, new Point2D(vAHX,vAHY));
+        Vector2D aPerp = new Vector2D(aCenter, new Point2D(aPerpX,aPerpY));
         Bounds2D a = new Bounds2D(vAHeight, vAHeight.magnitude(), aPerp.magnitude(), aCenter);
 
-        Point2D bCenter = new Point2D(6, 2);
-        Vector2D vBHeight = new Vector2D(bCenter, new Point2D(2,2));
-        Vector2D bPerp = new Vector2D(bCenter, new Point2D(6,4));
+        Point2D bCenter = new Point2D(bCenterX, bCenterY);
+        Vector2D vBHeight = new Vector2D(bCenter, new Point2D(vBHX,vBHY));
+        Vector2D bPerp = new Vector2D(bCenter, new Point2D(bPerpX,bPerpY));
         Bounds2D b = new Bounds2D(vBHeight, vBHeight.magnitude(), bPerp.magnitude(), bCenter);
 
         assertTrue(b.touchedBy(a));
         assertTrue(a.touchedBy(b));
     }
 
-    @Test
-    void  notTouchedTest() {
-        Point2D aCenter = new Point2D(3, 15);
-        Vector2D vAHeight = new Vector2D(aCenter, new Point2D(0,15));
-        Vector2D aPerp = new Vector2D(aCenter, new Point2D(5,15));
+    @ParameterizedTest
+    @CsvSource ({
+            "3,15, 0,15, 5,15, 6,2, 2,2, 6,4"
+    })
+    void  notTouchedTest(double aCenterX, double aCenterY, double vAHX, double vAHY, double aPerpX, double aPerpY, double bCenterX, double bCenterY, double vBHX, double vBHY, double bPerpX, double bPerpY) {
+        Point2D aCenter = new Point2D(aCenterX, aCenterY);
+        Vector2D vAHeight = new Vector2D(aCenter, new Point2D(vAHX,vAHY));
+        Vector2D aPerp = new Vector2D(aCenter, new Point2D(aPerpX,aPerpY));
         Bounds2D a = new Bounds2D(vAHeight, vAHeight.magnitude(), aPerp.magnitude(), aCenter);
 
-        Point2D bCenter = new Point2D(6, 2);
-        Vector2D vBHeight = new Vector2D(bCenter, new Point2D(2,2));
-        Vector2D bPerp = new Vector2D(bCenter, new Point2D(6,4));
+        Point2D bCenter = new Point2D(bCenterX, bCenterY);
+        Vector2D vBHeight = new Vector2D(bCenter, new Point2D(vBHX,vBHY));
+        Vector2D bPerp = new Vector2D(bCenter, new Point2D(bPerpX,bPerpY));
         Bounds2D b = new Bounds2D(vBHeight, vBHeight.magnitude(), bPerp.magnitude(), bCenter);
 
-        assertFalse(a.touchedBy(b));
+        boolean condition = a.touchedBy(b);
+        assertFalse(condition);
     }
 
 

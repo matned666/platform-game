@@ -1,7 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object;
 
 import com.google.gwt.event.dom.client.KeyCodes;
-import eu.mrndesign.matned.client.model.Model;
 import eu.mrndesign.matned.client.model.game.object.element.DesertBackground;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import eu.mrndesign.matned.client.model.tools.Point2D;
@@ -14,12 +13,10 @@ public class CanvasModel extends Bounds2D {
 
 	private final GameElement background = new DesertBackground();
 
-	private final Model model;
 	private final Game game;
 
-	public CanvasModel(double width, double height, Model model) {
+	public CanvasModel(double width, double height) {
 		super(new Vector2D(0,1), width, height, new Point2D(0, 0));
-		this.model = model;
 		this.game = new Game(this);
 	}
 

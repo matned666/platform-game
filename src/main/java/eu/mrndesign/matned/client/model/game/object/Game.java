@@ -1,6 +1,7 @@
 package eu.mrndesign.matned.client.model.game.object;
 
 import eu.mrndesign.matned.client.controller.TimeWrapper;
+import eu.mrndesign.matned.client.model.tools.Bounds2D;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -8,8 +9,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Game {
+    protected final Logger logger = Logger.getLogger(getClass().getName());
 
     private final Map<String, GameElement> mapIdToGameElement = new HashMap<>();
 
@@ -65,6 +68,12 @@ public class Game {
                             bullet.setToRemove();
                             rock.setToRemove();
                             mapIdToRock.remove(rock.getId());
+//                            logger.info("Bullet >> c:" + bullet.getBounds().getCenter() + ",bl:" + bullet.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_LEFT)  + ",br:" + bullet.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_RIGHT) + ",tr:" + bullet.getBounds().getCorner(Bounds2D.CornerType.TOP_RIGHT) + ",tl:" + bullet.getBounds().getCorner(Bounds2D.CornerType.TOP_LEFT) );
+//                            logger.info("Rock >> c:" + rock.getBounds().getCenter() + ",bl:" + rock.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_LEFT)  + ",br:" + rock.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_RIGHT) + ",tr:" + rock.getBounds().getCorner(Bounds2D.CornerType.TOP_RIGHT) + ",tl:" + rock.getBounds().getCorner(Bounds2D.CornerType.TOP_LEFT) );
+//                            logger.info("Bullet >> c:" + bullet.getBounds().getCenter() + ",v:" + bullet.getBounds().getVector() + ",h/w:" + bullet.getBounds().getHeight() + "/" + bullet.getBounds().getWidth());
+//                            logger.info("Rock >> c:" + rock.getBounds().getCenter() + ",v:" + rock.getBounds().getVector() + ",h/w:" + rock.getBounds().getHeight() + "/" + rock.getBounds().getWidth());
+                            logger.info("Bullet >> " + bullet.getBounds());
+                            logger.info("Rock >> " + rock.getBounds());
                         }
                     })
             );
