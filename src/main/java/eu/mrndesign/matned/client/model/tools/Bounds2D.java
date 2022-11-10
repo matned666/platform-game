@@ -69,7 +69,7 @@ public class Bounds2D {
 
     public Point2D getCorner(CornerType cornerType) {
         Vector2D vPerp = vector.getPerpVector();
-        return new Point2D(center).move(vPerp, cornerType.wMod * width*3/4).move(vector, cornerType.hMod * height*3/4);
+        return new Point2D(center).move(vPerp, cornerType.wMod * width*3/5).move(vector, cornerType.hMod * height*4/5);
     }
 
     private Border right() {
