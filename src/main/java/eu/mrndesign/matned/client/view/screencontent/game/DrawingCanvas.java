@@ -99,7 +99,7 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void initPauseImage() {
-        breakBear = new GameObjView(new BreakBear(null));
+        breakBear = new GameObjView(new BreakBear());
     }
 
     private void onKeyDown(KeyDownEvent event) {
@@ -108,7 +108,7 @@ public class DrawingCanvas extends AbsolutePanel {
                 Log.log("sdsd");
                 pauseSubject.onNext(true);
             default:
-                controller.onKeyPressed(event.getNativeKeyCode());
+                controller.onKeyPressed(event.getNativeEvent());
         }
     }
 

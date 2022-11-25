@@ -3,8 +3,8 @@ package eu.mrndesign.matned.client.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
+import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.ModelImpl;
@@ -70,8 +70,8 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void onKeyPressed(int keyCode) {
-        game.onKeyPressed(keyCode);
+    public void onKeyPressed(NativeEvent nativeElement) {
+        game.onKeyPressed(nativeElement);
     }
 
     @Override

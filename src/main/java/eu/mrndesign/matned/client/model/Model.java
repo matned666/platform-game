@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model;
 
+import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 
@@ -26,6 +27,6 @@ public interface Model {
 
     void onCanvasRefresh();
 
-    void onKeyPressed(int keyCode);
+    void onKeyPressed(NativeEvent keyCode);
 
 }

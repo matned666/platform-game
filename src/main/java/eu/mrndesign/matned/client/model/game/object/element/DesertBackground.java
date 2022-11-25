@@ -1,7 +1,9 @@
 package eu.mrndesign.matned.client.model.game.object.element;
 
+import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.GameElementType;
+import eu.mrndesign.matned.client.model.tools.MoveType;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +11,8 @@ import java.util.List;
 public class DesertBackground extends GameElement {
 
 
-    public DesertBackground() {
-        super("Background", 0, null, null, null, 1, 0);
+    public DesertBackground(CanvasModel canvasModel) {
+        super(canvasModel, GameElementType.BACKGROUND);
     }
 
     @Override
@@ -34,12 +36,23 @@ public class DesertBackground extends GameElement {
     }
 
     @Override
+    public void move(MoveType moveType) {
+
+    }
+
+    @Override
+    public boolean isRotateImageToVector() {
+        return false;
+    }
+
+    @Override
+    public boolean isAnimation() {
+        return false;
+    }
+
+    @Override
     public GameElementType getType() {
         return GameElementType.BACKGROUND;
     }
 
-    @Override
-    public boolean isToRemove() {
-        return false;
-    }
 }

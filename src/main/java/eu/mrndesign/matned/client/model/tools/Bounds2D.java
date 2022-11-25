@@ -10,7 +10,12 @@ public class Bounds2D {
     protected Vector2D vector;
     protected double width;
     protected double height;
+    protected double weight;
     protected final Point2D center;
+
+    public Bounds2D() {
+        this(new Vector2D(1,0), 1,1,new Point2D(0,0));
+    }
 
     public Bounds2D(Vector2D vector, double width, double height, Point2D center) {
         this.width = width;
@@ -88,6 +93,10 @@ public class Bounds2D {
         return new Border(getCorner(CornerType.BOTTOM_LEFT), getCorner(CornerType.BOTTOM_RIGHT));
     }
 
+    public boolean isOn(Bounds2D bounds) {
+        return touchedBy(bounds) && bounds.center.y > center.y;
+    }
+
 
     private static class Border{
         private final Point2D p1;
@@ -139,6 +148,14 @@ public class Bounds2D {
         return width;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
     public void setWidth(double width) {
         this.width = width;
     }
@@ -152,7 +169,11 @@ public class Bounds2D {
         this.height = height;
     }
 
-    public void setCenter(int x, int y) {
+    public void setCenter(Point2D p) {
+        setCenter(p.x, p.y);
+    }
+
+    public void setCenter(double x, double y) {
         center.setX(x);
         center.setY(y);
     }

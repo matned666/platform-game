@@ -30,7 +30,7 @@ public class Point2D {
         return new Point2D(x, y);
     }
 
-    public static Point2D randomPointOnEdge(int widthInt, int panelWidthInt, int panelHeightInt) {
+    public static Point2D randomPointOnEdge(double widthInt, double panelWidthInt, double panelHeightInt) {
         int lottery = (int) (Math.random() * 3);
         int x = (int) (Math.random() * panelWidthInt);
         int y = (int) (Math.random() * panelHeightInt);

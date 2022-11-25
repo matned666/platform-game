@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.controller;
 
+import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.view.screencontent.game.DrawingCanvas;
 
@@ -25,7 +26,7 @@ public interface Controller {
 
     void onCanvasMouseDown(int x, int y);
 
-    void onKeyPressed(int keyCode);
+    void onKeyPressed(NativeEvent keyCode);
 
     void setDrawingCanvas(DrawingCanvas widgets);
 

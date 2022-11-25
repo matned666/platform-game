@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object;
 
+import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.model.Model;
 
@@ -72,8 +73,8 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public void onKeyPressed(int keyCode) {
-        activeCanvasModel.onKeyPressed(keyCode);
+    public void onKeyPressed(NativeEvent nativeEvent) {
+        activeCanvasModel.onKeyPressed(nativeEvent);
     }
 
 

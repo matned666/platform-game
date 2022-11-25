@@ -3,12 +3,11 @@ package eu.mrndesign.matned.client.model.game.object.element;
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.GameElement;
 import eu.mrndesign.matned.client.model.game.object.GameElementType;
-import eu.mrndesign.matned.client.model.tools.Bounds2D;
+import eu.mrndesign.matned.client.model.tools.MoveType;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
@@ -16,14 +15,20 @@ import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
 public class Putin extends GameElement {
 
-    private List<String> frames;
+    private final List<String> frames  = Arrays.asList(
+            "img/stone1.png", "img/stone2.png", "img/stone3.png", "img/stone4.png",
+            "img/stone5.png", "img/stone4.png", "img/stone3.png", "img/stone2.png");;
+    private final GameElement referenceElement;
 
-    public Putin(double speed, GameElement referenceElement, CanvasModel canvasModel, int hp, int hit) {
-        super("Putin", speed, referenceElement, canvasModel, hp, hit);
-        frames = Arrays.asList("img/stone1.png", "img/stone2.png", "img/stone3.png", "img/stone4.png", "img/stone5.png", "img/stone4.png", "img/stone3.png", "img/stone2.png");
-        Point2D point2D = Point2D.randomPointOnEdge(30, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
-        Vector2D v = new Vector2D(point2D, Point2D.zero());
-        bounds = new Bounds2D(v, 30, 80, point2D);
+    public Putin(CanvasModel canvasModel, GameElement referenceElement) {
+        super(canvasModel, GameElementType.ENEMY);
+        this.referenceElement = referenceElement;
+        Point2D startCenter = Point2D.randomPointOnEdge(30, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
+        Vector2D startVector = new Vector2D(startCenter, Point2D.zero());
+        bounds.setVector(startVector);
+        bounds.setCenter(startCenter);
+        bounds.setWidth(30);
+        bounds.setHeight(80);
     }
 
     @Override
@@ -33,9 +38,9 @@ public class Putin extends GameElement {
 
     @Override
     public void refresh() {
-        if (!isInBounds(referenceElement)) {
+        if (!bounds.isIn(referenceElement.getBounds())) {
             Point2D referencedElementCenter = referenceElement.getBounds().getCenter();
-            setVector(new Vector2D(getBounds().getCenter(), referencedElementCenter));
+            getBounds().setVector(new Vector2D(getBounds().getCenter(), referencedElementCenter));
             moveTo(referencedElementCenter.getX(), referencedElementCenter.getY());
         }
     }
@@ -51,13 +56,13 @@ public class Putin extends GameElement {
     }
 
     @Override
-    public GameElementType getType() {
-        return GameElementType.ROCK;
+    public void move(MoveType moveType) {
+
     }
 
     @Override
-    public boolean isToRemove() {
-        return toRemove;
+    public boolean isRotateImageToVector() {
+        return true;
     }
 
     @Override

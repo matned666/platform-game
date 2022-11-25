@@ -1,84 +1,84 @@
 package eu.mrndesign.matned.client.model.game.object;
 
-import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
+import eu.mrndesign.matned.client.model.tools.Gravity;
+import eu.mrndesign.matned.client.model.tools.MoveType;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
 import java.util.List;
-import java.util.logging.Logger;
 
+/**
+ * Any object that is visible on the stage is a GameElement
+ */
 public abstract class GameElement {
+    protected final Vector2D referenceVector = new Vector2D(0, -1);
 
-    protected final Logger logger;
-
-    protected final Vector2D referenceVector = new Vector2D(0, -10);
-
-    protected int startFrame;
-
-    protected String id;
+    protected final String id;
     protected final CanvasModel canvasModel;
-    protected Bounds2D bounds;
-    protected final String name;
+    protected final Bounds2D bounds = new Bounds2D();
+    protected final GameElementType gameElementType;
     protected boolean toRemove = false;
+    protected final Gravity gravity;
 
-    protected int hP;
-    protected final int hit;
-    private final double speed;
+    protected double actualSpeed = 0;
 
-    protected GameElement referenceElement;
-
-    public GameElement(String name, double speed, Bounds2D bounds, CanvasModel canvasModel, int hP, int hit) {
-        this.name = name;
-        this.speed = speed;
-        this.bounds = bounds;
+    public GameElement(CanvasModel canvasModel, GameElementType gameElementType) {
         this.canvasModel = canvasModel;
-        logger = Logger.getLogger(name);
-        this.hP = hP;
-        this.hit = hit;
-        id = generateId();
+        this.gameElementType = gameElementType;
+        this.gravity = canvasModel.getGame().getGravity();
+        id = gameElementType.name() + System.currentTimeMillis();
     }
 
-    public GameElement(String name, double speed, GameElement referenceElement , CanvasModel canvasModel, int hP, int hit) {
-        this.name = name;
-        this.speed = speed;
-        this.referenceElement = referenceElement;
-        this.canvasModel = canvasModel;
-        logger = Logger.getLogger(name);
-        this.hP = hP;
-        this.hit = hit;
-        id = generateId();
+    /**
+     * @return sorted List of images for element animation
+     */
+    public abstract List<String> frames();
+
+    /**
+     * on frame refresh
+     */
+    public abstract void refresh();
+
+    /**
+     * on mouse move
+     * @param x horizontal
+     * @param y vertical
+     */
+    public abstract void mouseMove(int x, int y);
+
+    /**
+     * on mouse action
+     * @param x horizontal
+     * @param y vertical
+     */
+    public abstract void action(int x, int y);
+
+    /**
+     * Move according to MoveType and bounds vector
+     * @param moveType move style
+     */
+    public abstract void move(MoveType moveType);
+
+    /**
+     * If false - the image will should be flipped
+     * @return is the image rotated up to the actual bounds vector
+     */
+    public abstract boolean isRotateImageToVector();
+
+    /**
+     * @return if the element has animation frames list
+     */
+    public abstract boolean isAnimation();
+
+    public GameElementType getType() {
+        return gameElementType;
     }
 
-    private String generateId(){
-        return  name + System.currentTimeMillis();
-    }
-
-    public GameElement(String name, double speed, Bounds2D bounds, GameElement referenceElement, CanvasModel canvasModel, int hit, int hP) {
-        this(name, speed, bounds, canvasModel, hP, hit);
-        this.referenceElement = referenceElement;
-        startFrame = (int) TimeWrapper.getInstance().getFrameNo();
-
-    }
-
-    public void moveTo(double x, double y) {
-        rotate(x, y);
-        move();
-    }
-
-    public void rotate(double x, double y) {
-        bounds.rotate(x,y);
-    }
-
-    protected boolean isInBounds(GameElement gameElement) {
-        return bounds.touchedBy(gameElement.bounds);
-    }
-
-    public void move() {
-        bounds.getCenter().move(bounds.getVector(), speed);
-    }
-
-    public Vector2D getVector() {
-        return bounds.getVector();
+    /**
+     * @return Element angle
+     */
+    public double getAngle() {
+        return referenceVector.angleTo(bounds.getVector());
     }
 
     public String getId() {
@@ -89,64 +89,35 @@ public abstract class GameElement {
         return bounds;
     }
 
-    public void setVector(Vector2D vector) {
-        bounds.setVector(vector);
+    /**
+     * @return if the element has to be removed from maps
+     */
+    public boolean isToRemove() {
+        return toRemove;
     }
 
-    public abstract List<String> frames();
-
-    public abstract void refresh();
-
-    public abstract void mouseMove(int x, int y);
-
-    public abstract void action(int x, int y);
-
-    public double getAngle() {
-        return referenceVector.angleTo(bounds.getVector());
-    }
-
-    public abstract GameElementType getType();
-
-    public abstract boolean isToRemove();
-
+    /**
+     * Marks element as to remove from game maps on the next refresh frame
+     */
     public void setToRemove(){
         toRemove = true;
     }
 
-    public int actualImageIndex(){
-        return 0;
+    /**
+     * @return actual force
+     */
+    public double getActualSpeed() {
+        return actualSpeed;
     }
 
-    public boolean isAnimation(){
-        return false;
+    protected void moveTo(double x, double y) {
+        rotate(x, y);
+        bounds.getCenter().move(bounds.getVector(), actualSpeed);
     }
 
-    public double getSpeed() {
-        return speed;
+    protected void rotate(double x, double y) {
+        bounds.rotate(x,y);
     }
 
-    public int getHP() {
-        return hP;
-    }
 
-    public int getHit() {
-        return hit;
-    }
-
-    public void hit(int pts){
-        hP -= pts;
-        if (hP <= 0) {
-            setToRemove();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "GameElement{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", referenceVector=" + referenceVector +
-                ", bounds=" + bounds +
-                '}';
-    }
 }

@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.client.model.game.object;
 
-import eu.mrndesign.matned.client.controller.TimeWrapper;
-import eu.mrndesign.matned.client.model.tools.Bounds2D;
+import eu.mrndesign.matned.client.model.tools.Gravity;
+import eu.mrndesign.matned.client.model.tools.GravityImpl;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -17,43 +17,38 @@ public class Game {
     private final Map<String, GameElement> mapIdToGameElement = new HashMap<>();
 
     private final Map<String, GameElement> mapIdToBullet = new HashMap<>();
-    private final Map<String, GameElement> mapIdToRock = new HashMap<>();
+    private final Map<String, GameElement> mapIdToEnemy = new HashMap<>();
+    private final Map<String, GameElement> mapIdToBackgroundElement = new HashMap<>();
+
     private final List<String> removedGameElements = new LinkedList<>();
 
     private final CanvasModel canvasModel;
 
     private GameElement hero;
+    private final Gravity gravity;
     private long activatedFrameNo = 0;
-
-    private boolean newEnemy = false;
 
     private final Subject<Boolean> refreshSubject = PublishSubject.create();
     private final Subject<Boolean> bulletsRefreshSubject = PublishSubject.create();
     private final Subject<Boolean> removedSubject = PublishSubject.create();
-    private final Subject<Boolean> newEnemySubject = PublishSubject.create();
-    private final Subject<Boolean> newBulletSubject = PublishSubject.create();
     private final Subject<GameElement> blowSubject = PublishSubject.create();
 
     public Game(CanvasModel canvasModel) {
         this.canvasModel = canvasModel;
+        gravity = new GravityImpl(this);
         initRefreshSubscriptionSubscription();
         initBulletRefreshSubscriptionSubscription();
         initRemoveSubscriptionSubscription();
-        initEnemySubscription();
-        initBulletSubscription();
-        initBlowSubscription();
         initGameElements();
     }
 
     private void initRefreshSubscriptionSubscription() {
         refreshSubject.map(next -> {
             mapIdToGameElement.forEach((key, gameElement) -> {
+                gravity.calculate(gameElement);
                 gameElement.refresh();
                 if ((gameElement.isToRemove())) {
                     removeElement(gameElement.id);
-                    if (gameElement.getType() == GameElementType.ROCK) {
-                        newEnemy = true;
-                    }
                 }
             });
             return next;
@@ -63,17 +58,11 @@ public class Game {
     private void initBulletRefreshSubscriptionSubscription() {
         bulletsRefreshSubject.map(onNext -> {
             mapIdToBullet.values().forEach(bullet ->
-                    mapIdToRock.values().forEach(rock -> {
+                    mapIdToEnemy.values().forEach(rock -> {
                         if (rock.bounds.touchedBy(bullet.bounds)) {
                             bullet.setToRemove();
                             rock.setToRemove();
-                            mapIdToRock.remove(rock.getId());
-//                            logger.info("Bullet >> c:" + bullet.getBounds().getCenter() + ",bl:" + bullet.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_LEFT)  + ",br:" + bullet.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_RIGHT) + ",tr:" + bullet.getBounds().getCorner(Bounds2D.CornerType.TOP_RIGHT) + ",tl:" + bullet.getBounds().getCorner(Bounds2D.CornerType.TOP_LEFT) );
-//                            logger.info("Rock >> c:" + rock.getBounds().getCenter() + ",bl:" + rock.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_LEFT)  + ",br:" + rock.getBounds().getCorner(Bounds2D.CornerType.BOTTOM_RIGHT) + ",tr:" + rock.getBounds().getCorner(Bounds2D.CornerType.TOP_RIGHT) + ",tl:" + rock.getBounds().getCorner(Bounds2D.CornerType.TOP_LEFT) );
-//                            logger.info("Bullet >> c:" + bullet.getBounds().getCenter() + ",v:" + bullet.getBounds().getVector() + ",h/w:" + bullet.getBounds().getHeight() + "/" + bullet.getBounds().getWidth());
-//                            logger.info("Rock >> c:" + rock.getBounds().getCenter() + ",v:" + rock.getBounds().getVector() + ",h/w:" + rock.getBounds().getHeight() + "/" + rock.getBounds().getWidth());
-                            logger.info("Bullet >> " + bullet.getBounds());
-                            logger.info("Rock >> " + rock.getBounds());
+                            mapIdToEnemy.remove(rock.getId());
                         }
                     })
             );
@@ -93,33 +82,13 @@ public class Game {
         }).subscribe();
     }
 
-    private void initEnemySubscription() {
-        newEnemySubject.map(selected -> {
-            if (selected) {
-                addNewEnemy();
-            }
-            newEnemy = false;
-            return selected;
-        }).subscribe();
-    }
-
-    private void initBulletSubscription() {
-        newBulletSubject.map(fire -> {
-            if (fire) fireBullet();
-            return fire;
-        }).subscribe();
-    }
-
-    private void initBlowSubscription() {
-        blowSubject.map(blownElement -> {
-            blow(blownElement);
-            return blownElement;
-        }).subscribe();
-    }
-
     private void initGameElements() {
         addHero();
-        newEnemySubject.onNext(true);
+    }
+
+    public boolean isOnBackgroundElement(GameElement gameElement){
+        return mapIdToBackgroundElement.values().stream()
+                .anyMatch(backgroundElement -> gameElement.getBounds().isOn(backgroundElement.getBounds()));
     }
 
 
@@ -127,37 +96,14 @@ public class Game {
         refreshSubject.onNext(true);
         bulletsRefreshSubject.onNext(true);
         removedSubject.onNext(true);
-        newEnemySubject.onNext(newEnemy);
     }
 
     private void addHero() {
-        hero = GameElementsFactory.hero(canvasModel);
         mapIdToGameElement.put(hero.id, hero);
     }
 
-    public void addNewEnemy() {
-        GameElement rock = GameElementsFactory.enemy( hero, canvasModel, 10, 10); // TODO temporary hp and hit
-        mapIdToGameElement.put(rock.id, rock);
-        mapIdToRock.put(rock.getId(), rock);
-    }
-
-    void fireBullet() {
-        if (TimeWrapper.getInstance().getFrameNo() - activatedFrameNo > 20) {
-            GameElement bullet = GameElementsFactory.bullet(hero.getVector(), hero.getBounds(), canvasModel);
-            mapIdToGameElement.put(bullet.getId(), bullet);
-            mapIdToBullet.put(bullet.getId(), bullet);
-            activatedFrameNo = TimeWrapper.getInstance().getFrameNo();
-        }
-    }
-
-
     public void removeElement(String id) {
         removedGameElements.add(id);
-    }
-
-    private void blow(GameElement ge) {
-        GameElement blow = GameElementsFactory.blow(ge.getVector(), ge.getBounds(), canvasModel);
-        mapIdToGameElement.put(blow.id, blow);
     }
 
     public void clearRemoved() {
@@ -173,6 +119,21 @@ public class Game {
     }
 
     public void fire() {
-        newBulletSubject.onNext(true);
+//        TODO
+        logger.info("FIRE");
+    }
+
+    public void move(int direction, boolean isThrottle) {
+//        TODO
+        logger.info("Move " + direction + " t:" +isThrottle);
+    }
+
+    public void jump(boolean isThrottle) {
+//        TODO
+        logger.info("Jump " + " t:" +isThrottle);
+    }
+
+    public Gravity getGravity() {
+        return gravity;
     }
 }
