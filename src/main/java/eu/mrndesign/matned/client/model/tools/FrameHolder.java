@@ -3,6 +3,7 @@ package eu.mrndesign.matned.client.model.tools;
 import eu.mrndesign.matned.client.model.game.object.element.MoveType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class FrameHolder {
 
         public FrameHolderBuilder(String mainFirstFrame, String ... nextAnimationFrames) {
             framesStand.add(mainFirstFrame);
-            framesStand.addAll(List.of(nextAnimationFrames));
+            framesStand.addAll(Arrays.asList(nextAnimationFrames));
         }
 
         /**
@@ -53,7 +54,7 @@ public class FrameHolder {
          * @return List with walk animation frame urls
          */
         public FrameHolderBuilder walk(String ... frames) {
-            framesWalk = new ArrayList<>(List.of(frames));
+            framesWalk = new ArrayList<>(Arrays.asList(frames));
             return this;
         }
 
@@ -62,7 +63,7 @@ public class FrameHolder {
          * @return List with run animation frame urls
          */
         public FrameHolderBuilder run(String ... frames) {
-            framesRun = new ArrayList<>(List.of(frames));
+            framesRun = new ArrayList<>(Arrays.asList(frames));
             return this;
         }
 
@@ -71,7 +72,7 @@ public class FrameHolder {
          * @return List with jump animation frame urls
          */
         public FrameHolderBuilder jump(String ... frames) {
-            framesJump = new ArrayList<>(List.of(frames));
+            framesJump = new ArrayList<>(Arrays.asList(frames));
             return this;
         }
 
@@ -80,7 +81,7 @@ public class FrameHolder {
          * @return List with sneak animation frame urls
          */
         public FrameHolderBuilder sneak(String ... frames) {
-            framesSneak = new ArrayList<>(List.of(frames));
+            framesSneak = new ArrayList<>(Arrays.asList(frames));
             return this;
         }
 

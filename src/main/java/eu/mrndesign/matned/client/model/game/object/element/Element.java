@@ -42,27 +42,29 @@ public abstract class Element {
     /**
      * on frame refresh
      */
-    public abstract void refresh();
+    public void refresh() {}
 
     /**
      * on mouse move
      * @param x horizontal
      * @param y vertical
      */
-    public abstract void mouseMove(int x, int y);
+    public void mouseMove(int x, int y) {}
 
     /**
      * on mouse action
      * @param x horizontal
      * @param y vertical
      */
-    public abstract void action(int x, int y);
+    public void action(int x, int y) {}
 
     /**
      * Move according to MoveType and bounds vector
      * @param moveType move style
      */
-    public abstract void move(MoveType moveType);
+    public void move(MoveType moveType) {
+        actualSpeed = moveType.getSpeed();
+    }
 
     /**
      * If false - the image will should be flipped

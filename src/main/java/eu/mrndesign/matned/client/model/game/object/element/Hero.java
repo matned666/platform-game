@@ -8,11 +8,11 @@ import eu.mrndesign.matned.client.model.tools.Vector2D;
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
-public class StarShip extends Element {
+public class Hero extends Element {
 
     private boolean launched;
 
-    public StarShip(CanvasModel canvasModel) {
+    public Hero(CanvasModel canvasModel) {
         super(canvasModel, ElementType.HERO, new FrameHolder.FrameHolderBuilder("img/starship.png").walk("img/starship-fly.png").build());
         Point2D startCenter = new Point2D(PANEL_WIDTH_INT / 2, PANEL_HEIGHT_INT / 2);
         Vector2D startVector = new Vector2D(0, 1);
@@ -21,11 +21,6 @@ public class StarShip extends Element {
         bounds.setWidth(50);
         bounds.setHeight(80);
         bounds.setMass(60);
-    }
-
-    @Override
-    public void refresh() {
-
     }
 
     @Override
@@ -40,11 +35,6 @@ public class StarShip extends Element {
             launched = true;
             moveTo(x, y);
         }
-    }
-
-    @Override
-    public void move(MoveType moveType) {
-
     }
 
     @Override

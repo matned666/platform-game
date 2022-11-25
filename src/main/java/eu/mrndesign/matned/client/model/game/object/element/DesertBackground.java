@@ -18,26 +18,6 @@ public class DesertBackground extends Element {
     }
 
     @Override
-    public void refresh() {
-
-    }
-
-    @Override
-    public void mouseMove(int x, int y) {
-
-    }
-
-    @Override
-    public void action(int x, int y) {
-
-    }
-
-    @Override
-    public void move(MoveType moveType) {
-
-    }
-
-    @Override
     public boolean isRotateImageToVector() {
         return false;
     }
