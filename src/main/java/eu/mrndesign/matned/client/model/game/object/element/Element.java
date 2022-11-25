@@ -75,8 +75,6 @@ public abstract class Element {
      */
     public abstract boolean isAnimation();
 
-    public abstract double weight();
-
     public ElementType getType() {
         return elementType;
     }

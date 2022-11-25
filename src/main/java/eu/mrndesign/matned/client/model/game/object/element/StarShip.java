@@ -13,13 +13,14 @@ public class StarShip extends Element {
     private boolean launched;
 
     public StarShip(CanvasModel canvasModel) {
-        super(canvasModel, ElementType.HERO, new FrameHolder.FrameHolderBuilder("img/starship.png", "img/starship-fly.png").build());
+        super(canvasModel, ElementType.HERO, new FrameHolder.FrameHolderBuilder("img/starship.png").walk("img/starship-fly.png").build());
         Point2D startCenter = new Point2D(PANEL_WIDTH_INT / 2, PANEL_HEIGHT_INT / 2);
         Vector2D startVector = new Vector2D(0, 1);
         bounds.setVector(startVector);
         bounds.setCenter(startCenter);
         bounds.setWidth(50);
         bounds.setHeight(80);
+        bounds.setWeight(60);
     }
 
     @Override

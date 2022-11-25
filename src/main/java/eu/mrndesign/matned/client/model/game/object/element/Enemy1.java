@@ -5,16 +5,14 @@ import eu.mrndesign.matned.client.model.tools.FrameHolder;
 import eu.mrndesign.matned.client.model.tools.Point2D;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
-import java.util.List;
-
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
-public class Putin extends Element {
+public class Enemy1 extends Element {
 
     private final Element referenceElement;
 
-    public Putin(CanvasModel canvasModel, Element referenceElement) {
+    public Enemy1(CanvasModel canvasModel, Element referenceElement) {
         super(canvasModel, ElementType.ENEMY,
                 new FrameHolder.FrameHolderBuilder("img/stone3.png")
                         .walk("img/stone1.png", "img/stone2.png", "img/stone3.png", "img/stone4.png",
@@ -27,6 +25,7 @@ public class Putin extends Element {
         bounds.setCenter(startCenter);
         bounds.setWidth(30);
         bounds.setHeight(80);
+        bounds.setWeight(80);
     }
 
     @Override
@@ -63,8 +62,4 @@ public class Putin extends Element {
         return true;
     }
 
-    @Override
-    public double weight() {
-        return 0;
-    }
 }

@@ -83,4 +83,9 @@ public class ControllerImpl implements Controller {
     public void pause(boolean pause) {
         drawingCanvas.breakAction(pause);
     }
+
+    @Override
+    public CanvasModel getCanvasModel() {
+        return game.getDrawingArea();
+    }
 }

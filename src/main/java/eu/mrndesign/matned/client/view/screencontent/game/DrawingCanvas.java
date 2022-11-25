@@ -99,7 +99,7 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void initPauseImage() {
-        breakBear = new GameObjView(new BreakBear());
+        breakBear = new GameObjView(new BreakBear(controller.getCanvasModel()));
     }
 
     private void onKeyDown(KeyDownEvent event) {

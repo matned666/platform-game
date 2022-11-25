@@ -1,6 +1,7 @@
 package eu.mrndesign.matned.client.controller;
 
 import com.google.gwt.dom.client.NativeEvent;
+import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
 import eu.mrndesign.matned.client.view.screencontent.game.DrawingCanvas;
 
@@ -31,4 +32,7 @@ public interface Controller {
     void setDrawingCanvas(DrawingCanvas widgets);
 
     void pause(boolean pause);
+
+    CanvasModel getCanvasModel();
+
 }
