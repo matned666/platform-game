@@ -1,9 +1,7 @@
 package eu.mrndesign.matned.client.model.tools;
 
 import eu.mrndesign.matned.client.model.game.object.Game;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
-
-import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 
 public class GravityImpl implements Gravity {
 
@@ -21,11 +19,11 @@ public class GravityImpl implements Gravity {
     }
 
     @Override
-    public void calculate(GameElement gameElement) {
-        if (game.isOnBackgroundElement(gameElement)) {
+    public void calculate(Element element) {
+        if (game.isOnBackgroundElement(element)) {
             return;
         }
-        fall(gameElement.getActualSpeed(), gameElement.getBounds());
+        fall(element.getActualSpeed(), element.getBounds());
     }
 
     private void fall(double force, Bounds2D bounds) {

@@ -1,8 +1,9 @@
-package eu.mrndesign.matned.client.model.game.object;
+package eu.mrndesign.matned.client.model.game.object.element;
 
+import eu.mrndesign.matned.client.model.game.object.CanvasModel;
 import eu.mrndesign.matned.client.model.tools.Bounds2D;
+import eu.mrndesign.matned.client.model.tools.FrameHolder;
 import eu.mrndesign.matned.client.model.tools.Gravity;
-import eu.mrndesign.matned.client.model.tools.MoveType;
 import eu.mrndesign.matned.client.model.tools.Vector2D;
 
 import java.util.List;
@@ -10,29 +11,33 @@ import java.util.List;
 /**
  * Any object that is visible on the stage is a GameElement
  */
-public abstract class GameElement {
+public abstract class Element {
     protected final Vector2D referenceVector = new Vector2D(0, -1);
 
     protected final String id;
     protected final CanvasModel canvasModel;
     protected final Bounds2D bounds = new Bounds2D();
-    protected final GameElementType gameElementType;
+    protected final ElementType elementType;
     protected boolean toRemove = false;
     protected final Gravity gravity;
+    private final FrameHolder frameHolder;
 
     protected double actualSpeed = 0;
 
-    public GameElement(CanvasModel canvasModel, GameElementType gameElementType) {
+    public Element(CanvasModel canvasModel, ElementType elementType, FrameHolder frameHolder) {
         this.canvasModel = canvasModel;
-        this.gameElementType = gameElementType;
+        this.elementType = elementType;
         this.gravity = canvasModel.getGame().getGravity();
-        id = gameElementType.name() + System.currentTimeMillis();
+        id = elementType.name() + System.currentTimeMillis();
+        this.frameHolder = frameHolder;
     }
 
     /**
      * @return sorted List of images for element animation
      */
-    public abstract List<String> frames();
+    public List<String> getFrames(MoveType moveType) {
+        return frameHolder.getFrames(moveType);
+    }
 
     /**
      * on frame refresh
@@ -70,8 +75,10 @@ public abstract class GameElement {
      */
     public abstract boolean isAnimation();
 
-    public GameElementType getType() {
-        return gameElementType;
+    public abstract double weight();
+
+    public ElementType getType() {
+        return elementType;
     }
 
     /**

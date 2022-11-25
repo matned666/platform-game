@@ -2,7 +2,7 @@ package eu.mrndesign.matned.client.model;
 
 import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ public interface Model {
 
     CanvasModel getDrawingArea();
 
-    List<GameElement> getNewValues(Set<String> keySet);
+    List<Element> getNewValues(Set<String> keySet);
 
     List<String> getAllRemovedKeys(Set<String> keySet);
 

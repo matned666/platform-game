@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 import eu.mrndesign.matned.client.model.game.object.ModelImpl;
 import eu.mrndesign.matned.client.model.Model;
 import eu.mrndesign.matned.client.view.ScreenInterface;
@@ -35,12 +35,12 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public List<GameElement> getGameElement() {
+    public List<Element> getGameElement() {
         CanvasModel canvasModel = game.getDrawingArea();
         return new ArrayList<>(canvasModel.getMapIdToGameElement().values());
     }
     @Override
-    public List<GameElement> getNewValues(Set<String> keySet) {
+    public List<Element> getNewValues(Set<String> keySet) {
         return game.getNewValues(keySet);
     }
 

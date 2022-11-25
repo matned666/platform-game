@@ -1,22 +1,19 @@
 package eu.mrndesign.matned.client.model.game.object.element;
 
 import eu.mrndesign.matned.client.model.game.object.CanvasModel;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
-import eu.mrndesign.matned.client.model.game.object.GameElementType;
-import eu.mrndesign.matned.client.model.tools.MoveType;
 
 import java.util.Collections;
 import java.util.List;
 
-public class DesertBackground extends GameElement {
+public class DesertBackground extends Element {
 
 
     public DesertBackground(CanvasModel canvasModel) {
-        super(canvasModel, GameElementType.BACKGROUND);
+        super(canvasModel, ElementType.BACKGROUND, null);
     }
 
     @Override
-    public List<String> frames() {
+    public List<String> getFrames(MoveType moveType) {
         return Collections.singletonList("img/desert-background.jpg");
     }
 
@@ -51,8 +48,8 @@ public class DesertBackground extends GameElement {
     }
 
     @Override
-    public GameElementType getType() {
-        return GameElementType.BACKGROUND;
+    public ElementType getType() {
+        return ElementType.BACKGROUND;
     }
 
 }

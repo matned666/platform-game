@@ -3,8 +3,12 @@ package eu.mrndesign.matned.client.model.game.object;
 import com.google.gwt.dom.client.NativeEvent;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.model.Model;
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ModelImpl implements Model {
 
@@ -25,9 +29,9 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public List<GameElement> getNewValues(Set<String> keySet) {
-        Map<String, GameElement> mapIdToGameElement = activeCanvasModel.getMapIdToGameElement();
-        List<GameElement> newValues = new LinkedList<>();
+    public List<Element> getNewValues(Set<String> keySet) {
+        Map<String, Element> mapIdToGameElement = activeCanvasModel.getMapIdToGameElement();
+        List<Element> newValues = new LinkedList<>();
         mapIdToGameElement.keySet().stream().filter(key -> !keySet.contains(key)).forEach(key -> newValues.add(mapIdToGameElement.get(key)));
         return newValues;
     }
@@ -39,7 +43,7 @@ public class ModelImpl implements Model {
 
     @Override
     public boolean gameObjectsStateIsActual(Set<String> keySet) {
-        Map<String, GameElement> mapIdToGameElement = activeCanvasModel.getMapIdToGameElement();
+        Map<String, Element> mapIdToGameElement = activeCanvasModel.getMapIdToGameElement();
         for (String key : keySet) {
             if (!mapIdToGameElement.containsKey(key)) {
                 return false;

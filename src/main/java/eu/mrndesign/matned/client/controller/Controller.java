@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.client.controller;
 
 import com.google.gwt.dom.client.NativeEvent;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 import eu.mrndesign.matned.client.view.screencontent.game.DrawingCanvas;
 
 import java.util.List;
@@ -13,8 +13,8 @@ public interface Controller {
 
     String getActiveBackGroundImage();
 
-    List<GameElement> getGameElement();
-    List<GameElement> getNewValues(Set<String> keySet);
+    List<Element> getGameElement();
+    List<Element> getNewValues(Set<String> keySet);
 
     List<String> getRemovedKeys(Set<String> keySet);
 

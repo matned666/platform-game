@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Label;
 import eu.mrndesign.matned.client.controller.Constants;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
-import eu.mrndesign.matned.client.model.game.object.GameElement;
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 import eu.mrndesign.matned.client.model.game.object.element.BreakBear;
 import eu.mrndesign.matned.client.model.tools.Log;
 import eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView;
@@ -119,7 +119,7 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void addGameObjects() {
-        List<GameElement> allValues = controller.getGameElement();
+        List<Element> allValues = controller.getGameElement();
         manageGameObjectsMap(allValues, new ArrayList<>());
     }
 
@@ -152,7 +152,7 @@ public class DrawingCanvas extends AbsolutePanel {
         additionalLabel.setText("timer->" + TimeWrapper.getInstance().getFrameNo());
         drawingCanvasContext.clearRect(0, 0, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
         if (!controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
-            List<GameElement> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
+            List<Element> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
             manageGameObjectsMap(newValues, removedKeys);
         }
         addAllMappedToCanvas();
@@ -175,7 +175,7 @@ public class DrawingCanvas extends AbsolutePanel {
         drawingCanvasContext.translate(-rx, -ry);
     }
 
-    private void manageGameObjectsMap(List<GameElement> newValues, List<String> removedKeys) {
+    private void manageGameObjectsMap(List<Element> newValues, List<String> removedKeys) {
         if (removedKeys.size() > 0) {
             removeGameObjects(removedKeys);
         }
@@ -188,7 +188,7 @@ public class DrawingCanvas extends AbsolutePanel {
         removedKeys.forEach(mapIdToGameObjects::remove);
     }
 
-    private void addNewGameObjects(List<GameElement> newValues) {
+    private void addNewGameObjects(List<Element> newValues) {
         newValues.forEach(gameElement -> {
             GameObjView obj = new GameObjView(gameElement);
             mapIdToGameObjects.put(obj.getId(), obj);

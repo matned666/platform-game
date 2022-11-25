@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object;
 
+import eu.mrndesign.matned.client.model.game.object.element.Element;
 import eu.mrndesign.matned.client.model.tools.Gravity;
 import eu.mrndesign.matned.client.model.tools.GravityImpl;
 import io.reactivex.subjects.PublishSubject;
@@ -14,24 +15,24 @@ import java.util.logging.Logger;
 public class Game {
     protected final Logger logger = Logger.getLogger(getClass().getName());
 
-    private final Map<String, GameElement> mapIdToGameElement = new HashMap<>();
+    private final Map<String, Element> mapIdToGameElement = new HashMap<>();
 
-    private final Map<String, GameElement> mapIdToBullet = new HashMap<>();
-    private final Map<String, GameElement> mapIdToEnemy = new HashMap<>();
-    private final Map<String, GameElement> mapIdToBackgroundElement = new HashMap<>();
+    private final Map<String, Element> mapIdToBullet = new HashMap<>();
+    private final Map<String, Element> mapIdToEnemy = new HashMap<>();
+    private final Map<String, Element> mapIdToBackgroundElement = new HashMap<>();
 
     private final List<String> removedGameElements = new LinkedList<>();
 
     private final CanvasModel canvasModel;
 
-    private GameElement hero;
+    private Element hero;
     private final Gravity gravity;
     private long activatedFrameNo = 0;
 
     private final Subject<Boolean> refreshSubject = PublishSubject.create();
     private final Subject<Boolean> bulletsRefreshSubject = PublishSubject.create();
     private final Subject<Boolean> removedSubject = PublishSubject.create();
-    private final Subject<GameElement> blowSubject = PublishSubject.create();
+    private final Subject<Element> blowSubject = PublishSubject.create();
 
     public Game(CanvasModel canvasModel) {
         this.canvasModel = canvasModel;
@@ -48,7 +49,7 @@ public class Game {
                 gravity.calculate(gameElement);
                 gameElement.refresh();
                 if ((gameElement.isToRemove())) {
-                    removeElement(gameElement.id);
+                    removeElement(gameElement.getId());
                 }
             });
             return next;
@@ -59,7 +60,7 @@ public class Game {
         bulletsRefreshSubject.map(onNext -> {
             mapIdToBullet.values().forEach(bullet ->
                     mapIdToEnemy.values().forEach(rock -> {
-                        if (rock.bounds.touchedBy(bullet.bounds)) {
+                        if (rock.getBounds().touchedBy(bullet.getBounds())) {
                             bullet.setToRemove();
                             rock.setToRemove();
                             mapIdToEnemy.remove(rock.getId());
@@ -86,9 +87,9 @@ public class Game {
         addHero();
     }
 
-    public boolean isOnBackgroundElement(GameElement gameElement){
+    public boolean isOnBackgroundElement(Element element){
         return mapIdToBackgroundElement.values().stream()
-                .anyMatch(backgroundElement -> gameElement.getBounds().isOn(backgroundElement.getBounds()));
+                .anyMatch(backgroundElement -> element.getBounds().isOn(backgroundElement.getBounds()));
     }
 
 
@@ -99,7 +100,7 @@ public class Game {
     }
 
     private void addHero() {
-        mapIdToGameElement.put(hero.id, hero);
+        mapIdToGameElement.put(hero.getId(), hero);
     }
 
     public void removeElement(String id) {
@@ -110,7 +111,7 @@ public class Game {
         removedGameElements.forEach(mapIdToGameElement::remove);
     }
 
-    public Map<String, GameElement> getMapIdToGameElement() {
+    public Map<String, Element> getMapIdToGameElement() {
         return mapIdToGameElement;
     }
 
