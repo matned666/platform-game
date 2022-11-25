@@ -6,7 +6,8 @@ public enum MoveType {
     WALK(2),
     RUN(5),
     JUMP(10),
-    SNEAK(1);
+    SNEAK(1),
+    ATTACK(0);
 
     private final int speed;
 
