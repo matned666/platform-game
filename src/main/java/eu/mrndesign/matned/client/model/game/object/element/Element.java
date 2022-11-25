@@ -111,8 +111,8 @@ public abstract class Element {
     /**
      * @return actual force
      */
-    public double getActualSpeed() {
-        return actualSpeed;
+    public Vector2D getActualForce() {
+        return bounds.getVector(). magnituded(actualSpeed);
     }
 
     protected void moveTo(double x, double y) {

@@ -10,7 +10,7 @@ public class Bounds2D {
     protected Vector2D vector;
     protected double width;
     protected double height;
-    protected double weight;
+    protected double mass;
     protected final Point2D center;
 
     public Bounds2D() {
@@ -94,9 +94,8 @@ public class Bounds2D {
     }
 
     public boolean isOn(Bounds2D bounds) {
-        return touchedBy(bounds) && bounds.center.y > center.y;
+        return touchedBy(bounds) && bounds.topBorder() <= bottomBorder();
     }
-
 
     private static class Border{
         private final Point2D p1;
@@ -148,12 +147,12 @@ public class Bounds2D {
         return width;
     }
 
-    public double getWeight() {
-        return weight;
+    public double getMass() {
+        return mass;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setMass(double mass) {
+        this.mass = mass;
     }
 
     public void setWidth(double width) {

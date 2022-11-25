@@ -20,7 +20,7 @@ public class StarShip extends Element {
         bounds.setCenter(startCenter);
         bounds.setWidth(50);
         bounds.setHeight(80);
-        bounds.setWeight(60);
+        bounds.setMass(60);
     }
 
     @Override

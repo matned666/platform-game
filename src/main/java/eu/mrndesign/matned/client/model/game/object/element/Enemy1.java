@@ -25,7 +25,7 @@ public class Enemy1 extends Element {
         bounds.setCenter(startCenter);
         bounds.setWidth(30);
         bounds.setHeight(80);
-        bounds.setWeight(80);
+        bounds.setMass(80);
     }
 
     @Override
