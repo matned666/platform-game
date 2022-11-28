@@ -1,0 +1,89 @@
+<level>
+
+    <background>
+        <name>desert-background</name>
+    </background>
+
+    <hero>
+        <name>starship</name>
+        <width>50</width>
+        <height>80</height>
+        <startXPos>0</startXPos>
+        <startYPos>0</startYPos>
+        <hp>100</hp>
+        <hostile>false</hostile>
+        <items>
+            <item>
+                <name>Gun</name>
+                <type>WEAPON</type>
+                <modTypes>
+                    <modType>
+                        <type>SHOOT_BULLET</type>
+                        <desc>bullet1</desc>
+                        <value>1</value>
+                    </modType>
+                </modTypes>
+                <equipped>true</equipped>
+            </item>
+
+            <item>
+                <name>Armor</name>
+                <type>ARMOR</type>
+                <modTypes>
+                    <modType>
+                        <type>DEFENCE</type>
+                        <value>10</value>
+                    </modType>
+                </modTypes>
+                <equipped>true</equipped>
+            </item>
+        </items>
+    </hero>
+
+    <grounds>
+        <ground>
+            <name>ground</name>
+            <hPos>CENTER</hPos>
+            <vPos>BOTTOM</vPos>
+            <width>100</width>
+            <height>5</height>
+            <startXPos>0</startXPos>
+            <startYPos>0</startYPos>
+        </ground>
+    </grounds>
+
+    <items>
+        <item>
+            <name>bullet1</name>
+            <type>BULLET</type>
+            <width>10</width>
+            <height>10</height>
+
+            <modTypes>
+                <modType>
+                    <type>BLOW</type>
+                    <desc>blow</desc>
+                    <value>1</value>
+                </modType>
+            </modTypes>
+        </item>
+        <item>
+            <name>blow</name>
+            <type>BLOW</type>
+            <modTypes>
+                <modType>
+                    <type>ATTACK</type>
+                    <value>10</value>
+                </modType>
+                <modType>
+                    <type>RANGE</type>
+                    <value>10</value>
+                </modType>
+            </modTypes>
+        </item>
+    </items>
+
+    <characters>
+    </characters>
+
+</level>

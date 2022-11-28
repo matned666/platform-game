@@ -2,28 +2,25 @@ package eu.mrndesign.matned.client.model.game.object;
 
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
-import eu.mrndesign.matned.client.model.game.object.element.DesertBackground;
-import eu.mrndesign.matned.client.model.game.object.element.Element;
-import eu.mrndesign.matned.client.model.tools.Bounds2D;
-import eu.mrndesign.matned.client.model.game.object.element.MoveType;
-import eu.mrndesign.matned.client.model.tools.Point2D;
-import eu.mrndesign.matned.client.model.tools.Vector2D;
+import eu.mrndesign.matned.client.model.Model;
+import eu.mrndesign.matned.client.model.game.object.element.ElementImpl;
+import eu.mrndesign.matned.client.model.tool.Bounds2D;
+import eu.mrndesign.matned.client.model.tool.Point2D;
+import eu.mrndesign.matned.client.model.tool.Vector2D;
 
 import java.util.List;
 import java.util.Map;
 
 public class CanvasModel extends Bounds2D {
 
-    private final Element background;
     private final Game game;
 
-    public CanvasModel(double width, double height) {
+    public CanvasModel(double width, double height, Model model) {
         super(new Vector2D(0, 1), width, height, new Point2D(0, 0));
-        this.game = new Game(this);
-        background = new DesertBackground(this);
+        this.game = new Game(this, model);
     }
 
-    public Map<String, Element> getMapIdToGameElement() {
+    public Map<String, ElementImpl> getMapIdToGameElement() {
         return game.getMapIdToGameElement();
     }
 
@@ -36,7 +33,7 @@ public class CanvasModel extends Bounds2D {
     }
 
     public String getBackgroundImage() {
-        return background.getFrames(MoveType.STAND).get(0);
+        return game.getBackground();
     }
 
     public void canvasRefresh() {

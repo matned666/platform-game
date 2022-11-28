@@ -1,0 +1,15 @@
+<level>
+
+    <background></background>
+
+    <hero>
+        <name>starship</name>
+        <hostile></hostile>
+    </hero>
+
+    <grounds>
+        <ground>
+            <vPos>BOTTOM</vPos>
+        </ground>
+    </grounds>
+</level>

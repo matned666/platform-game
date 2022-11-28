@@ -1,8 +1,10 @@
 package eu.mrndesign.matned.client.model.game.object;
 
-import eu.mrndesign.matned.client.model.game.object.element.Element;
-import eu.mrndesign.matned.client.model.tools.Gravity;
-import eu.mrndesign.matned.client.model.tools.GravityImpl;
+import eu.mrndesign.matned.client.model.Model;
+import eu.mrndesign.matned.client.model.game.object.data.model.LevelData;
+import eu.mrndesign.matned.client.model.game.object.element.ElementImpl;
+import eu.mrndesign.matned.client.model.tool.Gravity;
+import eu.mrndesign.matned.client.model.tool.GravityImpl;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -15,27 +17,31 @@ import java.util.logging.Logger;
 public class Game {
     protected final Logger logger = Logger.getLogger(getClass().getName());
 
-    private final Map<String, Element> mapIdToGameElement = new HashMap<>();
+    private final Map<String, ElementImpl> mapIdToGameElement = new HashMap<>();
 
-    private final Map<String, Element> mapIdToBullet = new HashMap<>();
-    private final Map<String, Element> mapIdToEnemy = new HashMap<>();
-    private final Map<String, Element> mapIdToBackgroundElement = new HashMap<>();
+    private final Map<String, ElementImpl> mapIdToBullet = new HashMap<>();
+    private final Map<String, ElementImpl> mapIdToEnemy = new HashMap<>();
+    private final Map<String, ElementImpl> mapIdToBackgroundElement = new HashMap<>();
 
     private final List<String> removedGameElements = new LinkedList<>();
 
     private final CanvasModel canvasModel;
 
-    private Element hero;
+    private ElementImpl hero;
     private final Gravity gravity;
     private long activatedFrameNo = 0;
 
     private final Subject<Boolean> refreshSubject = PublishSubject.create();
     private final Subject<Boolean> bulletsRefreshSubject = PublishSubject.create();
     private final Subject<Boolean> removedSubject = PublishSubject.create();
-    private final Subject<Element> blowSubject = PublishSubject.create();
+    private final Subject<ElementImpl> blowSubject = PublishSubject.create();
 
-    public Game(CanvasModel canvasModel) {
+    private final Model model;
+    private LevelData levelData;
+
+    public Game(CanvasModel canvasModel, Model model) {
         this.canvasModel = canvasModel;
+        this.model = model;
         gravity = new GravityImpl(this);
         initRefreshSubscriptionSubscription();
         initBulletRefreshSubscriptionSubscription();
@@ -87,7 +93,7 @@ public class Game {
         addHero();
     }
 
-    public boolean isOnBackgroundElement(Element element){
+    public boolean isOnBackgroundElement(ElementImpl element){
         return mapIdToBackgroundElement.values().stream()
                 .anyMatch(backgroundElement -> element.getBounds().isOn(backgroundElement.getBounds()));
     }
@@ -111,7 +117,7 @@ public class Game {
         removedGameElements.forEach(mapIdToGameElement::remove);
     }
 
-    public Map<String, Element> getMapIdToGameElement() {
+    public Map<String, ElementImpl> getMapIdToGameElement() {
         return mapIdToGameElement;
     }
 
@@ -137,4 +143,9 @@ public class Game {
     public Gravity getGravity() {
         return gravity;
     }
+
+    public String getBackground() {
+        return "";
+    }
+
 }

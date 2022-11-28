@@ -13,9 +13,7 @@ import com.google.gwt.user.client.ui.Label;
 import eu.mrndesign.matned.client.controller.Constants;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
-import eu.mrndesign.matned.client.model.game.object.element.Element;
-import eu.mrndesign.matned.client.model.game.object.element.BreakBear;
-import eu.mrndesign.matned.client.model.tools.Log;
+import eu.mrndesign.matned.client.model.game.object.element.ElementImpl;
 import eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -29,8 +27,7 @@ import java.util.logging.Logger;
 import static eu.mrndesign.matned.client.controller.Constants.*;
 
 public class DrawingCanvas extends AbsolutePanel {
-
-    protected final Logger logger;
+    private static final Logger logger = Logger.getLogger("DrawingCanvas:");
 
     private final Canvas drawingCanvas;
 
@@ -52,7 +49,6 @@ public class DrawingCanvas extends AbsolutePanel {
     public DrawingCanvas(Controller controller) {
         this.controller = controller;
         controller.setDrawingCanvas(this);
-        logger = Logger.getLogger("DrawingCanvas:");
         drawingCanvas = Canvas.createIfSupported();
         Image background = new Image(controller.getActiveBackGroundImage());
         background.setHeight(PANEL_HEIGHT);
@@ -75,7 +71,7 @@ public class DrawingCanvas extends AbsolutePanel {
         add(mouseActionPosLabel, PANEL_WIDTH_INT * 2 / 4, 0);
         add(additionalLabel, PANEL_WIDTH_INT * 3 / 4, 0);
         initListeners();
-        initPauseImage();
+//        initPauseImage();
         setTimer();
     }
 
@@ -98,14 +94,13 @@ public class DrawingCanvas extends AbsolutePanel {
         }).subscribe();
     }
 
-    private void initPauseImage() {
-        breakBear = new GameObjView(new BreakBear(controller.getCanvasModel()));
-    }
+//    private void initPauseImage() {
+//        breakBear = new GameObjView(new BreakBear(controller.getCanvasModel()));
+//    }
 
     private void onKeyDown(KeyDownEvent event) {
         switch (event.getNativeKeyCode()) {
             case KeyCodes.KEY_P:
-                Log.log("sdsd");
                 pauseSubject.onNext(true);
             default:
                 controller.onKeyPressed(event.getNativeEvent());
@@ -119,7 +114,7 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void addGameObjects() {
-        List<Element> allValues = controller.getGameElement();
+        List<ElementImpl> allValues = controller.getGameElement();
         manageGameObjectsMap(allValues, new ArrayList<>());
     }
 
@@ -152,7 +147,7 @@ public class DrawingCanvas extends AbsolutePanel {
         additionalLabel.setText("timer->" + TimeWrapper.getInstance().getFrameNo());
         drawingCanvasContext.clearRect(0, 0, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
         if (!controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
-            List<Element> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
+            List<ElementImpl> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
             manageGameObjectsMap(newValues, removedKeys);
         }
         addAllMappedToCanvas();
@@ -175,7 +170,7 @@ public class DrawingCanvas extends AbsolutePanel {
         drawingCanvasContext.translate(-rx, -ry);
     }
 
-    private void manageGameObjectsMap(List<Element> newValues, List<String> removedKeys) {
+    private void manageGameObjectsMap(List<ElementImpl> newValues, List<String> removedKeys) {
         if (removedKeys.size() > 0) {
             removeGameObjects(removedKeys);
         }
@@ -188,7 +183,7 @@ public class DrawingCanvas extends AbsolutePanel {
         removedKeys.forEach(mapIdToGameObjects::remove);
     }
 
-    private void addNewGameObjects(List<Element> newValues) {
+    private void addNewGameObjects(List<ElementImpl> newValues) {
         newValues.forEach(gameElement -> {
             GameObjView obj = new GameObjView(gameElement);
             mapIdToGameObjects.put(obj.getId(), obj);
