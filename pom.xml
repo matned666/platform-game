@@ -6,124 +6,13 @@
 
     <groupId>eu.mrndesign.matned</groupId>
     <artifactId>fridge-king</artifactId>
-    <version>ion=butterFluEffect</version>
-    <packaging>gwt-app</packaging>
+    <version>BUTTERFLY-0.1</version>
+    <modules>
+        <module>client</module>
+        <module>xml-server</module>
+    </modules>
+    <packaging>pom</packaging>
     <name>fridge-king</name>
     <description>Project description</description>
-
-    <developers>
-        <developer>
-            <id>matned</id>
-            <name>Mateusz Niedbał</name>
-            <email>mat.niedbal@mrndesign.eu</email>
-            <organization>mrndesign.eu</organization>
-            <organizationUrl>https://mrndesign.eu</organizationUrl>
-            <roles>
-                <role>Architect</role>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.google.gwt</groupId>
-                <artifactId>gwt</artifactId>
-                <version>2.9.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.gwt.elemento</groupId>
-            <artifactId>elemento-core</artifactId>
-            <version>0.9.1-gwt2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.intendia.gwt.rxgwt2</groupId>
-            <artifactId>rxgwt</artifactId>
-            <version>2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.intendia.gwt</groupId>
-            <artifactId>rxjava2-gwt</artifactId>
-            <version>2.2.10-gwt1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.intendia.gwt/rxjava-gwt -->
-        <dependency>
-            <groupId>com.intendia.gwt</groupId>
-            <artifactId>rxjava-gwt</artifactId>
-            <version>1.3.4-gwt1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.3.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>net.ltgt.gwt.maven</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <moduleName>eu.mrndesign.matned.App</moduleName>
-                    <skipModule>true</skipModule>
-                </configuration>
-            </plugin>
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
 </project>

@@ -1,9 +1,9 @@
-package eu.mrndesign.matned.client.model.tool;
+package eu.mrndesign.matned.util;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
+import java.io.InputStream;
 
 public class XmlWorker<E> {
 
@@ -14,8 +14,8 @@ public class XmlWorker<E> {
         jaxbUnmarshaller = jaxbContext.createUnmarshaller();
     }
 
-    public E unMarshal(File file) throws JAXBException {
-        return  (E) jaxbUnmarshaller.unmarshal(file);
+    public E unMarshal(InputStream inputStream) throws JAXBException {
+        return (E) jaxbUnmarshaller.unmarshal(inputStream);
     }
 
 }
