@@ -5,6 +5,7 @@ import eu.mrndesign.matned.model.LevelData;
 import eu.mrndesign.matned.service.XmlService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +24,8 @@ public class XmlController {
 
     @GetMapping("/level/{fileName}")
     public LevelData getLevelData(@PathVariable String fileName) {
-        return xmlService.getLevel(fileName);
+        LevelData level = xmlService.getLevel(fileName);
+        return level;
     }
 
 
