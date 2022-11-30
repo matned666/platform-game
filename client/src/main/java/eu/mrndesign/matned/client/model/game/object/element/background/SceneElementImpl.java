@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object.element.background;
 
+import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.element.BaseElement;
 import eu.mrndesign.matned.client.model.game.object.data.model.SceneElementData;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
@@ -9,8 +10,8 @@ public class SceneElementImpl extends BaseElement implements SceneElement{
 
     private final SceneElementData sceneElementData;
 
-    public SceneElementImpl(SceneElementData sceneElementData) {
-        super("Scene");
+    public SceneElementImpl(Game game, SceneElementData sceneElementData) {
+        super(game, "Scene");
         this.sceneElementData = sceneElementData;
         bounds = Bounds2D.generate(sceneElementData);
     }

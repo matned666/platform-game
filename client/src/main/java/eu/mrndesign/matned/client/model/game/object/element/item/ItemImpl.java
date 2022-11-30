@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object.element.item;
 
+import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.element.BaseElement;
 import eu.mrndesign.matned.client.model.game.object.data.model.ItemData;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
@@ -10,8 +11,8 @@ public class ItemImpl extends BaseElement implements Item{
     private final ItemData itemData;
     private boolean equipped;
 
-    public ItemImpl(ItemData itemData) {
-        super("Item");
+    public ItemImpl(Game game, ItemData itemData) {
+        super(game, "Item");
         this.itemData = itemData;
         bounds = Bounds2D.generate(itemData);
         equipped = itemData.isEquipped();

@@ -1,10 +1,13 @@
 package eu.mrndesign.matned.client.model.game.object.element;
 
+import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.frame.MoveType;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Math2D;
 import eu.mrndesign.matned.client.model.tool.math.Point2D;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
+import eu.mrndesign.matned.client.model.tool.phisic.Gravity;
+import eu.mrndesign.matned.client.model.tool.phisic.GravityImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +24,13 @@ public abstract class BaseElement implements Element {
 
     protected boolean toRemove;
 
-    protected BaseElement(String type) {
-        id = type + System.currentTimeMillis() + Math2D.randomInt(0, 10000);
+    protected final Game game;
+    protected final Gravity gravity;
+
+    protected BaseElement(Game game, String type) {
+        this.game = game;
+        this.id = type + System.currentTimeMillis() + Math2D.randomInt(0, 10000);
+        this.gravity = new GravityImpl(game, this);
     }
 
     @Override

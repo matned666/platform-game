@@ -3,6 +3,7 @@ package eu.mrndesign.matned.client.model.game.object;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.model.Model;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
+import eu.mrndesign.matned.client.model.game.object.element.character.CharacterImpl;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Point2D;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
@@ -10,14 +11,16 @@ import eu.mrndesign.matned.client.view.screencontent.game.KeyMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class CanvasModel extends Bounds2D {
+    protected static final Logger logger = Logger.getLogger(CharacterImpl.class.getName());
 
     private final Game game;
 
     public CanvasModel(double width, double height, Model model, Controller controller) {
         super(new Vector2D(0, 1), width, height, new Point2D(0, 0));
-        this.game = new Game(this, model, controller);
+        this.game = new Game(this, controller);
     }
 
     public Map<String, Element> getMapIdToGameElement() {
@@ -29,7 +32,7 @@ public class CanvasModel extends Bounds2D {
     }
 
     public void mouseMoveEvent(int x, int y) {
-        game.getHero().setDirection(x, y);
+        game.setDirection(x, y);
     }
 
     public String getBackgroundImage() {
@@ -46,6 +49,7 @@ public class CanvasModel extends Bounds2D {
 
     public void onKeyPressed(KeyMap keyMap, boolean run, boolean sneak) {
         Vector2D v;
+        logger.info(keyMap.name());
         double speed = 5;
         switch (keyMap) {
             case ACTION:
@@ -70,7 +74,7 @@ public class CanvasModel extends Bounds2D {
                 game.move(v, speed);
                 break;
             case JUMP:
-                game.move(1, speed * 3);
+                game.move(speed * 3);
         }
     }
 

@@ -100,11 +100,12 @@ public class DrawingCanvas extends AbsolutePanel {
 //    }
 
     private void onKeyDown(KeyDownEvent event) {
+        logger.info(event.getNativeKeyCode() + " key");
         switch (event.getNativeKeyCode()) {
             case KeyCodes.KEY_P:
                 pauseSubject.onNext(true);
             default:
-                controller.onKeyPressed(KeyMap.getEvent(), event.isShiftKeyDown(), event.isControlKeyDown());
+                controller.onKeyPressed(KeyMap.getEvent(event.getNativeKeyCode()), event.isShiftKeyDown(), event.isControlKeyDown());
         }
     }
 
@@ -147,9 +148,10 @@ public class DrawingCanvas extends AbsolutePanel {
         }
         additionalLabel.setText("timer->" + TimeWrapper.getInstance().getFrameNo());
         drawingCanvasContext.clearRect(0, 0, PANEL_WIDTH_INT, PANEL_HEIGHT_INT);
-        if (!controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
+        if (controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
             List<Element> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
             manageGameObjectsMap(newValues, removedKeys);
+            logger.info(newValues.toString());
         }
         addAllMappedToCanvas();
         TimeWrapper.getInstance().nextFrame();
@@ -181,7 +183,9 @@ public class DrawingCanvas extends AbsolutePanel {
     }
 
     private void removeGameObjects(List<String> removedKeys) {
-        removedKeys.forEach(mapIdToGameObjects::remove);
+        if (removedKeys.size() > 0) {
+            removedKeys.forEach(mapIdToGameObjects::remove);
+        }
     }
 
     private void addNewGameObjects(List<Element> newValues) {
