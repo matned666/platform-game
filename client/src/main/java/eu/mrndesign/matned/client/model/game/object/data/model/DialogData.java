@@ -11,10 +11,9 @@ public class DialogData {
     private static final Logger logger = Logger.getLogger(DialogData.class.getName());
 
 //    TODO doesn't work - to repair
-    public static DialogData generateDialogData(JSONObject dialog) {
+    public static DialogData parse(JSONObject dialog) {
         DialogData dialogData = new DialogData();
         dialogData.setExitDialog(dialog.get("exitDialog").isBoolean().booleanValue());
-        logger.info(dialogData.toString());
         dialogData.setTitle(dialog.get("title").isString().stringValue());
         JSONArray texts = dialog.get("texts").isArray();
         for (int i = 0; i < texts.size(); i++) {
@@ -22,7 +21,7 @@ public class DialogData {
         }
         JSONArray options = dialog.get("options").isArray();
         for (int i = 0; i < options.size(); i++) {
-            dialogData.getOptions().add(generateDialogData(options.get(i).isObject()));
+            dialogData.getOptions().add(DialogData.parse(options.get(i).isObject()));
         }
         return dialogData;
     }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GameStructureData {
 
-    public static GameStructureData generateGameStructureData(JSONObject game) {
+    public static GameStructureData parse(JSONObject game) {
         GameStructureData gameStructureData = new GameStructureData();
         JSONArray lvls = game.get("levels").isArray();
         for (int i = 0; i < lvls.size(); i++) {

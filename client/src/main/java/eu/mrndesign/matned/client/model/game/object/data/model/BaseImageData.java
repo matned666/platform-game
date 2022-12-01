@@ -1,10 +1,17 @@
 package eu.mrndesign.matned.client.model.game.object.data.model;
 
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 
-public class BaseImageData implements Boundable{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+public class BaseImageData implements Boundable {
+    private static final Logger logger = Logger.getLogger(BaseImageData.class.getName());
 
     private String name = "";
+    private final List<ActionData> actions = new ArrayList<>();
     private double width;
     private double height;
     private int startXPos;
@@ -14,14 +21,18 @@ public class BaseImageData implements Boundable{
     private String horizontalPos = "CENTER";
     private String verticalPos = "CENTER";
 
-    public static BaseImageData generateBaseImageData(JSONObject image) {
+    public static BaseImageData parseBase(JSONObject image) {
         BaseImageData baseImageData = new BaseImageData();
-        updateFromJSONObject(image,baseImageData);
+        parseBaseData(image,baseImageData);
         return baseImageData;
     }
 
-    public static void updateFromJSONObject(JSONObject image, BaseImageData baseImageData){
+    public static void parseBaseData(JSONObject image, BaseImageData baseImageData){
         baseImageData.setName(image.get("name").isString().stringValue());
+        JSONArray actions = image.get("actions").isArray();
+        for (int i = 0; i < actions.size(); i++) {
+            baseImageData.getActions().add(ActionData.parse(actions.get(i).isObject()));
+        }
         baseImageData.setHorizontalPos(image.get("horizontalPos").isString().stringValue());
         baseImageData.setVerticalPos(image.get("verticalPos").isString().stringValue());
         baseImageData.setWidth(image.get("width").isNumber().doubleValue());
@@ -76,6 +87,10 @@ public class BaseImageData implements Boundable{
         return directionY;
     }
 
+    public List<ActionData> getActions() {
+        return actions;
+    }
+
     public void setDirectionX(double directionX) {
         this.directionX = directionX;
     }
@@ -116,6 +131,7 @@ public class BaseImageData implements Boundable{
     public String toString() {
         return "BaseImageData{" +
                 "name='" + name + '\'' +
+                ", actions=" + actions +
                 ", width=" + width +
                 ", height=" + height +
                 ", startXPos=" + startXPos +

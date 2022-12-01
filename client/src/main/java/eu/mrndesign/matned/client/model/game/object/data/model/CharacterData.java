@@ -7,20 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static eu.mrndesign.matned.client.model.game.object.data.model.DialogData.generateDialogData;
-import static eu.mrndesign.matned.client.model.game.object.data.model.ItemData.generateItemData;
-
 public class CharacterData extends BaseImageData{
     private static final Logger logger = Logger.getLogger(CharacterData.class.getName());
 
-    public static CharacterData generateCharacterData(JSONObject character) {
+    public static CharacterData parse(JSONObject character) {
         CharacterData characterData = new CharacterData();
-        BaseImageData.updateFromJSONObject(character, characterData);
+        BaseImageData.parseBaseData(character, characterData);
         characterData.setHp((int) character.get("hp").isNumber().doubleValue());
         characterData.setHostile(character.get("hostile").isBoolean().booleanValue());
         JSONArray items = character.get("items").isArray();
         for (int i = 0; i < items.size(); i++) {
-            characterData.getItems().add(generateItemData(items.get(i).isObject()));
+            characterData.getItems().add(ItemData.parse(items.get(i).isObject()));
+        }
+        JSONArray slots = character.get("slots").isArray();
+        for (int i = 0; i < slots.size(); i++) {
+            characterData.getSlots().add(slots.get(i).isString().stringValue());
         }
 //        characterData.setDialogData(generateDialogData(character.get("dialogData").isObject()));
         return characterData;
@@ -30,6 +31,8 @@ public class CharacterData extends BaseImageData{
     private boolean hostile = true;
     private int hp;
     private final List<ItemData> items = new ArrayList<>();
+    private final List<String> slots =  new ArrayList<>();
+
 //    private DialogData dialogData;
 
     public boolean isHostile() {
@@ -43,6 +46,11 @@ public class CharacterData extends BaseImageData{
     public List<ItemData> getItems() {
         return items;
     }
+
+    public List<String> getSlots() {
+        return slots;
+    }
+
 
 //    public DialogData getDialogData() {
 //        return dialogData;

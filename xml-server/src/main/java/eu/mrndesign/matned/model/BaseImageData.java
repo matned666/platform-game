@@ -1,8 +1,11 @@
 package eu.mrndesign.matned.model;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement
 public class BaseImageData implements Serializable {
@@ -16,10 +19,18 @@ public class BaseImageData implements Serializable {
     private double directionY;
     private String horizontalPos = "CENTER";
     private String verticalPos = "CENTER";
+    private final List<ActionData> actions = new ArrayList<>();
+
 
     @XmlElement(name = "name")
     public String getName() {
         return name;
+    }
+
+    @XmlElementWrapper(name = "actions")
+    @XmlElement(name = "action")
+    public List<ActionData> getActions() {
+        return actions;
     }
 
     @XmlElement(name = "width")
@@ -102,6 +113,7 @@ public class BaseImageData implements Serializable {
     public String toString() {
         return "BaseImageData{" +
                 "name='" + name + '\'' +
+                ", actions=" + actions +
                 ", width=" + width +
                 ", height=" + height +
                 ", startXPos=" + startXPos +

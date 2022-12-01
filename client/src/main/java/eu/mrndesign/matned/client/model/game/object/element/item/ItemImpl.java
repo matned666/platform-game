@@ -1,21 +1,21 @@
 package eu.mrndesign.matned.client.model.game.object.element.item;
 
 import eu.mrndesign.matned.client.model.game.object.Game;
-import eu.mrndesign.matned.client.model.game.object.element.BaseElement;
+import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 import eu.mrndesign.matned.client.model.game.object.data.model.ItemData;
+import eu.mrndesign.matned.client.model.game.object.element.BaseElement;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
 
-public class ItemImpl extends BaseElement implements Item{
+import java.util.List;
+
+public class ItemImpl extends BaseElement implements Item {
 
     private final ItemData itemData;
-    private boolean equipped;
 
     public ItemImpl(Game game, ItemData itemData) {
-        super(game, "Item");
+        super(game, "Item", itemData);
         this.itemData = itemData;
-        bounds = Bounds2D.generate(itemData);
-        equipped = itemData.isEquipped();
     }
 
     @Override
@@ -29,13 +29,8 @@ public class ItemImpl extends BaseElement implements Item{
     }
 
     @Override
-    public boolean isEquipped() {
-        return equipped;
-    }
-
-    @Override
-    public void setEquipped(boolean equipped) {
-        this.equipped = equipped;
+    public List<ActionData> getActions() {
+        return itemData.getActions();
     }
 
     @Override

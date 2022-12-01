@@ -1,7 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object;
 
 import eu.mrndesign.matned.client.controller.Controller;
-import eu.mrndesign.matned.client.model.Model;
 import eu.mrndesign.matned.client.model.game.object.data.model.CharacterData;
 import eu.mrndesign.matned.client.model.game.object.data.model.*;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
@@ -56,14 +55,16 @@ public class Game {
     }
 
     private void initDataElements() {
-        requester.requestLevelStructure("level1");
+//        requester.requestGameStructure("game.structure");
+        onGameStructureReceive(null);
     }
 
     public void onGameStructureReceive(GameStructureData gameStructureData) {
+        requester.requestLevelStructure("level1");
 //        TODO support for more levels - set LevelData field to List<LevelData>
     }
 
-    public void onLevelDataReceived(LevelData levelData) {
+    public void onLevelRequestCallBack(LevelData levelData) {
         this.levelData = levelData;
         GameContent.getInstance(controller).initCanvas();
         updateGameElements();

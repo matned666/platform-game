@@ -49,7 +49,6 @@ public class CanvasModel extends Bounds2D {
 
     public void onKeyPressed(KeyMap keyMap, boolean run, boolean sneak) {
         Vector2D v;
-        logger.info(keyMap.name());
         double speed = 5;
         switch (keyMap) {
             case ACTION:
@@ -74,7 +73,7 @@ public class CanvasModel extends Bounds2D {
                 game.move(v, speed);
                 break;
             case JUMP:
-                game.move(speed * 3);
+                game.move(speed * 100);
         }
     }
 

@@ -41,7 +41,6 @@ public class DrawingCanvas extends AbsolutePanel {
     private int actualY;
 
     private boolean dragging;
-    private GameObjView breakBear;
 
     private final Subject<Boolean> pauseSubject = PublishSubject.create();
 
@@ -50,7 +49,6 @@ public class DrawingCanvas extends AbsolutePanel {
         controller.setDrawingCanvas(this);
         drawingCanvas = Canvas.createIfSupported();
         String activeBackGroundImage = controller.getActiveBackGroundImage();
-        logger.info(activeBackGroundImage);
         Image background = new Image(activeBackGroundImage);
         background.setHeight(PANEL_HEIGHT);
         background.setWidth(PANEL_WIDTH);
@@ -72,7 +70,6 @@ public class DrawingCanvas extends AbsolutePanel {
         add(mouseActionPosLabel, PANEL_WIDTH_INT * 2 / 4, 0);
         add(additionalLabel, PANEL_WIDTH_INT * 3 / 4, 0);
         initListeners();
-//        initPauseImage();
         setTimer();
     }
 
@@ -95,12 +92,8 @@ public class DrawingCanvas extends AbsolutePanel {
         }).subscribe();
     }
 
-//    private void initPauseImage() {
-//        breakBear = new GameObjView(new BreakBear(controller.getCanvasModel()));
-//    }
 
     private void onKeyDown(KeyDownEvent event) {
-        logger.info(event.getNativeKeyCode() + " key");
         switch (event.getNativeKeyCode()) {
             case KeyCodes.KEY_P:
                 pauseSubject.onNext(true);
@@ -111,7 +104,7 @@ public class DrawingCanvas extends AbsolutePanel {
 
     public void breakAction(boolean pause) {
         if (pause) {
-            drawImageElement(breakBear);
+
         }
     }
 
@@ -151,7 +144,6 @@ public class DrawingCanvas extends AbsolutePanel {
         if (controller.gameObjectsStateIsActual(mapIdToGameObjects.keySet())) {
             List<Element> newValues = controller.getNewValues(mapIdToGameObjects.keySet());
             manageGameObjectsMap(newValues, removedKeys);
-            logger.info(newValues.toString());
         }
         addAllMappedToCanvas();
         TimeWrapper.getInstance().nextFrame();
@@ -168,7 +160,7 @@ public class DrawingCanvas extends AbsolutePanel {
         ImageElement img = value.getImage();
         drawingCanvasContext.translate(rx, ry);
         drawingCanvasContext.rotate(actualAngle);
-        drawingCanvasContext.drawImage(img, -value.getWidth() / 2, -value.getHeight() / 2, value.getWidth(), value.getHeight());
+        drawingCanvasContext.drawImage(img, (double)-img.getWidth() / 2, (double)-img.getHeight() / 2, img.getWidth(), img.getHeight());
         drawingCanvasContext.rotate(-actualAngle);
         drawingCanvasContext.translate(-rx, -ry);
     }

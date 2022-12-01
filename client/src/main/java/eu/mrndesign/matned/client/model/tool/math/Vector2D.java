@@ -25,8 +25,12 @@ public class Vector2D extends Point2D{
     }
 
     public double angleTo(Vector2D v) {
-        double dot = x*v.x + y*v.y;
-        double det = x*v.y - y*v.x;
+        return angleTo(v.x, v.y);
+    }
+
+    public double angleTo(double x1, double y1) {
+        double dot = x*x1 + y*y1;
+        double det = x*y1 - y*x1;
         double result = Math.toDegrees(Math.atan2(det, dot));
         if (result >= 0) {
             return result;
@@ -47,11 +51,6 @@ public class Vector2D extends Point2D{
         result.x /= magnitude;
         result.y /= magnitude;
         return result;
-    }
-
-    public double angleTo(double x, double y) {
-        Vector2D v = new Vector2D(x, y);
-        return angleTo(v);
     }
 
     public void rotate(double angleDegrees){

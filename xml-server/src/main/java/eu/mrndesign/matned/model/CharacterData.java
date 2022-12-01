@@ -10,7 +10,8 @@ public class CharacterData extends BaseImageData {
 
     private boolean hostile = true;
     private int hp;
-    private final List<ItemData> items = new ArrayList<>();
+    private final List<ItemData> items =  new ArrayList<>();
+    private final List<String> slots =  new ArrayList<>();
     private DialogData dialogData;
 
     @XmlElement(name = "hostile", defaultValue = "true")
@@ -34,6 +35,12 @@ public class CharacterData extends BaseImageData {
         return dialogData;
     }
 
+    @XmlElementWrapper(name = "slots")
+    @XmlElement(name = "slot")
+    public List<String> getSlots() {
+        return slots;
+    }
+
     public void setHostile(boolean hostile) {
         this.hostile = hostile;
     }
@@ -52,6 +59,7 @@ public class CharacterData extends BaseImageData {
                 super.toString() +
                 "hostile=" + hostile +
                 ", hp=" + hp +
+                ", slots=" + slots +
                 ", items=" + items +
                 ", dialogData=" + dialogData +
                 '}';

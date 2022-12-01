@@ -5,18 +5,20 @@ import com.google.gwt.json.client.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ItemData extends BaseImageData{
+    private static final Logger logger = Logger.getLogger(ItemData.class.getName());
 
-    public static ItemData generateItemData(JSONObject item) {
+    public static ItemData parse(JSONObject item) {
         ItemData itemData = new ItemData();
-        BaseImageData.updateFromJSONObject(item, itemData);
+        BaseImageData.parseBaseData(item, itemData);
         itemData.setType(item.get("type").isString().stringValue());
         itemData.setValue(item.get("value").isNumber().doubleValue());
-        itemData.setEquipped(item.get("equipped").isBoolean().booleanValue());
+        itemData.setSlot(item.get("slot").isString().stringValue());
         JSONArray mods = item.get("modDataTypes").isArray();
         for (int i = 0; i < mods.size(); i++) {
-            itemData.getModDataTypes().add(ModData.generateModType(mods.get(i).isObject()));
+            itemData.getModDataTypes().add(ModData.parse(mods.get(i).isObject()));
         }
         return itemData;
     }
@@ -24,7 +26,8 @@ public class ItemData extends BaseImageData{
     private String type = "COMMON";
     private final List<ModData> modDataTypes = new ArrayList<>();
     private double value;
-    private boolean equipped;
+    private String slot;
+
 
     public String getType() {
         return type;
@@ -38,8 +41,12 @@ public class ItemData extends BaseImageData{
         return value;
     }
 
-    public boolean isEquipped() {
-        return equipped;
+    public String getSlot() {
+        return slot;
+    }
+
+    public void setSlot(String slot) {
+        this.slot = slot;
     }
 
     public void setType(String type) {
@@ -50,9 +57,6 @@ public class ItemData extends BaseImageData{
         this.value = value;
     }
 
-    public void setEquipped(boolean equipped) {
-        this.equipped = equipped;
-    }
 
     @Override
     public String toString() {
@@ -61,7 +65,7 @@ public class ItemData extends BaseImageData{
                 "type='" + type + '\'' +
                 ", modDataTypes=" + modDataTypes +
                 ", value=" + value +
-                ", equipped=" + equipped +
+                ", slot=" + slot +
                 '}';
     }
 

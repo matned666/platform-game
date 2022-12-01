@@ -5,6 +5,14 @@
 
     <background>
         <name>desert-background</name>
+        <actions>
+            <action>
+                <name>STAND</name>
+                <images>
+                    <image>desert-background.jpg</image>
+                </images>
+            </action>
+        </actions>
     </background>
 
     <hero>
@@ -15,37 +23,64 @@
         <startYPos>0</startYPos>
         <hp>100</hp>
         <hostile>false</hostile>
-        <items>
-            <item>
-                <name>Gun</name>
-                <type>WEAPON</type>
-                <modTypes>
-                    <modType>
-                        <type>SHOOT_BULLET</type>
-                        <desc>bullet1</desc>
-                        <value>1</value>
-                    </modType>
-                </modTypes>
-                <equipped>true</equipped>
-            </item>
-
-            <item>
-                <name>Armor</name>
-                <type>ARMOR</type>
-                <modTypes>
-                    <modType>
-                        <type>DEFENCE</type>
-                        <value>10</value>
-                    </modType>
-                </modTypes>
-                <equipped>true</equipped>
-            </item>
-        </items>
+        <actions>
+            <action>
+                <name>STAND</name>
+                <images>
+                    <image>starship-stand1.png</image>
+                    <image>starship-walk1.png</image>
+                </images>
+            </action>
+            <action>
+                <name>MOVE_LEFT</name>
+                <keyCodes>
+                    <keyCode>65</keyCode>
+                    <keyCode>37</keyCode>
+                </keyCodes>
+                <vectorX>-1</vectorX>
+                <vectorY>0</vectorY>
+                <force>10</force>
+                <images>
+                    <image>starship-walk1.png</image>
+                </images>
+            </action>
+            <action>
+                <name>MOVE_RIGHT</name>
+                <keyCodes>
+                    <keyCode>68</keyCode>
+                    <keyCode>39</keyCode>
+                </keyCodes>
+                <vectorX>1</vectorX>
+                <vectorY>0</vectorY>
+                <force>10</force>
+                <images>
+                    <image>starship-walk1.png</image>
+                </images>
+            </action>
+            <action>
+                <name>JUMP</name>
+                <keyCodes>
+                    <keyCode>32</keyCode>
+                </keyCodes>
+                <force>50</force>
+                <images>
+                    <image>starship-walk1.png</image>
+                </images>
+            </action>
+        </actions>
     </hero>
 
     <grounds>
         <ground>
             <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>testball.png</image>
+                    </images>
+                </action>
+            </actions>
             <hPos>CENTER</hPos>
             <vPos>BOTTOM</vPos>
             <width>100</width>
@@ -56,34 +91,7 @@
     </grounds>
 
     <items>
-        <item>
-            <name>bullet1</name>
-            <type>BULLET</type>
-            <width>10</width>
-            <height>10</height>
 
-            <modTypes>
-                <modType>
-                    <type>BLOW</type>
-                    <desc>blow</desc>
-                    <value>1</value>
-                </modType>
-            </modTypes>
-        </item>
-        <item>
-            <name>blow</name>
-            <type>BLOW</type>
-            <modTypes>
-                <modType>
-                    <type>ATTACK</type>
-                    <value>10</value>
-                </modType>
-                <modType>
-                    <type>RANGE</type>
-                    <value>10</value>
-                </modType>
-            </modTypes>
-        </item>
     </items>
 
     <characters>

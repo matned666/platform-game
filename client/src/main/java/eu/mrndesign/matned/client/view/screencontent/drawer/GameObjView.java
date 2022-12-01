@@ -4,60 +4,60 @@ import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
+import eu.mrndesign.matned.client.model.game.object.element.item.ItemImpl;
 import eu.mrndesign.matned.client.model.game.object.frame.MoveType;
+import eu.mrndesign.matned.client.view.screencontent.drawer.image.ImageHolder;
+import eu.mrndesign.matned.client.view.screencontent.drawer.image.ImageHolderImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static eu.mrndesign.matned.client.controller.Constants.ANIMATION_FRAME_RATE;
 
 public class GameObjView extends Image {
+    private static final Logger logger = Logger.getLogger(GameObjView.class.getName());
 
-    private final Element character;
+    private final Element element;
     private final String id;
     private long frameNo = 0;
-    private final List<ImageElement> frames = new ArrayList<>();
+    private final ImageHolder imageHolder;
 
     public GameObjView(Element element) {
-        this.character = element;
+        this.element = element;
         this.id = element.getId();
+        this.imageHolder = ImageHolderImpl.parse(element.getActions());
         setStyleName("gameObject");
         getElement().setDraggable("DRAGGABLE_FALSE");
-        List<String> frames = element.getFrames(MoveType.STAND);
-        setUrl(frames.get(0));
-        frames.forEach(url -> this.frames.add(ImageElement.as(new Image(url).getElement())));
     }
 
     public String getId() {
         return id;
     }
 
-    private ImageElement animationRun() {
+    private ImageElement animationRun(String action) {
         int frame = (int) (TimeWrapper.getInstance().getFrameNo() - frameNo) - 1;
-        if (frame >= frames.size()*ANIMATION_FRAME_RATE) {
+        if (frame >= imageHolder.getAnimation(action).size()*ANIMATION_FRAME_RATE) {
             frameNo = TimeWrapper.getInstance().getFrameNo();
             frame = (int) (TimeWrapper.getInstance().getFrameNo() - frameNo) - 1;
         }
-        return  frames.get(frame/ANIMATION_FRAME_RATE);
+        return  imageHolder.getAnimation(action).get(frame/ANIMATION_FRAME_RATE);
     }
 
     public double getRotationValue() {
-        return character.getAngle();
+        return element.getAngle();
     }
 
     public double getCenterX() {
-        return character.getBounds().getCenter().getX();
+        return element.getBounds().getCenter().getX();
     }
 
     public double getCenterY() {
-        return character.getBounds().getCenter().getY();
+        return element.getBounds().getCenter().getY();
     }
 
     public ImageElement getImage() {
-        if (character.getFrames(MoveType.STAND).size()>1) {
-            return animationRun();
-        } else {
-            return frames.get(0);
-        }
+        return animationRun("STAND");
     }
+
 }

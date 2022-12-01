@@ -4,9 +4,9 @@ import com.google.gwt.json.client.JSONObject;
 
 public class SceneElementData extends BaseImageData{
 
-    public static SceneElementData generateGroundData(JSONObject ground) {
+    public static SceneElementData parse(JSONObject ground) {
         SceneElementData sceneElementData = new SceneElementData();
-        BaseImageData.updateFromJSONObject(ground, sceneElementData);
+        BaseImageData.parseBaseData(ground, sceneElementData);
         sceneElementData.setDestructible(ground.get("destructible").isBoolean().booleanValue());
         sceneElementData.setHp(ground.get("hp").isNumber().doubleValue());
         return sceneElementData;

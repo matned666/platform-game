@@ -7,30 +7,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static eu.mrndesign.matned.client.model.game.object.data.model.CharacterData.generateCharacterData;
-import static eu.mrndesign.matned.client.model.game.object.data.model.ItemData.generateItemData;
-import static eu.mrndesign.matned.client.model.game.object.data.model.SceneElementData.generateGroundData;
-
 public class LevelData {
     private static final Logger logger = Logger.getLogger(LevelData.class.getName());
 
-    public static LevelData generateLevelData(JSONObject level) {
+    public static LevelData parse(JSONObject level) {
         LevelData levelData = new LevelData();
         levelData.setWidthSquares((int) level.get("widthSquares").isNumber().doubleValue());
         levelData.setHeightSquares((int) level.get("heightSquares").isNumber().doubleValue());
-        levelData.setBackground(BaseImageData.generateBaseImageData(level.get("background").isObject()));
-        levelData.setHero(generateCharacterData(level.get("hero").isObject()));
+        levelData.setBackground(BaseImageData.parseBase(level.get("background").isObject()));
+        levelData.setHero(CharacterData.parse(level.get("hero").isObject()));
         JSONArray items = level.get("items").isArray();
         for (int i = 0; i < items.size(); i++) {
-            levelData.getItems().add(generateItemData(items.get(i).isObject()));
+            levelData.getItems().add(ItemData.parse(items.get(i).isObject()));
         }
         JSONArray characters = level.get("characters").isArray();
         for (int i = 0; i < characters.size(); i++) {
-            levelData.getCharacters().add(generateCharacterData(characters.get(i).isObject()));
+            levelData.getCharacters().add(CharacterData.parse(characters.get(i).isObject()));
         }
         JSONArray grounds = level.get("grounds").isArray();
         for (int i = 0; i < grounds.size(); i++) {
-            levelData.getGrounds().add(generateGroundData(grounds.get(i).isObject()));
+            levelData.getGrounds().add(SceneElementData.parse(grounds.get(i).isObject()));
         }
         return levelData;
     }

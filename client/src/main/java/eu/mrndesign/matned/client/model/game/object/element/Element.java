@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object.element;
 
+import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 import eu.mrndesign.matned.client.model.game.object.frame.MoveType;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
@@ -47,15 +48,13 @@ public interface Element {
     void setToRemove();
 
     /**
-     * @return sorted List of images for element animation
-     */
-    List<String> getFrames(MoveType moveType);
-
-    /**
      * @return Element angle to the reference Vector
      */
     double getAngle();
 
-
+    /**
+     * @return List of {@link ActionData} fot the Element
+     */
+    List<ActionData> getActions();
 
 }

@@ -12,7 +12,7 @@ public class ItemData extends BaseImageData {
     private String type = "COMMON";
     private final List<ModData> modDataTypes = new ArrayList<>();
     private double value;
-    private boolean equipped;
+    private String slot = "";
 
     @XmlElement(name = "type", defaultValue = "COMMON")
     public String getType() {
@@ -30,21 +30,13 @@ public class ItemData extends BaseImageData {
         return value;
     }
 
-    @XmlElement(name = "equipped")
-    public boolean isEquipped() {
-        return equipped;
+    @XmlElement(name = "slot")
+    public String getSlot() {
+        return slot;
     }
 
-    @Override
-    @XmlTransient
-    public double getDirectionX() {
-        return 1;
-    }
-
-    @Override
-    @XmlTransient
-    public double getDirectionY() {
-        return 0;
+    public void setSlot(String slot) {
+        this.slot = slot;
     }
 
     public void setType(String type) {
@@ -55,10 +47,6 @@ public class ItemData extends BaseImageData {
         this.value = value;
     }
 
-    public void setEquipped(boolean equipped) {
-        this.equipped = equipped;
-    }
-
     @Override
     public String toString() {
         return "ItemData{" +
@@ -66,7 +54,7 @@ public class ItemData extends BaseImageData {
                 "type='" + type + '\'' +
                 ", modDataTypes=" + modDataTypes +
                 ", value=" + value +
-                ", equipped=" + equipped +
+                ", slot=" + slot +
                 '}';
     }
 

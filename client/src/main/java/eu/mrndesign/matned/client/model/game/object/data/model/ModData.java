@@ -4,7 +4,7 @@ import com.google.gwt.json.client.JSONObject;
 
 public class ModData {
 
-    public static ModData generateModType(JSONObject mod) {
+    public static ModData parse(JSONObject mod) {
         ModData modData = new ModData();
         modData.setType(mod.get("type").isString().stringValue());
         modData.setDesc(mod.get("desc").isString().stringValue());

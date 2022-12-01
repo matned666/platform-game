@@ -10,9 +10,6 @@ import eu.mrndesign.matned.client.model.game.object.data.model.LevelData;
 
 import java.util.logging.Logger;
 
-import static eu.mrndesign.matned.client.model.game.object.data.model.GameStructureData.generateGameStructureData;
-import static eu.mrndesign.matned.client.model.game.object.data.model.LevelData.generateLevelData;
-
 public class HttpRequester implements Requester {
     protected final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -34,9 +31,10 @@ public class HttpRequester implements Requester {
                 public void onResponseReceived(Request request, Response response) {
                     JSONValue value = JSONParser.parseStrict(response.getText());
                     JSONObject obj = value.isObject();
-                    GameStructureData gameStructureData = generateGameStructureData(obj);
+                    GameStructureData gameStructureData = GameStructureData.parse(obj);
                     game.onGameStructureReceive(gameStructureData);
                 }
+
                 @Override
                 public void onError(Request request, Throwable exception) {
 //               TODO     model.onServerError("Get all candidates error");
@@ -63,8 +61,8 @@ public class HttpRequester implements Requester {
                     JSONValue value = JSONParser.parseStrict(response.getText());
                     JSONObject level = value.isObject();
                     logger.info("Request received");
-                    LevelData levelData = generateLevelData(level);
-                    game.onLevelDataReceived(levelData);
+                    LevelData levelData = LevelData.parse(level);
+                    game.onLevelRequestCallBack(levelData);
                 }
 
                 @Override
