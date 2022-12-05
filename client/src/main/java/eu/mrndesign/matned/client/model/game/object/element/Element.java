@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.client.model.game.object.element;
 
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
-import eu.mrndesign.matned.client.model.game.object.frame.MoveType;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
 
@@ -30,7 +30,7 @@ public interface Element {
      * Moves Element in x,y direction by the given speed
      * @param vector movement direction
      */
-    void move(Vector2D vector, double initSpeed);
+    void move(Vector2D vector, double initSpeed, ActionType actionType);
 
     /**
      * @return {@link Bounds2D} object of the Element
@@ -57,4 +57,5 @@ public interface Element {
      */
     List<ActionData> getActions();
 
+    void stop();
 }

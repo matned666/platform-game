@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object.element.background;
 
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 import eu.mrndesign.matned.client.model.game.object.data.model.SceneElementData;
@@ -29,8 +30,9 @@ public class SceneElementImpl extends BaseElement implements SceneElement {
     }
 
     @Override
-    public void move(Vector2D v, double initSpeed) {
-//        TODO
+    public void move(Vector2D v, double initSpeed, ActionType actionType) {
+        super.move(v, initSpeed, actionType);
+//        ToDO
     }
 
     @Override

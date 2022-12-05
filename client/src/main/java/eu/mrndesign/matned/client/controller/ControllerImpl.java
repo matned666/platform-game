@@ -75,6 +75,11 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
+    public void onKeyReleased() {
+        model.onKeyReleased();
+    }
+
+    @Override
     public void setDrawingCanvas(DrawingCanvas drawingCanvas) {
         this.drawingCanvas = drawingCanvas;
     }

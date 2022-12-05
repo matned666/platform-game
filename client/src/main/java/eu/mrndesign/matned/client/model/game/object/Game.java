@@ -11,6 +11,7 @@ import eu.mrndesign.matned.client.model.request.HttpRequester;
 import eu.mrndesign.matned.client.model.request.Requester;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
 import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
+import eu.mrndesign.matned.client.view.screencontent.object.ActionTypeHolder;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -168,17 +169,21 @@ public class Game {
 
     public synchronized void action() {
         actualVector = hero.getBounds().getVector();
-        hero.move(actualVector, 20);
+        hero.move(actualVector, 20, ActionType.JUMP);
 
     }
 
     private Vector2D actualVector = new Vector2D(1,0);
-    public synchronized void move(Vector2D vector, double speed) {
-        hero.move(vector, speed);
+    public synchronized void move(Vector2D vector, double speed, ActionType actionType) {
+        hero.move(vector, speed, actionType);
     }
 
     public void move(double speed) {
-        hero.move(hero.getBounds().getVector(), speed);
+        hero.move(hero.getBounds().getVector(), speed, ActionType.JUMP);
+    }
+
+    public void stop() {
+        hero.stop();
     }
 
     public synchronized void setDirection(int x, int y) {

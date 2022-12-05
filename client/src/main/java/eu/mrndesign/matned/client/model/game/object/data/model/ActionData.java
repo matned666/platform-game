@@ -2,6 +2,7 @@ package eu.mrndesign.matned.client.model.game.object.data.model;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class ActionData {
 
     public static ActionData parse(JSONObject action) {
         ActionData actionData = new ActionData();
-        actionData.setName(action.get("name").isString().stringValue());
+        actionData.setActionType(ActionType.getFrom(action.get("name").isString().stringValue()));
         JSONArray keyCodes = action.get("keyCodes").isArray();
         for (int i = 0; i < keyCodes.size(); i++) {
             actionData.keyCodes.add((int) keyCodes.get(i).isNumber().doubleValue());
@@ -37,7 +38,7 @@ public class ActionData {
         return actionData;
     }
 
-    private String name;
+    private ActionType actionType;
     private final List<Integer> keyCodes = new ArrayList<>();
     private String startTask;
     private String endTask;
@@ -48,12 +49,12 @@ public class ActionData {
     private final List<String> images = new ArrayList<>();
     private final List<String> slotsUse = new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public ActionType getActionType() {
+        return actionType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
     }
 
     public List<Integer> getKeyCodes() {
@@ -115,7 +116,7 @@ public class ActionData {
     @Override
     public String toString() {
         return "ActionData{" +
-                "name='" + name + '\'' +
+                "name='" + actionType + '\'' +
                 ", keyCodes=" + keyCodes +
                 ", startTask='" + startTask + '\'' +
                 ", endTask='" + endTask + '\'' +

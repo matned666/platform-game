@@ -1,5 +1,6 @@
 package eu.mrndesign.matned.client.model.game.object.element.character;
 
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 import eu.mrndesign.matned.client.model.game.object.data.model.CharacterData;
@@ -39,7 +40,9 @@ public class CharacterImpl extends BaseElement implements Character {
         gravity.calculate(this, actualSpeed);
     }
 
-    public void move(Vector2D v, double initSpeed) {
+    @Override
+    public void move(Vector2D v, double initSpeed, ActionType actionType) {
+        super.move(v, initSpeed, actionType);
         actualSpeed = initSpeed;
         getBounds().getCenter().move(v, initSpeed);
     }

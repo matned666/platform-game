@@ -61,7 +61,7 @@ public class CanvasModel extends Bounds2D {
                 } else if (sneak) {
                     speed /= 2;
                 }
-                game.move(v, speed);
+                game.move(v, speed, ActionType.MOVE_LEFT);
                 break;
             case MOVE_RIGHT:
                 v = new Vector2D(1, 0);
@@ -70,11 +70,17 @@ public class CanvasModel extends Bounds2D {
                 } else if (sneak) {
                     speed /= 2;
                 }
-                game.move(v, speed);
+                game.move(v, speed, ActionType.MOVE_RIGHT);
                 break;
             case JUMP:
                 game.move(speed * 100);
+            default:
+                game.stop();
         }
+    }
+
+    public void onKeyReleased(){
+        game.stop();
     }
 
     public Game getGame() {

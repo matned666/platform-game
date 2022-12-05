@@ -6,6 +6,7 @@ import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Image;
@@ -13,7 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
-import eu.mrndesign.matned.client.view.screencontent.drawer.GameObjView;
+import eu.mrndesign.matned.client.view.screencontent.object.GameObjView;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -85,6 +86,7 @@ public class DrawingCanvas extends AbsolutePanel {
         drawingCanvas.addMouseOutHandler(e -> dragging=false);
         drawingCanvas.addMouseOverHandler(e -> dragging=false);
         drawingCanvas.addKeyDownHandler(this::onKeyDown);
+        drawingCanvas.addKeyUpHandler(this::onKeyUp);
         pauseSubject.map(pause -> {
             boolean b = TimeWrapper.getInstance().startStop();
             breakAction(b);
@@ -97,8 +99,19 @@ public class DrawingCanvas extends AbsolutePanel {
         switch (event.getNativeKeyCode()) {
             case KeyCodes.KEY_P:
                 pauseSubject.onNext(true);
+                break;
             default:
                 controller.onKeyPressed(KeyMap.getEvent(event.getNativeKeyCode()), event.isShiftKeyDown(), event.isControlKeyDown());
+                controller.onCanvasMouseMove(actualX, actualY);
+        }
+    }
+
+    private void onKeyUp(KeyUpEvent event){
+        switch (event.getNativeKeyCode()) {
+            case KeyCodes.KEY_P:
+                break;
+            default:
+                controller.onKeyReleased();
         }
     }
 

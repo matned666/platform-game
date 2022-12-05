@@ -1,16 +1,13 @@
-package eu.mrndesign.matned.client.view.screencontent.drawer;
+package eu.mrndesign.matned.client.view.screencontent.object;
 
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
-import eu.mrndesign.matned.client.model.game.object.element.item.ItemImpl;
-import eu.mrndesign.matned.client.model.game.object.frame.MoveType;
-import eu.mrndesign.matned.client.view.screencontent.drawer.image.ImageHolder;
-import eu.mrndesign.matned.client.view.screencontent.drawer.image.ImageHolderImpl;
+import eu.mrndesign.matned.client.view.screencontent.object.image.ImageHolder;
+import eu.mrndesign.matned.client.view.screencontent.object.image.ImageHolderImpl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static eu.mrndesign.matned.client.controller.Constants.ANIMATION_FRAME_RATE;
@@ -35,7 +32,7 @@ public class GameObjView extends Image {
         return id;
     }
 
-    private ImageElement animationRun(String action) {
+    private ImageElement animationRun(ActionType action) {
         int frame = (int) (TimeWrapper.getInstance().getFrameNo() - frameNo) - 1;
         if (frame >= imageHolder.getAnimation(action).size()*ANIMATION_FRAME_RATE) {
             frameNo = TimeWrapper.getInstance().getFrameNo();
@@ -57,7 +54,7 @@ public class GameObjView extends Image {
     }
 
     public ImageElement getImage() {
-        return animationRun("STAND");
+        return animationRun(ActionTypeHolder.getInstance().get(id));
     }
 
 }

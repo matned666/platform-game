@@ -1,7 +1,8 @@
-package eu.mrndesign.matned.client.view.screencontent.drawer.image;
+package eu.mrndesign.matned.client.view.screencontent.object.image;
 
 import com.google.gwt.dom.client.ImageElement;
 import com.google.gwt.user.client.ui.Image;
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 
 import java.util.ArrayList;
@@ -12,15 +13,15 @@ import java.util.logging.Logger;
 public class Animation {
     private static final Logger logger = Logger.getLogger(Animation.class.getName());
 
-    private final String key;
+    private final ActionType key;
     private final List<ImageElement> animation = new ArrayList<>();
 
-    private Animation(String key) {
+    private Animation(ActionType key) {
         this.key = key;
     }
 
     public static Animation parse(ActionData action) {
-        Animation animation = new Animation(action.getName());
+        Animation animation = new Animation(action.getActionType());
         action.getImages().forEach(a ->{
             logger.info("img/"+a);
             animation.getAnimation().add(ImageElement.as(new Image("img/"+a).getElement()));

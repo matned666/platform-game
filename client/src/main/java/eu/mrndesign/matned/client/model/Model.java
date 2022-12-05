@@ -29,4 +29,5 @@ public interface Model {
 
     void onKeyPressed(KeyMap keyCode, boolean mod1, boolean mod2);
 
+    void onKeyReleased();
 }
