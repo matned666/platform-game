@@ -1,5 +1,7 @@
 package eu.mrndesign.matned.client.model.game.object;
 
+import eu.mrndesign.matned.client.model.exception.UnrecognizedActionTypeException;
+
 import java.util.Arrays;
 
 public enum ActionType {
@@ -11,7 +13,7 @@ public enum ActionType {
     JUMP,
     SNEAK,
     DEATH,
-    ATTACK;
+    ATTACK, ACTION;
 
     public boolean is(String name) {
         return name().equalsIgnoreCase(name);

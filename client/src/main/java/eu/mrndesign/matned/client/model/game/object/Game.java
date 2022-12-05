@@ -11,7 +11,6 @@ import eu.mrndesign.matned.client.model.request.HttpRequester;
 import eu.mrndesign.matned.client.model.request.Requester;
 import eu.mrndesign.matned.client.model.tool.math.Vector2D;
 import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
-import eu.mrndesign.matned.client.view.screencontent.object.ActionTypeHolder;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -26,6 +25,7 @@ public class Game {
 
     private final Map<String, Element> mapIdToElement = new HashMap<>();
 
+    private final Map<String, Element> mapPlayerMovementElements = new HashMap<>();
     private final Map<String, Element> mapIdToBullet = new HashMap<>();
     private final Map<String, Element> mapIdToEnemy = new HashMap<>();
     private final Map<String, Element> mapIdToSceneElement = new HashMap<>();
@@ -34,8 +34,6 @@ public class Game {
 
     private final CanvasModel canvasModel;
     private final Requester requester;
-
-    private Element hero;
 
     private final Subject<Boolean> refreshSubject = PublishSubject.create();
     private final Subject<Boolean> bulletsRefreshSubject = PublishSubject.create();
@@ -118,7 +116,8 @@ public class Game {
 
     private void updateHero() {
         CharacterData heroData = levelData.getHero();
-        hero = new CharacterImpl(this, heroData);
+        Element hero = new CharacterImpl(this, heroData);
+        mapPlayerMovementElements.put(hero.getId(), hero);
         mapIdToElement.put(hero.getId(), hero);
     }
 
@@ -167,28 +166,12 @@ public class Game {
         return removedGameElements;
     }
 
-    public synchronized void action() {
-        actualVector = hero.getBounds().getVector();
-        hero.move(actualVector, 20, ActionType.JUMP);
-
-    }
-
-    private Vector2D actualVector = new Vector2D(1,0);
-    public synchronized void move(Vector2D vector, double speed, ActionType actionType) {
-        hero.move(vector, speed, actionType);
-    }
-
-    public void move(double speed) {
-        hero.move(hero.getBounds().getVector(), speed, ActionType.JUMP);
-    }
-
-    public void stop() {
-        hero.stop();
+    public synchronized void action(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
+        mapPlayerMovementElements.values().forEach(element -> element.action(actionType, shiftDown, ctrlDown));
     }
 
     public synchronized void setDirection(int x, int y) {
-        hero.setDirection(x,y);
-        actualVector = hero.getBounds().getVector();
+        mapPlayerMovementElements.values().forEach(element -> element.setDirection(x, y));
     }
 
     public String getBackground() {

@@ -2,6 +2,8 @@ package eu.mrndesign.matned.client.model.game.object.data.model;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
+import eu.mrndesign.matned.client.model.exception.ActionNotFoundException;
+import eu.mrndesign.matned.client.model.game.object.ActionType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,14 @@ public class BaseImageData implements Boundable {
     @Override
     public String getVerticalPos() {
         return verticalPos;
+    }
+
+    @Override
+    public ActionData getAction(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
+        return actions.stream()
+                .filter(a -> a.getActionType() == actionType)
+                .findFirst()
+                .orElseThrow(()->new ActionNotFoundException("BaseImageData", actionType));
     }
 
     @Override

@@ -93,8 +93,7 @@ public class DrawingCanvas extends AbsolutePanel {
             return b;
         }).subscribe();
     }
-
-
+    
     private void onKeyDown(KeyDownEvent event) {
         switch (event.getNativeKeyCode()) {
             case KeyCodes.KEY_P:

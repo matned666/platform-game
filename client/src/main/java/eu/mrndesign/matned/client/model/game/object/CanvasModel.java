@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static eu.mrndesign.matned.client.view.screencontent.game.KeyMap.ACTION;
+
 public class CanvasModel extends Bounds2D {
     protected static final Logger logger = Logger.getLogger(CharacterImpl.class.getName());
 
@@ -47,40 +49,25 @@ public class CanvasModel extends Bounds2D {
         return game.getRemovedGameElements();
     }
 
-    public void onKeyPressed(KeyMap keyMap, boolean run, boolean sneak) {
-        Vector2D v;
-        double speed = 5;
+    public void onKeyPressed(KeyMap keyMap, boolean shiftDown, boolean ctrlDown) {
         switch (keyMap) {
             case ACTION:
-                game.action();
+                game.action(ActionType.ACTION, shiftDown, ctrlDown);
                 break;
             case MOVE_LEFT:
-                v = new Vector2D(-1, 0);
-                if (run) {
-                    speed *= 2;
-                } else if (sneak) {
-                    speed /= 2;
-                }
-                game.move(v, speed, ActionType.MOVE_LEFT);
+                game.action(ActionType.MOVE_LEFT, shiftDown, ctrlDown);
                 break;
             case MOVE_RIGHT:
-                v = new Vector2D(1, 0);
-                if (run) {
-                    speed *= 2;
-                } else if (sneak) {
-                    speed /= 2;
-                }
-                game.move(v, speed, ActionType.MOVE_RIGHT);
+                game.action(ActionType.MOVE_RIGHT, shiftDown, ctrlDown);
                 break;
             case JUMP:
-                game.move(speed * 100);
+                game.action(ActionType.JUMP, shiftDown, ctrlDown);
             default:
-                game.stop();
         }
     }
 
     public void onKeyReleased(){
-        game.stop();
+        game.action(ActionType.STAND, false, false);
     }
 
     public Game getGame() {

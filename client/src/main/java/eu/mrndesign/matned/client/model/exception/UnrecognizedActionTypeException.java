@@ -1,4 +1,4 @@
-package eu.mrndesign.matned.client.model.game.object;
+package eu.mrndesign.matned.client.model.exception;
 
 public class UnrecognizedActionTypeException extends RuntimeException{
 

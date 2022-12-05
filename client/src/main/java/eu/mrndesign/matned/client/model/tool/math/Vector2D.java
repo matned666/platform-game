@@ -154,4 +154,9 @@ public class Vector2D extends Point2D{
     public Vector2D getPerpVector() {
         return new Vector2D(y, -x);
     }
+
+    public void paste(Vector2D v){
+        x = v.x;
+        y = v.y;
+    }
 }
