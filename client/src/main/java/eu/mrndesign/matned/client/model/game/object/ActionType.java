@@ -8,12 +8,12 @@ public enum ActionType {
     STAND,
     MOVE_LEFT,
     MOVE_RIGHT,
-    RUN_LEFT,
-    RUN_RIGHT,
+    RUN,
     JUMP,
     SNEAK,
     DEATH,
-    ATTACK, ACTION;
+    ATTACK,
+    ACTION, FLY;
 
     public boolean is(String name) {
         return name().equalsIgnoreCase(name);

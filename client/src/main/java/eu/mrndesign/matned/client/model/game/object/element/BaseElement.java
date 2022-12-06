@@ -4,6 +4,7 @@ import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 import eu.mrndesign.matned.client.model.game.object.data.model.Boundable;
 import eu.mrndesign.matned.client.model.game.object.ActionType;
+import eu.mrndesign.matned.client.model.game.object.element.character.CharacterImpl;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Math2D;
 import eu.mrndesign.matned.client.model.tool.math.Point2D;
@@ -12,7 +13,10 @@ import eu.mrndesign.matned.client.model.tool.phisic.Gravity;
 import eu.mrndesign.matned.client.model.tool.phisic.GravityImpl;
 import eu.mrndesign.matned.client.view.screencontent.object.ActionTypeHolder;
 
+import java.util.logging.Logger;
+
 public abstract class BaseElement implements Element {
+    protected static final Logger logger = Logger.getLogger(BaseElement.class.getName());
 
     private final String id;
     private final Bounds2D bounds;
@@ -23,7 +27,7 @@ public abstract class BaseElement implements Element {
 
     private boolean toRemove;
 
-    private Runnable actualAction = () -> {};
+    private final Move move;
 
     protected BaseElement(Game game, String type, Boundable boundable) {
         this.game = game;
@@ -31,6 +35,7 @@ public abstract class BaseElement implements Element {
         this.gravity = new GravityImpl(game, this);
         this.boundable = boundable;
         this.bounds = Bounds2D.generate(boundable);
+        this.move = new Move(this, gravity);
         ActionTypeHolder.getInstance().put(id, ActionType.STAND);
     }
 
@@ -41,18 +46,18 @@ public abstract class BaseElement implements Element {
 
     @Override
     public void setDirection(int x, int y) {
-        bounds.setVector(new Vector2D(bounds.getCenter(), new Point2D(x,y)));
+        bounds.setVector(new Vector2D(bounds.getCenter(), new Point2D(x, y)));
     }
 
     @Override
-    public void setVisual(Vector2D vector, double initSpeed, ActionType actionType){
+    public void setVisual(Vector2D vector, double initSpeed, ActionType actionType) {
         ActionTypeHolder.getInstance().put(id, actionType);
     }
 
     @Override
     public void refresh() {
-        actualAction.run();
-        gravity.calculate(this, 10);
+        move.run();
+//        logger.info(move.toString());
     }
 
     @Override
@@ -72,24 +77,94 @@ public abstract class BaseElement implements Element {
 
     @Override
     public double getAngle() {
-        return -getBounds().getVector().angleTo(0, -1);
+        return -getBounds().getVector().angleTo(1, 0);
     }
 
     @Override
-    public void action(ActionType actionType, boolean shiftDown, boolean ctrlDown){
+    public void action(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
+//        move.vector.setY(action.getVectorY());
+//        logger.info(actionType.name() +" -> vX:" + action.getVectorX() + ", vY:" + action.getVectorY() + ", gSp:" + move.gravitySpeed);
+        if (actionType == null) {
+            move.fly = false;
+            move.gravitySpeed = 0;
+            ActionTypeHolder.getInstance().put(id, ActionType.STAND);
+            return;
+        }
+
+        ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
+        switch (actionType){
+            case JUMP:
+                if (move.gravitySpeed != 0) return;
+                move.gravitySpeed = action.getForce();
+                ActionTypeHolder.getInstance().put(id, actionType);
+                break;
+            case FLY:
+                move.fly = true;
+                move.gravitySpeed = action.getForce();
+                ActionTypeHolder.getInstance().put(id, actionType);
+                break;
+        }
+//        if (actionType == ActionType.JUMP && move.gravitySpeed == 0) {
+//            ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
+//            move.gravitySpeed = action.getForce();
+//            ActionTypeHolder.getInstance().put(id, actionType);
+//        } else if(actionType == ActionType.FLY) {
+//            ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
+//            move.fly = true;
+//            move.gravitySpeed = 7;
+//            logger.info("FLYYYYY");
+//        }else {
+//
+//        }
+
+    }
+
+    @Override
+    public void move(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
         ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
         Vector2D vector = new Vector2D(action.getVectorX(), action.getVectorY());
         setVisual(vector, action.getForce(), actionType);
-        switch (actionType) {
-            case MOVE_LEFT:
-            case MOVE_RIGHT:
-                actualAction = () -> {
-                    bounds.getCenter().move(vector, action.getForce());
-                };
-                break;
-            case STAND:
-                actualAction = () -> {};
-                break;
+        move.gravitySpeed = 0;
+        move.fly = false;
+        move.force = action.getForce() * (shiftDown? 3 : 1);
+        if (action.getVectorX() == 0 && action.getVectorY() == 0) {
+//            this check is must have before setting a direction Vector
+//            otherwise operations on Vector2D(0,0) may throw NaN values
+            return;
+        }
+        move.vector.setY(action.getVectorY());
+        move.vector.setX(action.getVectorX());
+    }
+
+    private static class Move {
+
+        private final Vector2D vector = new Vector2D(1, 0);
+        private double force;
+        private double gravitySpeed = 0;
+        private boolean fly;
+
+        private final Element element;
+        private final Gravity gravity;
+
+        private Move(Element element, Gravity gravity) {
+            this.element = element;
+            this.gravity = gravity;
+        }
+
+        private void run() {
+            element.getBounds().getCenter().move(vector, force);
+            gravity.calculate(element, gravitySpeed, fly);
+        }
+
+        @Override
+        public String toString() {
+            return "Move{" +
+                    "vector=" + vector +
+                    ", force=" + force +
+                    ", gravitySpeed=" + gravitySpeed +
+                    ", element=" + element +
+                    ", gravity=" + gravity +
+                    '}';
         }
     }
 

@@ -75,8 +75,8 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void onKeyReleased() {
-        model.onKeyReleased();
+    public void onKeyReleased(KeyMap key) {
+        model.onKeyReleased(key);
     }
 
     @Override

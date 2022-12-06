@@ -110,7 +110,7 @@ public class DrawingCanvas extends AbsolutePanel {
             case KeyCodes.KEY_P:
                 break;
             default:
-                controller.onKeyReleased();
+                controller.onKeyReleased(KeyMap.getEvent(event.getNativeKeyCode()));
         }
     }
 

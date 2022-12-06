@@ -57,12 +57,14 @@ public interface Element {
      */
     List<ActionData> getActions();
 
+    void action(ActionType actionType, boolean shiftDown, boolean ctrlDown);
+
     /**
      *
      * @param actionType
      * @param shiftDown
      * @param ctrlDown
      */
-    void action(ActionType actionType, boolean shiftDown, boolean ctrlDown);
+    void move(ActionType actionType, boolean shiftDown, boolean ctrlDown);
 
 }

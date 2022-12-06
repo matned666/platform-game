@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static eu.mrndesign.matned.client.view.screencontent.game.KeyMap.ACTION;
-
 public class CanvasModel extends Bounds2D {
     protected static final Logger logger = Logger.getLogger(CharacterImpl.class.getName());
 
@@ -55,19 +53,28 @@ public class CanvasModel extends Bounds2D {
                 game.action(ActionType.ACTION, shiftDown, ctrlDown);
                 break;
             case MOVE_LEFT:
-                game.action(ActionType.MOVE_LEFT, shiftDown, ctrlDown);
+                game.move(ActionType.MOVE_LEFT, shiftDown, ctrlDown);
                 break;
             case MOVE_RIGHT:
-                game.action(ActionType.MOVE_RIGHT, shiftDown, ctrlDown);
+                game.move(ActionType.MOVE_RIGHT, shiftDown, ctrlDown);
                 break;
             case JUMP:
                 game.action(ActionType.JUMP, shiftDown, ctrlDown);
+                break;
+            case FLY:
+                game.action(ActionType.FLY, shiftDown, ctrlDown);
+                break;
             default:
         }
     }
 
-    public void onKeyReleased(){
-        game.action(ActionType.STAND, false, false);
+    public void onKeyReleased(KeyMap keyMap){
+        if (KeyMap.moveMaps.contains(keyMap)) {
+            game.move(ActionType.STAND, false, false);
+        } else {
+            game.action(null, false, false);
+
+        }
     }
 
     public Game getGame() {

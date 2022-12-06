@@ -22,7 +22,6 @@ public class Bounds2D {
     protected Vector2D vector;
     protected double width;
     protected double height;
-    protected double mass;
     protected final Point2D center;
 
     public Bounds2D() {
@@ -47,6 +46,13 @@ public class Bounds2D {
                 && rightBorder() < bounds2D.rightBorder();
     }
 
+    /**
+     * <br> Collision check.
+     * <br> Checks if there is any gap on shadows dropped by both figures on each figure each side
+     * <br> if there is a gap found than touched by returns false result
+     * @param b collider
+     * @return boolean result
+     */
     public boolean touchedBy(Bounds2D b) {
         return isNoGapBetweenBounds(b) && b.isNoGapBetweenBounds(this);
     }
@@ -159,14 +165,6 @@ public class Bounds2D {
         return width;
     }
 
-    public double getMass() {
-        return mass;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
     public void setWidth(double width) {
         this.width = width;
     }
@@ -191,7 +189,7 @@ public class Bounds2D {
 
     @Override
     public String toString() {
-        return center + ", " + vector.moved(vector, height / 2) + ", " + vector.moved(vector, height / 2).getPerpVector();
+        return "Bounds: "+center + ", " + vector.moved(vector, height / 2) + ", " + vector.moved(vector, height / 2).getPerpVector();
     }
 
     public Vector2D getVector() {

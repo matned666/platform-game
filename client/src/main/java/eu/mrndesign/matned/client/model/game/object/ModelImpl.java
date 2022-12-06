@@ -82,8 +82,8 @@ public class ModelImpl implements Model {
     }
 
     @Override
-    public void onKeyReleased() {
-        activeCanvasModel.onKeyReleased();
+    public void onKeyReleased(KeyMap key) {
+        activeCanvasModel.onKeyReleased(key);
     }
 
 

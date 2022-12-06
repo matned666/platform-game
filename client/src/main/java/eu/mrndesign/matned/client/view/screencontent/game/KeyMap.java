@@ -4,17 +4,22 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import eu.mrndesign.matned.client.model.game.object.element.character.CharacterImpl;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 public enum KeyMap {
 
     NONE,
-    ACTION(KeyCodes.KEY_SPACE, KeyCodes.KEY_Z),
+    ACTION(),
     JUMP(KeyCodes.KEY_W, KeyCodes.KEY_UP),
+    FLY(KeyCodes.KEY_SPACE),
     MOVE_LEFT(KeyCodes.KEY_A, KeyCodes.KEY_LEFT),
     MOVE_RIGHT(KeyCodes.KEY_D, KeyCodes.KEY_RIGHT);
 
     protected static final Logger logger = Logger.getLogger(KeyMap.class.getName());
+
+    public static final List<KeyMap> moveMaps = Arrays.asList(MOVE_LEFT, MOVE_RIGHT);
+
     private final int[] keys;
 
     KeyMap(int ... keys) {

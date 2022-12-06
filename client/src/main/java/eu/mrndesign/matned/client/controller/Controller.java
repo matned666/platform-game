@@ -29,7 +29,7 @@ public interface Controller {
 
     void onKeyPressed(KeyMap keyCode, boolean mod1, boolean mod2);
 
-    void onKeyReleased();
+    void onKeyReleased(KeyMap event);
 
     void setDrawingCanvas(DrawingCanvas widgets);
 

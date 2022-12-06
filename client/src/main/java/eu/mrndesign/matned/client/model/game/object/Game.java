@@ -9,7 +9,6 @@ import eu.mrndesign.matned.client.model.game.object.element.character.CharacterI
 import eu.mrndesign.matned.client.model.game.object.element.item.ItemImpl;
 import eu.mrndesign.matned.client.model.request.HttpRequester;
 import eu.mrndesign.matned.client.model.request.Requester;
-import eu.mrndesign.matned.client.model.tool.math.Vector2D;
 import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -170,8 +169,12 @@ public class Game {
         mapPlayerMovementElements.values().forEach(element -> element.action(actionType, shiftDown, ctrlDown));
     }
 
+    public synchronized void move(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
+        mapPlayerMovementElements.values().forEach(element -> element.move(actionType, shiftDown, ctrlDown));
+    }
+
     public synchronized void setDirection(int x, int y) {
-        mapPlayerMovementElements.values().forEach(element -> element.setDirection(x, y));
+//        mapPlayerMovementElements.values().forEach(element -> element.setDirection(x, y));
     }
 
     public String getBackground() {
