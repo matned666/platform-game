@@ -9,7 +9,7 @@
             <action>
                 <name>STAND</name>
                 <images>
-                    <image>desert-background.jpg</image>
+                    <image>white-background.jpg</image>
                 </images>
             </action>
         </actions>

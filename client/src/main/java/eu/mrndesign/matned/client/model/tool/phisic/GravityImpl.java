@@ -11,7 +11,7 @@ import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
 public class GravityImpl implements Gravity {
 
     private static final double GRAVITY = 9;
-    private static final double TERMINAL_VELOCITY = 30;
+    private static final double TERMINAL_VELOCITY = 100;
     private static final double TERMINAL_COUNTER_VELOCITY = -10;
 
     private double verticalSpeed = 0;

@@ -82,15 +82,12 @@ public abstract class BaseElement implements Element {
 
     @Override
     public void action(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
-//        move.vector.setY(action.getVectorY());
-//        logger.info(actionType.name() +" -> vX:" + action.getVectorX() + ", vY:" + action.getVectorY() + ", gSp:" + move.gravitySpeed);
         if (actionType == null) {
             move.fly = false;
             move.gravitySpeed = 0;
-            ActionTypeHolder.getInstance().put(id, ActionType.STAND);
+            ActionTypeHolder.getInstance().put(id, move.actionType);
             return;
         }
-
         ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
         switch (actionType){
             case JUMP:
@@ -99,24 +96,9 @@ public abstract class BaseElement implements Element {
                 ActionTypeHolder.getInstance().put(id, actionType);
                 break;
             case FLY:
-                move.fly = true;
-                move.gravitySpeed = action.getForce();
-                ActionTypeHolder.getInstance().put(id, actionType);
+
                 break;
         }
-//        if (actionType == ActionType.JUMP && move.gravitySpeed == 0) {
-//            ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
-//            move.gravitySpeed = action.getForce();
-//            ActionTypeHolder.getInstance().put(id, actionType);
-//        } else if(actionType == ActionType.FLY) {
-//            ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
-//            move.fly = true;
-//            move.gravitySpeed = 7;
-//            logger.info("FLYYYYY");
-//        }else {
-//
-//        }
-
     }
 
     @Override
@@ -127,10 +109,16 @@ public abstract class BaseElement implements Element {
         move.gravitySpeed = 0;
         move.fly = false;
         move.force = action.getForce() * (shiftDown? 3 : 1);
+        move.actionType = actionType;
         if (action.getVectorX() == 0 && action.getVectorY() == 0) {
 //            this check is must have before setting a direction Vector
 //            otherwise operations on Vector2D(0,0) may throw NaN values
             return;
+        }
+        if (ctrlDown) {
+            move.fly = true;
+            move.gravitySpeed = action.getForce();
+            ActionTypeHolder.getInstance().put(id, actionType);
         }
         move.vector.setY(action.getVectorY());
         move.vector.setX(action.getVectorX());
@@ -142,6 +130,7 @@ public abstract class BaseElement implements Element {
         private double force;
         private double gravitySpeed = 0;
         private boolean fly;
+        private ActionType actionType;
 
         private final Element element;
         private final Gravity gravity;
