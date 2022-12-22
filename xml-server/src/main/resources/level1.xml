@@ -108,7 +108,7 @@
                 </action>
             </actions>
             <hPos>CENTER</hPos>
-            <vPos>BOTTOM</vPos>
+            <vPos>CENTER</vPos>
             <width>5</width>
             <height>100</height>
             <startXPos>0</startXPos>
@@ -125,7 +125,7 @@
                 </action>
             </actions>
             <hPos>CENTER</hPos>
-            <vPos>TOP</vPos>
+            <vPos>CENTER</vPos>
             <width>5</width>
             <height>100</height>
             <startXPos>5</startXPos>
@@ -137,15 +137,32 @@
                 <action>
                     <name>STAND</name>
                     <images>
-                        <image>ground-black.jpg</image>
+                        <image>ground-black-1200.jpg</image>
                     </images>
                 </action>
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
             <width>5</width>
-            <height>100</height>
+            <height>1180</height>
             <startXPos>0</startXPos>
+            <startYPos>3</startYPos>
+        </ground>
+        <ground>
+            <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>ground-black-1200.jpg</image>
+                    </images>
+                </action>
+            </actions>
+            <hPos>CENTER</hPos>
+            <vPos>CENTER</vPos>
+            <width>5</width>
+            <height>1180</height>
+            <startXPos>4</startXPos>
             <startYPos>4</startYPos>
         </ground>
         <ground>
@@ -154,51 +171,36 @@
                 <action>
                     <name>STAND</name>
                     <images>
-                        <image>ground-black.jpg</image>
+                        <image>ground-black-1200.jpg</image>
                     </images>
                 </action>
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
             <width>5</width>
-            <height>100</height>
-            <startXPos>0</startXPos>
+            <height>1180</height>
+            <startXPos>3</startXPos>
             <startYPos>5</startYPos>
         </ground>
-        <!--    <ground>-->
-        <!--            <name>ground</name>-->
-        <!--            <actions>-->
-        <!--                <action>-->
-        <!--                    <name>STAND</name>-->
-        <!--                    <images>-->
-        <!--                        <image>ground-black.jpg</image>-->
-        <!--                    </images>-->
-        <!--                </action>-->
-        <!--            </actions>-->
-        <!--            <hPos>CENTER</hPos>-->
-        <!--            <vPos>CENTER</vPos>-->
-        <!--            <width>100</width>-->
-        <!--            <height>5</height>-->
-        <!--            <startXPos>1</startXPos>-->
-        <!--            <startYPos>5</startYPos>-->
-        <!--        </ground>-->
-        <!--    <ground>-->
-        <!--            <name>ground</name>-->
-        <!--            <actions>-->
-        <!--                <action>-->
-        <!--                    <name>STAND</name>-->
-        <!--                    <images>-->
-        <!--                        <image>ground-black.jpg</image>-->
-        <!--                    </images>-->
-        <!--                </action>-->
-        <!--            </actions>-->
-        <!--            <hPos>CENTER</hPos>-->
-        <!--            <vPos>CENTER</vPos>-->
-        <!--            <width>100</width>-->
-        <!--            <height>5</height>-->
-        <!--            <startXPos>2</startXPos>-->
-        <!--            <startYPos>5</startYPos>-->
-        <!--        </ground>-->
+
+        <ground>
+            <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>ground-black-1200.jpg</image>
+                    </images>
+                </action>
+            </actions>
+            <hPos>CENTER</hPos>
+            <vPos>CENTER</vPos>
+            <width>5</width>
+            <height>1180</height>
+            <startXPos>0</startXPos>
+            <startYPos>1</startYPos>
+        </ground>
+
     </grounds>
 
     <items>

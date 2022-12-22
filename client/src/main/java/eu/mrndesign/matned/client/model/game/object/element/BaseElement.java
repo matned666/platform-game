@@ -86,11 +86,10 @@ public abstract class BaseElement implements Element {
         if (actionType == null) {
             move.vector.setY(0);
             ActionTypeHolder.getInstance().put(id, move.getAction());
-
             return;
         }
-        ActionTypeHolder.getInstance().put(id, actionType);
         ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
+        ActionTypeHolder.getInstance().put(id, actionType);
         switch (actionType){
             case STAND:
                 move.force = 0;
@@ -98,13 +97,10 @@ public abstract class BaseElement implements Element {
             case JUMP:
                 if (physics.getVerticalSpeed() != 0d) return;
                 physics.setGravityMod(action.getForce());
-                ActionTypeHolder.getInstance().put(id, actionType);
                 move.vector.setY(action.getVectorY());
                 move.vector.setX(move.vector.getX()*2);
-
                 break;
             case MOVE_LEFT:
-
             case MOVE_RIGHT:
                 setMoveAction(action, shiftDown);
                 break;
@@ -152,6 +148,7 @@ public abstract class BaseElement implements Element {
         }
 
         public ActionType getAction() {
+            if (force == 0) return ActionType.STAND;
             if (vector.getX() > 0) return ActionType.MOVE_RIGHT;
             if (vector.getX() < 0) return ActionType.MOVE_LEFT;
             return ActionType.STAND;

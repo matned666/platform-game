@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public enum KeyMap {
 
-    NONE,
+    NONE(KeyCodes.KEY_SHIFT, KeyCodes.KEY_CTRL),
     ACTION(),
     JUMP(KeyCodes.KEY_W, KeyCodes.KEY_UP),
     FLY(KeyCodes.KEY_SPACE),

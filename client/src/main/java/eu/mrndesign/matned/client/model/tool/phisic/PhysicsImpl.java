@@ -10,6 +10,7 @@ import eu.mrndesign.matned.client.model.tool.math.Vector2D;
 import java.util.logging.Logger;
 
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_INT;
+import static eu.mrndesign.matned.client.controller.Constants.PANEL_WIDTH_INT;
 
 public class PhysicsImpl implements Physics {
     protected static final Logger logger = Logger.getLogger(PhysicsImpl.class.getName());
@@ -47,6 +48,7 @@ public class PhysicsImpl implements Physics {
         logger.info(realMoveVector+" - move");
         move(realMoveVector);
         doNotFallBelowScene();
+        doNotGoOverScene();
     }
 
     @Override
@@ -67,6 +69,16 @@ public class PhysicsImpl implements Physics {
                 verticalSpeed = 0;
                 rollBack(moveVector.newNormalized(), collider.getBounds());
             }
+        }
+    }
+
+    private void doNotGoOverScene() {
+        Bounds2D bounds = element.getBounds();
+        if (bounds.getCenter().getX() + bounds.getHeight() > PANEL_WIDTH_INT) {
+            bounds.getCenter().setX(PANEL_WIDTH_INT - bounds.getHeight());
+        }
+        if (bounds.getCenter().getX() - bounds.getHeight() < 0) {
+            bounds.getCenter().setX(bounds.getHeight());
         }
     }
 
