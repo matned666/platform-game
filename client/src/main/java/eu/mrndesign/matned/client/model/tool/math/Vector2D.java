@@ -2,6 +2,8 @@ package eu.mrndesign.matned.client.model.tool.math;
 
 public class Vector2D extends Point2D{
 
+    public static Vector2D ZERO = new Vector2D(0,0);
+
     public Vector2D(double x, double y) {
         super(x,y);
         this.x = x;
@@ -158,5 +160,12 @@ public class Vector2D extends Point2D{
     public void paste(Vector2D v){
         x = v.x;
         y = v.y;
+    }
+
+    public Vector2D opposite() {
+        Vector2D result = new Vector2D(this);
+        result.x *= -1;
+        result.y *= -1;
+        return result;
     }
 }

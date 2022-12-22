@@ -62,7 +62,6 @@ public class Bounds2D {
         Point2D thisTopLeft = getCorner(CornerType.TOP_LEFT);
         Point2D thisTopRight = getCorner(CornerType.TOP_RIGHT);
         Point2D thisBottomRight = getCorner(CornerType.BOTTOM_RIGHT);
-        System.out.println();
         return isNoGapBetweenBoundsOnVector(thisTopLeft, thisTopRight, b) &&
                 isNoGapBetweenBoundsOnVector(thisBottomLeft, thisTopLeft, b) &&
                 isNoGapBetweenBoundsOnVector(thisTopRight, thisBottomRight, b) &&
@@ -92,7 +91,7 @@ public class Bounds2D {
 
     public Point2D getCorner(CornerType cornerType) {
         Vector2D vPerp = vector.getPerpVector();
-        return new Point2D(center).move(vPerp, cornerType.wMod * width*3/5).move(vector, cornerType.hMod * height*4/5);
+        return new Point2D(center).move(vPerp, cornerType.wMod * width/2).move(vector, cornerType.hMod * height/2);
     }
 
     private Border right() {
@@ -189,7 +188,7 @@ public class Bounds2D {
 
     @Override
     public String toString() {
-        return "Bounds: "+center + ", " + vector.moved(vector, height / 2) + ", " + vector.moved(vector, height / 2).getPerpVector();
+        return "Bounds: c:"+center + ", v:" + vector + ", w:" +width + ", h:"+height;
     }
 
     public Vector2D getVector() {

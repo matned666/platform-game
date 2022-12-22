@@ -78,4 +78,8 @@ public class TimeWrapper {
             timer.scheduleRepeating(FRAME_RATE_PERIOD_MILLIS);
         }
     }
+
+    public boolean frameDividedBy(long divider) {
+        return frameNo%divider == 0;
+    }
 }

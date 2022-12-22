@@ -42,9 +42,7 @@ class Bounds2DTest {
 
     @ParameterizedTest
     @CsvSource({
-            "3,8, 0,11, 5,10, 6,2, 2,2, 6,4",
             "845.2942769857734,603.1531305628457, -15.979279783347234,-36.66964163453892, -36.66964163453892,15.979279783347234, 809.2875789334909,509.55944572572236, 6.588801632815572,13.475447786378265, 13.475447786378265,-6.588801632815572",
-            "0,0, 0,5, 2,0, 0,4, 0,-5, -2,0"
     })
     void  anotherTouchedTest(double aCenterX, double aCenterY, double vAHX, double vAHY, double aPerpX, double aPerpY, double bCenterX, double bCenterY, double vBHX, double vBHY, double bPerpX, double bPerpY) {
         Point2D aCenter = new Point2D(aCenterX, aCenterY);
@@ -78,6 +76,45 @@ class Bounds2DTest {
 
         boolean condition = a.touchedBy(b);
         assertFalse(condition);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource ({
+            "75,0, 0,1, 50,80, 75,51, 0,1, 100,20"
+
+    })
+    void  notTouchedTest2(double aCenterX, double aCenterY, double vAX, double vAY, double aW, double aH, double bCenterX, double bCenterY, double vBX, double vBY, double bW, double bH) {
+        Point2D aCenter = new Point2D(aCenterX, aCenterY);
+        Vector2D vA = new Vector2D(vAX,vAY);
+        Bounds2D a = new Bounds2D(vA, aW, aH, aCenter);
+
+        Point2D bCenter = new Point2D(bCenterX, bCenterY);
+        Vector2D vB = new Vector2D(vBX,vBY);
+        Bounds2D b = new Bounds2D(vB, bW, bH, bCenter);
+
+
+        boolean condition = a.touchedBy(b);
+        assertFalse(condition);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource ({
+            "75,0, 1,0, 50,80, TOP_LEFT, 115, 25",
+            "75,0, 1,0, 50,80, TOP_RIGHT, 115, -25",
+            "75,0, 1,0, 50,80, BOTTOM_LEFT, 35, 25",
+            "75,0, 1,0, 50,80, BOTTOM_RIGHT, 35, -25"
+    })
+    void  testCorner(double aCenterX, double aCenterY, double vAX, double vAY, double aW, double aH, String type, double rX, double rY) {
+        Point2D aCenter = new Point2D(aCenterX, aCenterY);
+        Vector2D vA = new Vector2D(vAX,vAY);
+        Bounds2D bounds2D = new Bounds2D(vA, aW, aH, aCenter);
+
+        Point2D expectedResult = new Point2D(rX, rY);
+        Point2D actualResult = bounds2D.getCorner(Bounds2D.CornerType.valueOf(type));
+
+        assertEquals(expectedResult, actualResult);
     }
 
 

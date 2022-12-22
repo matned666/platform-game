@@ -27,12 +27,6 @@ public interface Element {
     void setDirection(int x, int y);
 
     /**
-     * Moves Element in x,y direction by the given speed
-     * @param vector movement direction
-     */
-    void setVisual(Vector2D vector, double initSpeed, ActionType actionType);
-
-    /**
      * @return {@link Bounds2D} object of the Element
      */
     Bounds2D getBounds();
@@ -59,12 +53,5 @@ public interface Element {
 
     void action(ActionType actionType, boolean shiftDown, boolean ctrlDown);
 
-    /**
-     *
-     * @param actionType
-     * @param shiftDown
-     * @param ctrlDown
-     */
-    void move(ActionType actionType, boolean shiftDown, boolean ctrlDown);
-
+    void move(Vector2D moveVector, double moveForce);
 }

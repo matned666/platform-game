@@ -13,10 +13,7 @@ import eu.mrndesign.matned.client.view.screencontent.game.GameContent;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Game {
@@ -65,19 +62,28 @@ public class Game {
     public void onLevelRequestCallBack(LevelData levelData) {
         this.levelData = levelData;
         GameContent.getInstance(controller).initCanvas();
-        updateGameElements();
+        createGameElements();
     }
 
     private void initRefreshSubscriptionSubscription() {
-        refreshSubject.map(next -> {
-            mapIdToElement.forEach((key, gameElement) -> {
-                gameElement.refresh();
-                if ((gameElement.isToRemove())) {
-                    removeElement(gameElement.getId());
-                }
-            });
-            return next;
-        }).subscribe();
+        refreshSubject
+                .map(next -> {
+                    mapIdToElement.forEach((key, gameElement) -> {
+                        try {
+                            gameElement.refresh();
+                            if ((gameElement.isToRemove())) {
+                                removeElement(gameElement.getId());
+                            }
+                        }catch (Exception e) {
+                            logger.info("ERROR: "+Arrays.toString(e.getStackTrace()));
+                        }
+                    });
+                    return next;
+                }).subscribe();
+    }
+
+    public boolean collideWithAnyElement(Element element) {
+        return mapIdToElement.values().stream().filter(e -> !e.getId().equals(element.getId())).anyMatch(e -> e.getBounds().touchedBy(element.getBounds()));
     }
 
     private void initBulletRefreshSubscriptionSubscription() {
@@ -107,20 +113,20 @@ public class Game {
         }).subscribe();
     }
 
-    private void updateGameElements() {
-        updateHero();
-        updateGrounds();
-        updateItems();
+    private void createGameElements() {
+        createHero();
+        createGrounds();
+        createItems();
     }
 
-    private void updateHero() {
+    private void createHero() {
         CharacterData heroData = levelData.getHero();
         Element hero = new CharacterImpl(this, heroData);
         mapPlayerMovementElements.put(hero.getId(), hero);
         mapIdToElement.put(hero.getId(), hero);
     }
 
-    private void updateGrounds() {
+    private void createGrounds() {
         List<SceneElementData> sceneElementDataList = levelData.getGrounds();
         sceneElementDataList.forEach(sceneElementData -> {
             Element sceneElement = new SceneElementImpl(this, sceneElementData);
@@ -129,7 +135,7 @@ public class Game {
         });
     }
 
-    private void updateItems() {
+    private void createItems() {
         List<ItemData> itemDataList = levelData.getItems();
         itemDataList.forEach(itemData -> {
             Element item = new ItemImpl(this, itemData);
@@ -137,11 +143,20 @@ public class Game {
         });
     }
 
-    public boolean isOnBackgroundElement(Element element){
+    public Double onBackgroundElement(Element element) {
         return mapIdToSceneElement.values().stream()
-                .anyMatch(backgroundElement -> element.getBounds().isOn(backgroundElement.getBounds()));
+                .filter(backgroundElement -> element.getBounds().isOn(backgroundElement.getBounds()))
+                .map(element1 -> element1.getBounds().topBorder())
+                .findFirst()
+                .orElse(null);
     }
 
+    public Element collideBackgroundElement(Element element) {
+        return mapIdToSceneElement.values().stream()
+                .filter(backgroundElement -> element.getBounds().touchedBy(backgroundElement.getBounds()))
+                .findFirst()
+                .orElse(null);
+    }
 
     public void refresh() {
         refreshSubject.onNext(true);
@@ -170,7 +185,7 @@ public class Game {
     }
 
     public synchronized void move(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
-        mapPlayerMovementElements.values().forEach(element -> element.move(actionType, shiftDown, ctrlDown));
+        mapPlayerMovementElements.values().forEach(element -> element.action(actionType, shiftDown, ctrlDown));
     }
 
     public synchronized void setDirection(int x, int y) {
@@ -178,6 +193,6 @@ public class Game {
     }
 
     public String getBackground() {
-        return "img/"+levelData.getBackground().getName()+".jpg";
+        return "img/" + levelData.getBackground().getName() + ".jpg";
     }
 }

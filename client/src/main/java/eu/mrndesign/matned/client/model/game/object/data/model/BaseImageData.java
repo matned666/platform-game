@@ -18,8 +18,8 @@ public class BaseImageData implements Boundable {
     private double height;
     private int startXPos;
     private int startYPos;
-    private double directionX = 1;
-    private double directionY;
+    private double directionX = 0;
+    private double directionY = -1;
     private String horizontalPos = "CENTER";
     private String verticalPos = "CENTER";
 

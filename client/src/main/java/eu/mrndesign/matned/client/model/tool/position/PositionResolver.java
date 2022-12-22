@@ -20,7 +20,7 @@ public class PositionResolver {
     public Point2D resolve(Boundable boundable) {
         double squareWidth = (double) panelWidthPx / widthRatio;
         double x = squareWidth * getPosModifier(boundable.getVerticalPos());
-        double squareHeight = (double) panelHeightPx / heightRatio;
+        double squareHeight = (double) panelHeightPx / heightRatio + 5;
         double y = squareHeight * getPosModifier(boundable.getVerticalPos());
         x += squareWidth * boundable.getStartXPos();
         y += squareHeight * boundable.getStartYPos();
