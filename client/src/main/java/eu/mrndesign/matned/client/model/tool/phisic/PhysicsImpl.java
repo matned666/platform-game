@@ -40,11 +40,12 @@ public class PhysicsImpl implements Physics {
         } else {
             verticalSpeed = 0;
         }
-        logger.info(moveVector+"");
-        Vector2D realMoveVector = moveVector.magnituded(moveForce);
-        move(realMoveVector);
         Vector2D fallVector = getFallVector();
+        logger.info(fallVector+" - fall - " + verticalSpeed);
         move(fallVector);
+        Vector2D realMoveVector = moveVector.magnituded(moveForce);
+        logger.info(realMoveVector+" - move");
+        move(realMoveVector);
         doNotFallBelowScene();
     }
 

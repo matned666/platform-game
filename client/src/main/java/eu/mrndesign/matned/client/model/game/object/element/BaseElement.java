@@ -97,7 +97,6 @@ public abstract class BaseElement implements Element {
                 break;
             case JUMP:
                 if (physics.getVerticalSpeed() != 0d) return;
-//                logger.info("getVerticalSpeed()="+physics.getVerticalSpeed());
                 physics.setGravityMod(action.getForce());
                 ActionTypeHolder.getInstance().put(id, actionType);
                 move.vector.setY(action.getVectorY());

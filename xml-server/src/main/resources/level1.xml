@@ -4,12 +4,12 @@
     <height>50</height>
 
     <background>
-        <name>white-background</name>
+        <name>gen-background</name>
         <actions>
             <action>
                 <name>STAND</name>
                 <images>
-                    <image>white-background.jpg</image>
+                    <image>gen-background.jpg</image>
                 </images>
             </action>
         </actions>
@@ -17,8 +17,8 @@
 
     <hero>
         <name>starship</name>
-        <width>50</width>
-        <height>80</height>
+        <width>75</width>
+        <height>30</height>
         <startXPos>0</startXPos>
         <startYPos>0</startYPos>
         <hp>100</hp>
@@ -40,6 +40,8 @@
                 <vectorY>0</vectorY>
                 <force>5</force>
                 <images>
+                    <image>walk1.png</image>
+                    <image>moveL2.png</image>
                     <image>moveL3.png</image>
                     <image>moveL4.png</image>
                     <image>moveL5.png</image>
@@ -57,8 +59,8 @@
                 <vectorY>0</vectorY>
                 <force>5</force>
                 <images>
-<!--                    <image>move1.png</image>-->
-<!--                    <image>move2.png</image>-->
+                    <image>walk1.png</image>
+                    <image>move2.png</image>
                     <image>move3.png</image>
                     <image>move4.png</image>
                     <image>move5.png</image>
@@ -73,7 +75,7 @@
                     <keyCode>87</keyCode>
                     <keyCode>38</keyCode>
                 </keyCodes>
-                <force>50</force>
+                <force>-40</force>
                 <images>
                     <image>jump1.png</image>
                 </images>
@@ -107,8 +109,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>BOTTOM</vPos>
-            <width>100</width>
-            <height>5</height>
+            <width>5</width>
+            <height>100</height>
             <startXPos>0</startXPos>
             <startYPos>2</startYPos>
         </ground>
@@ -123,10 +125,10 @@
                 </action>
             </actions>
             <hPos>CENTER</hPos>
-            <vPos>BOTTOM</vPos>
-            <width>100</width>
-            <height>5</height>
-            <startXPos>1</startXPos>
+            <vPos>TOP</vPos>
+            <width>5</width>
+            <height>100</height>
+            <startXPos>5</startXPos>
             <startYPos>2</startYPos>
         </ground>
         <ground>
@@ -141,8 +143,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>100</width>
-            <height>5</height>
+            <width>5</width>
+            <height>100</height>
             <startXPos>0</startXPos>
             <startYPos>4</startYPos>
         </ground>
@@ -158,28 +160,45 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>100</width>
-            <height>5</height>
+            <width>5</width>
+            <height>100</height>
             <startXPos>0</startXPos>
             <startYPos>5</startYPos>
         </ground>
-        <ground>
-            <name>ground</name>
-            <actions>
-                <action>
-                    <name>STAND</name>
-                    <images>
-                        <image>ground-black.jpg</image>
-                    </images>
-                </action>
-            </actions>
-            <hPos>CENTER</hPos>
-            <vPos>BOTTOM</vPos>
-            <width>100</width>
-            <height>5</height>
-            <startXPos>0</startXPos>
-            <startYPos>0</startYPos>
-        </ground>
+        <!--    <ground>-->
+        <!--            <name>ground</name>-->
+        <!--            <actions>-->
+        <!--                <action>-->
+        <!--                    <name>STAND</name>-->
+        <!--                    <images>-->
+        <!--                        <image>ground-black.jpg</image>-->
+        <!--                    </images>-->
+        <!--                </action>-->
+        <!--            </actions>-->
+        <!--            <hPos>CENTER</hPos>-->
+        <!--            <vPos>CENTER</vPos>-->
+        <!--            <width>100</width>-->
+        <!--            <height>5</height>-->
+        <!--            <startXPos>1</startXPos>-->
+        <!--            <startYPos>5</startYPos>-->
+        <!--        </ground>-->
+        <!--    <ground>-->
+        <!--            <name>ground</name>-->
+        <!--            <actions>-->
+        <!--                <action>-->
+        <!--                    <name>STAND</name>-->
+        <!--                    <images>-->
+        <!--                        <image>ground-black.jpg</image>-->
+        <!--                    </images>-->
+        <!--                </action>-->
+        <!--            </actions>-->
+        <!--            <hPos>CENTER</hPos>-->
+        <!--            <vPos>CENTER</vPos>-->
+        <!--            <width>100</width>-->
+        <!--            <height>5</height>-->
+        <!--            <startXPos>2</startXPos>-->
+        <!--            <startYPos>5</startYPos>-->
+        <!--        </ground>-->
     </grounds>
 
     <items>
