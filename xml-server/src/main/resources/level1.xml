@@ -70,7 +70,7 @@
             </action>
             <action>
                 <name>JUMP</name>
-                <vectorY>1</vectorY>
+                <vectorY>-1</vectorY>
                 <keyCodes>
                     <keyCode>87</keyCode>
                     <keyCode>38</keyCode>
