@@ -171,9 +171,9 @@ public class DrawingCanvas extends AbsolutePanel {
         double ry = value.getCenterY();
         ImageElement img = value.getImage();
         drawingCanvasContext.translate(rx, ry);
-        drawingCanvasContext.rotate(actualAngle);
+//        drawingCanvasContext.rotate(actualAngle);
         drawingCanvasContext.drawImage(img, (double)-img.getWidth() / 2, (double)-img.getHeight() / 2, img.getWidth(), img.getHeight());
-        drawingCanvasContext.rotate(-actualAngle);
+//        drawingCanvasContext.rotate(-actualAngle);
         drawingCanvasContext.translate(-rx, -ry);
     }
 

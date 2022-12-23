@@ -3,7 +3,7 @@ package eu.mrndesign.matned.client.model.game.object.element;
 import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
-import eu.mrndesign.matned.client.model.game.object.data.model.Boundable;
+import eu.mrndesign.matned.client.model.game.object.data.model.BoundsData;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Math2D;
 import eu.mrndesign.matned.client.model.tool.math.Point2D;
@@ -22,7 +22,7 @@ public abstract class BaseElement implements Element {
 
     protected final Game game;
     protected final Physics physics;
-    private final Boundable boundable;
+    private final BoundsData boundsData;
 
     private boolean toRemove;
 
@@ -30,13 +30,13 @@ public abstract class BaseElement implements Element {
 
     private final String type;
 
-    protected BaseElement(Game game, String type, Boundable boundable) {
+    protected BaseElement(Game game, String type, BoundsData boundsData) {
         this.game = game;
         this.type = type;
         this.id = type + System.currentTimeMillis() + Math2D.randomInt(0, 10000);
         this.physics = new PhysicsImpl(game, this);
-        this.boundable = boundable;
-        this.bounds = Bounds2D.generate(boundable);
+        this.boundsData = boundsData;
+        this.bounds = Bounds2D.generateFrom(boundsData);
         this.move = new Move(this, physics);
         ActionTypeHolder.getInstance().put(id, ActionType.STAND);
     }
@@ -88,7 +88,7 @@ public abstract class BaseElement implements Element {
             ActionTypeHolder.getInstance().put(id, move.getAction());
             return;
         }
-        ActionData action = boundable.getAction(actionType, shiftDown, ctrlDown);
+        ActionData action = boundsData.getAction(actionType, shiftDown, ctrlDown);
         ActionTypeHolder.getInstance().put(id, actionType);
         switch (actionType){
             case STAND:

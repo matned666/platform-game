@@ -1,49 +1,37 @@
 package eu.mrndesign.matned.client.model.tool.math;
 
-import eu.mrndesign.matned.client.model.game.object.data.model.Boundable;
+import eu.mrndesign.matned.client.model.game.object.data.model.BoundsData;
+import eu.mrndesign.matned.client.model.game.object.element.BaseElement;
 import eu.mrndesign.matned.client.model.tool.position.PositionResolver;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 import static eu.mrndesign.matned.client.controller.Constants.*;
 import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_SQUARES;
 
 public class Bounds2D {
+    protected static final Logger logger = Logger.getLogger(Bounds2D.class.getName());
 
-    public static Bounds2D generate(Boundable boundable){
+    public static Bounds2D generateFrom(BoundsData data){
             final Bounds2D bounds;
             final PositionResolver positionResolver = new PositionResolver(PANEL_WIDTH_INT, PANEL_HEIGHT_INT, PANEL_WIDTH_SQUARES, PANEL_HEIGHT_SQUARES);
-            Point2D center = positionResolver.resolve(boundable);
-            Vector2D vector = new Vector2D(boundable.getDirectionX(), boundable.getDirectionY());
-            bounds = new Bounds2D(vector, boundable.getWidth(), boundable.getHeight(), center);
+            Point2D center = positionResolver.resolve(data);
+            Vector2D vector = new Vector2D(data.getDirectionX(), data.getDirectionY());
+            bounds = new Bounds2D(vector, data.getWidth(), data.getHeight(), center);
             return bounds;
     }
 
-    protected Vector2D vector;
-    protected double width;
-    protected double height;
-    protected final Point2D center;
-
-    public Bounds2D() {
-        this(new Vector2D(1,0), 1,1,new Point2D(0,0));
-    }
+    private final Vector2D vector;
+    private final double width;
+    private final double height;
+    private final Point2D center;
 
     public Bounds2D(Vector2D vector, double width, double height, Point2D center) {
         this.width = width;
         this.height = height;
         this.center = center;
         this.vector = vector;
-    }
-
-    public boolean isOutOfView() {
-        return center.x < 0 || center.x > PANEL_WIDTH_INT || center.y < 0 || center.y > PANEL_HEIGHT_INT;
-    }
-
-    public boolean isIn(Bounds2D bounds2D) {
-        return topBorder() > bounds2D.topBorder()
-                && bottomBorder() < bounds2D.bottomBorder()
-                && leftBorder() > bounds2D.leftBorder()
-                && rightBorder() < bounds2D.rightBorder();
     }
 
     /**
@@ -62,6 +50,7 @@ public class Bounds2D {
         Point2D thisTopLeft = getCorner(CornerType.TOP_LEFT);
         Point2D thisTopRight = getCorner(CornerType.TOP_RIGHT);
         Point2D thisBottomRight = getCorner(CornerType.BOTTOM_RIGHT);
+
         return isNoGapBetweenBoundsOnVector(thisTopLeft, thisTopRight, b) &&
                 isNoGapBetweenBoundsOnVector(thisBottomLeft, thisTopLeft, b) &&
                 isNoGapBetweenBoundsOnVector(thisTopRight, thisBottomRight, b) &&
@@ -91,7 +80,7 @@ public class Bounds2D {
 
     public Point2D getCorner(CornerType cornerType) {
         Vector2D vPerp = vector.getPerpVector();
-        return new Point2D(center).move(vPerp, cornerType.wMod * width/2).move(vector, cornerType.hMod * height/2);
+        return new Point2D(center).move(vPerp, cornerType.xMod * width/2).move(vector, cornerType.yMod * height/2);
     }
 
     private Border right() {
@@ -110,10 +99,6 @@ public class Bounds2D {
         return new Border(getCorner(CornerType.BOTTOM_LEFT), getCorner(CornerType.BOTTOM_RIGHT));
     }
 
-    public boolean isOn(Bounds2D bounds) {
-        return touchedBy(bounds) && bounds.topBorder() <= bottomBorder();
-    }
-
     private static class Border{
         private final Point2D p1;
         private final Point2D p2;
@@ -125,35 +110,18 @@ public class Bounds2D {
     }
 
     public enum CornerType {
-        BOTTOM_LEFT(-1, -1),
-        BOTTOM_RIGHT(1, -1),
-        TOP_LEFT(-1, 1),
-        TOP_RIGHT(1, 1);
+        BOTTOM_LEFT(1, -1),
+        BOTTOM_RIGHT(-1, -1),
+        TOP_LEFT(1, 1),
+        TOP_RIGHT(-1, 1);
 
-        private final int wMod;
-        private final int hMod;
+        private final int xMod;
+        private final int yMod;
 
-        CornerType(int wMod, int hMod) {
-            this.wMod = wMod;
-            this.hMod = hMod;
+        CornerType(int xMod, int yMod) {
+            this.xMod = xMod;
+            this.yMod = yMod;
         }
-    }
-
-
-    public double leftBorder() {
-        return center.getX() - width / 2;
-    }
-
-    public double rightBorder() {
-        return center.getX() + width / 2;
-    }
-
-    public double topBorder() {
-        return center.getY() - height / 2;
-    }
-
-    public double bottomBorder() {
-        return center.getY() + height / 2;
     }
 
     public Point2D getCenter() {
@@ -164,21 +132,8 @@ public class Bounds2D {
         return width;
     }
 
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
     public double getHeight() {
         return height;
-    }
-
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
-    public void setCenter(Point2D p) {
-        setCenter(p.x, p.y);
     }
 
     public void setCenter(double x, double y) {
@@ -196,11 +151,7 @@ public class Bounds2D {
     }
 
     public void setVector(Vector2D vector) {
-        this.vector = vector;
-    }
-
-    public void rotate(double x, double y) {
-        this.vector = new Vector2D(center, x, y);
+        this.vector.copy(vector);
     }
 
 }

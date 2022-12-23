@@ -143,14 +143,6 @@ public class Game {
         });
     }
 
-    public Double onBackgroundElement(Element element) {
-        return mapIdToSceneElement.values().stream()
-                .filter(backgroundElement -> element.getBounds().isOn(backgroundElement.getBounds()))
-                .map(element1 -> element1.getBounds().topBorder())
-                .findFirst()
-                .orElse(null);
-    }
-
     public Element collideBackgroundElement(Element element) {
         return mapIdToSceneElement.values().stream()
                 .filter(backgroundElement -> element.getBounds().touchedBy(backgroundElement.getBounds()))

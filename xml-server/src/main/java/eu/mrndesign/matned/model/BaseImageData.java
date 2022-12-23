@@ -15,8 +15,8 @@ public class BaseImageData implements Serializable {
     private int startYPos;
     private double width;
     private double height;
-    private double directionX = 1;
-    private double directionY;
+    private double directionX;
+    private double directionY = -1;
     private String horizontalPos = "CENTER";
     private String verticalPos = "CENTER";
     private final List<ActionData> actions = new ArrayList<>();
@@ -63,12 +63,12 @@ public class BaseImageData implements Serializable {
         return verticalPos;
     }
 
-    @XmlElement(name = "vectorX", defaultValue = "1")
+    @XmlElement(name = "vectorX", defaultValue = "0")
     public double getDirectionX() {
         return directionX;
     }
 
-    @XmlElement(name = "vectorY")
+    @XmlElement(name = "vectorY", defaultValue = "-1")
     public double getDirectionY() {
         return directionY;
     }

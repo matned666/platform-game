@@ -42,10 +42,8 @@ public class PhysicsImpl implements Physics {
             verticalSpeed = 0;
         }
         Vector2D fallVector = getFallVector();
-        logger.info(fallVector+" - fall - " + verticalSpeed);
         move(fallVector);
         Vector2D realMoveVector = moveVector.magnituded(moveForce);
-        logger.info(realMoveVector+" - move");
         move(realMoveVector);
         doNotFallBelowScene();
         doNotGoOverScene();
@@ -74,18 +72,18 @@ public class PhysicsImpl implements Physics {
 
     private void doNotGoOverScene() {
         Bounds2D bounds = element.getBounds();
-        if (bounds.getCenter().getX() + bounds.getHeight() > PANEL_WIDTH_INT) {
-            bounds.getCenter().setX(PANEL_WIDTH_INT - bounds.getHeight());
+        if (bounds.getCenter().getX() + bounds.getWidth() > PANEL_WIDTH_INT) {
+            bounds.getCenter().setX(PANEL_WIDTH_INT - bounds.getWidth());
         }
-        if (bounds.getCenter().getX() - bounds.getHeight() < 0) {
-            bounds.getCenter().setX(bounds.getHeight());
+        if (bounds.getCenter().getX() - bounds.getWidth() < 0) {
+            bounds.getCenter().setX(bounds.getWidth());
         }
     }
 
     private void doNotFallBelowScene() {
         Bounds2D bounds = element.getBounds();
-        if (bounds.getCenter().getY() + bounds.getWidth() > PANEL_HEIGHT_INT) {
-            bounds.getCenter().setY(PANEL_HEIGHT_INT - bounds.getWidth());
+        if (bounds.getCenter().getY() + bounds.getHeight() > PANEL_HEIGHT_INT) {
+            bounds.getCenter().setY(PANEL_HEIGHT_INT - bounds.getHeight());
             verticalSpeed = 0;
         }
     }

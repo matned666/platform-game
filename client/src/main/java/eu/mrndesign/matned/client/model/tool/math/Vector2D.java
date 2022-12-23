@@ -18,10 +18,6 @@ public class Vector2D extends Point2D{
         this(copy.x, copy.y);
     }
 
-    public Vector2D(Point2D center, double x, double y) {
-        super(x - center.x, y - center.y);
-    }
-
     public Vector2D(Point2D end) {
         super(end.x, end.y);
     }

@@ -1,6 +1,6 @@
 package eu.mrndesign.matned.client.model.tool.position;
 
-import eu.mrndesign.matned.client.model.game.object.data.model.Boundable;
+import eu.mrndesign.matned.client.model.game.object.data.model.BoundsData;
 import eu.mrndesign.matned.client.model.tool.math.Point2D;
 
 public class PositionResolver {
@@ -17,13 +17,13 @@ public class PositionResolver {
         this.heightRatio = heightRatio;
     }
 
-    public Point2D resolve(Boundable boundable) {
+    public Point2D resolve(BoundsData boundsData) {
         double squareWidth = (double) panelWidthPx / widthRatio;
-        double x = squareWidth * getPosModifier(boundable.getVerticalPos());
+        double x = squareWidth * getPosModifier(boundsData.getVerticalPos());
         double squareHeight = (double) panelHeightPx / heightRatio + 5;
-        double y = squareHeight * getPosModifier(boundable.getVerticalPos());
-        x += squareWidth * boundable.getStartXPos();
-        y += squareHeight * boundable.getStartYPos();
+        double y = squareHeight * getPosModifier(boundsData.getVerticalPos());
+        x += squareWidth * boundsData.getStartXPos();
+        y += squareHeight * boundsData.getStartYPos();
         return new Point2D(x,y);
     }
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class BaseImageData implements Boundable {
+public class BaseImageData implements BoundsData {
     private static final Logger logger = Logger.getLogger(BaseImageData.class.getName());
 
     private String name = "";

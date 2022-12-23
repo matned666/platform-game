@@ -2,7 +2,7 @@ package eu.mrndesign.matned.client.model.game.object.data.model;
 
 import eu.mrndesign.matned.client.model.game.object.ActionType;
 
-public interface Boundable {
+public interface BoundsData {
 
     double getWidth();
 

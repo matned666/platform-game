@@ -17,8 +17,8 @@
 
     <hero>
         <name>starship</name>
-        <width>75</width>
-        <height>30</height>
+        <width>30</width>
+        <height>75</height>
         <startXPos>0</startXPos>
         <startYPos>0</startYPos>
         <hp>100</hp>
@@ -109,8 +109,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>5</width>
-            <height>100</height>
+            <width>100</width>
+            <height>5</height>
             <startXPos>0</startXPos>
             <startYPos>2</startYPos>
         </ground>
@@ -126,8 +126,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>5</width>
-            <height>100</height>
+            <width>100</width>
+            <height>5</height>
             <startXPos>5</startXPos>
             <startYPos>2</startYPos>
         </ground>
@@ -143,8 +143,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>5</width>
-            <height>1180</height>
+            <width>1180</width>
+            <height>5</height>
             <startXPos>0</startXPos>
             <startYPos>3</startYPos>
         </ground>
@@ -160,8 +160,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>5</width>
-            <height>1180</height>
+            <width>1180</width>
+            <height>5</height>
             <startXPos>4</startXPos>
             <startYPos>4</startYPos>
         </ground>
@@ -177,8 +177,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>5</width>
-            <height>1180</height>
+            <width>1180</width>
+            <height>5</height>
             <startXPos>3</startXPos>
             <startYPos>5</startYPos>
         </ground>
@@ -195,8 +195,8 @@
             </actions>
             <hPos>CENTER</hPos>
             <vPos>CENTER</vPos>
-            <width>5</width>
-            <height>1180</height>
+            <width>1180</width>
+            <height>5</height>
             <startXPos>0</startXPos>
             <startYPos>1</startYPos>
         </ground>

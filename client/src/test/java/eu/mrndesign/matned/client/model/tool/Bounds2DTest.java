@@ -12,24 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class Bounds2DTest {
 
     @Test
-    void isSquareInBounds(){
-        Vector2D vector = new Vector2D(0,1);
-        Bounds2D bounds1 = new Bounds2D(vector, 5,5, new Point2D(0,0));
-        Bounds2D bounds2 = new Bounds2D(vector, 2,2, new Point2D(1,1));
-
-        assertTrue(bounds2.isIn(bounds1));
-    }
-
-    @Test
-    void isSquareInBounds2(){
-        Vector2D vector = new Vector2D(0,1);
-        Bounds2D bounds1 = new Bounds2D(vector,5,5, new Point2D(0,0));
-        Bounds2D bounds2 = new Bounds2D(vector,2,2, new Point2D(-1,1));
-
-        assertTrue(bounds2.isIn(bounds1));
-    }
-
-    @Test
     void isTouched(){
         Vector2D vector = new Vector2D(0,1);
         Bounds2D box = new Bounds2D(vector, 10, 10, new Point2D(0, 0));
@@ -81,7 +63,29 @@ class Bounds2DTest {
 
     @ParameterizedTest
     @CsvSource ({
-            "75,0, 0,1, 50,80, 75,51, 0,1, 100,20"
+            "75,0, 0,-1, 50,80, 75,50, 0,1, 100,20",
+            "75,0, 0,-1, 5,80, 100,51, 0,1, 100,20"
+
+    })
+    void  touchedTest2(double aCenterX, double aCenterY, double vAX, double vAY, double aW, double aH, double bCenterX, double bCenterY, double vBX, double vBY, double bW, double bH) {
+        Point2D aCenter = new Point2D(aCenterX, aCenterY);
+        Vector2D vA = new Vector2D(vAX,vAY);
+        Bounds2D a = new Bounds2D(vA, aW, aH, aCenter);
+
+        Point2D bCenter = new Point2D(bCenterX, bCenterY);
+        Vector2D vB = new Vector2D(vBX,vBY);
+        Bounds2D b = new Bounds2D(vB, bW, bH, bCenter);
+
+
+        boolean condition = a.touchedBy(b);
+        assertTrue(condition);
+    }
+
+
+    @ParameterizedTest
+    @CsvSource ({
+            "75,0, 0,-1, 50,80, 75,51, 0,1, 100,20",
+            "75,0, 0,-1, 5,80, 100,51, 0,1, 100,20"
 
     })
     void  notTouchedTest2(double aCenterX, double aCenterY, double vAX, double vAY, double aW, double aH, double bCenterX, double bCenterY, double vBX, double vBY, double bW, double bH) {
@@ -101,10 +105,10 @@ class Bounds2DTest {
 
     @ParameterizedTest
     @CsvSource ({
-            "75,0, 1,0, 50,80, TOP_LEFT, 115, 25",
-            "75,0, 1,0, 50,80, TOP_RIGHT, 115, -25",
-            "75,0, 1,0, 50,80, BOTTOM_LEFT, 35, 25",
-            "75,0, 1,0, 50,80, BOTTOM_RIGHT, 35, -25"
+            "75,0, 0,-1, 50,80, BOTTOM_RIGHT, 100, 40",
+            "75,0, 0,-1, 50,80, TOP_RIGHT, 100, -40",
+            "75,0, 0,-1, 50,80, BOTTOM_LEFT, 50, 40",
+            "75,0, 0,-1, 50,80, TOP_LEFT, 50, -40"
     })
     void  testCorner(double aCenterX, double aCenterY, double vAX, double vAY, double aW, double aH, String type, double rX, double rY) {
         Point2D aCenter = new Point2D(aCenterX, aCenterY);
