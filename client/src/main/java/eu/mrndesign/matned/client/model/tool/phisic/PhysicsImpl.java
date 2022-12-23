@@ -41,12 +41,21 @@ public class PhysicsImpl implements Physics {
         } else {
             verticalSpeed = 0;
         }
+
         Vector2D fallVector = getFallVector();
         move(fallVector);
-        Vector2D realMoveVector = moveVector.magnituded(moveForce);
+        Vector2D realMoveVector = getMoveVector(moveVector, moveForce);
         move(realMoveVector);
         doNotFallBelowScene();
         doNotGoOverScene();
+    }
+
+    private Vector2D getMoveVector(Vector2D moveVector, double moveForce) {
+        final Vector2D moveVNorm = moveVector.newNormalized();
+        final Vector2D elementVNorm = element.getBounds().getVector().newNormalized();
+        final Vector2D realMoveNorm = moveVNorm.added(elementVNorm);
+        logger.info("mV:"+moveVNorm + ",nV:"+elementVNorm + ",rMV:"+realMoveNorm);
+        return realMoveNorm.magnituded(moveForce);
     }
 
     @Override
@@ -64,6 +73,7 @@ public class PhysicsImpl implements Physics {
             element.move(moveVector, moveVector.magnitude());
             Element collider = game.collideBackgroundElement(element);
             if (collider != null) {
+                element.getBounds().setVector(collider.getBounds().getVector());
                 verticalSpeed = 0;
                 rollBack(moveVector.newNormalized(), collider.getBounds());
             }
@@ -83,6 +93,7 @@ public class PhysicsImpl implements Physics {
     private void doNotFallBelowScene() {
         Bounds2D bounds = element.getBounds();
         if (bounds.getCenter().getY() + bounds.getHeight() > PANEL_HEIGHT_INT) {
+            element.getBounds().setVector(new Vector2D(0,-1));
             bounds.getCenter().setY(PANEL_HEIGHT_INT - bounds.getHeight());
             verticalSpeed = 0;
         }

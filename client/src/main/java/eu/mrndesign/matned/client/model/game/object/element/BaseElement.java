@@ -73,7 +73,7 @@ public abstract class BaseElement implements Element {
 
     @Override
     public double getAngle() {
-        return -getBounds().getVector().angleTo(1, 0);
+        return -getBounds().getVector().angleTo(0, -1);
     }
 
     @Override
