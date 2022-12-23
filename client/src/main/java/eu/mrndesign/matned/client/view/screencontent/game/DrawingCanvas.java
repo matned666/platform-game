@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 import eu.mrndesign.matned.client.controller.Controller;
 import eu.mrndesign.matned.client.controller.TimeWrapper;
 import eu.mrndesign.matned.client.model.game.object.element.Element;
+import eu.mrndesign.matned.client.model.game.object.element.background.SceneElement;
 import eu.mrndesign.matned.client.view.screencontent.object.GameObjView;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -171,9 +172,9 @@ public class DrawingCanvas extends AbsolutePanel {
         double ry = value.getCenterY();
         ImageElement img = value.getImage();
         drawingCanvasContext.translate(rx, ry);
-        drawingCanvasContext.rotate(actualAngle);
+        if (value.getModelElement() instanceof SceneElement) drawingCanvasContext.rotate(actualAngle);
         drawingCanvasContext.drawImage(img, (double)-img.getWidth() / 2, (double)-img.getHeight() / 2, img.getWidth(), img.getHeight());
-        drawingCanvasContext.rotate(-actualAngle);
+        if (value.getModelElement() instanceof SceneElement) drawingCanvasContext.rotate(-actualAngle);
         drawingCanvasContext.translate(-rx, -ry);
     }
 

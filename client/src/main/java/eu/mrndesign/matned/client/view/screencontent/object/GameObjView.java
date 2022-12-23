@@ -32,6 +32,10 @@ public class GameObjView extends Image {
         return id;
     }
 
+    public Element getModelElement() {
+        return element;
+    }
+
     private ImageElement animationRun(ActionType action) {
         int frame = (int) (TimeWrapper.getInstance().getFrameNo() - frameNo) - 1;
         if (frame >= imageHolder.getAnimation(action).size()*ANIMATION_FRAME_RATE) {

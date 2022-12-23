@@ -46,8 +46,6 @@ public class PhysicsImpl implements Physics {
         move(fallVector);
         Vector2D realMoveVector = getMoveVector(moveVector, moveForce);
         move(realMoveVector);
-        doNotFallBelowScene();
-        doNotGoOverScene();
     }
 
     private Vector2D getMoveVector(Vector2D moveVector, double moveForce) {
@@ -71,6 +69,8 @@ public class PhysicsImpl implements Physics {
     private void move(Vector2D moveVector) {
         if (!Vector2D.ZERO.equals(moveVector)) {
             element.move(moveVector, moveVector.magnitude());
+            doNotFallBelowScene();
+            doNotGoOverScene();
             Element collider = game.collideBackgroundElement(element);
             if (collider != null) {
                 element.getBounds().setVector(collider.getBounds().getVector());
