@@ -12,8 +12,8 @@ public class LevelData implements Serializable {
 
     private BaseImageData background;
     private CharacterData hero;
-    private int widthSquares;
-    private int heightSquares;
+    private double width;
+    private double height;
     private final List<SceneElementData> grounds = new ArrayList<>();
     private final List<ItemData> items = new ArrayList<>();
     private final List<CharacterData> characters = new ArrayList<>();
@@ -47,21 +47,21 @@ public class LevelData implements Serializable {
     }
 
     @XmlElement(name = "width")
-    public int getWidthSquares() {
-        return widthSquares;
+    public double getWidth() {
+        return width;
     }
 
     @XmlElement(name = "height")
-    public int getHeightSquares() {
-        return heightSquares;
+    public double getHeight() {
+        return height;
     }
 
-    public void setWidthSquares(int widthSquares) {
-        this.widthSquares = widthSquares;
+    public void setWidth(double width) {
+        this.width = width;
     }
 
-    public void setHeightSquares(int heightSquares) {
-        this.heightSquares = heightSquares;
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     public void setBackground(BaseImageData background) {

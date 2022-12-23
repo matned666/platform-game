@@ -12,8 +12,8 @@ public class LevelData {
 
     public static LevelData parse(JSONObject level) {
         LevelData levelData = new LevelData();
-        levelData.setWidthSquares((int) level.get("widthSquares").isNumber().doubleValue());
-        levelData.setHeightSquares((int) level.get("heightSquares").isNumber().doubleValue());
+        levelData.setWidth(level.get("width").isNumber().doubleValue());
+        levelData.setHeight(level.get("height").isNumber().doubleValue());
         levelData.setBackground(BaseImageData.parseBase(level.get("background").isObject()));
         levelData.setHero(CharacterData.parse(level.get("hero").isObject()));
         JSONArray items = level.get("items").isArray();
@@ -33,8 +33,8 @@ public class LevelData {
 
     private BaseImageData background;
     private CharacterData hero;
-    private int widthSquares;
-    private int heightSquares;
+    private double width;
+    private double height;
     private final List<SceneElementData> grounds = new ArrayList<>();
     private final List<ItemData> items = new ArrayList<>();
     private final List<CharacterData> characters = new ArrayList<>();
@@ -59,20 +59,20 @@ public class LevelData {
         return characters;
     }
 
-    public int getWidthSquares() {
-        return widthSquares;
+    public double getWidth() {
+        return width;
     }
 
-    public int getHeightSquares() {
-        return heightSquares;
+    public double getHeight() {
+        return height;
     }
 
-    public void setWidthSquares(int widthSquares) {
-        this.widthSquares = widthSquares;
+    public void setWidth(double width) {
+        this.width = width;
     }
 
-    public void setHeightSquares(int heightSquares) {
-        this.heightSquares = heightSquares;
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     public void setBackground(BaseImageData background) {

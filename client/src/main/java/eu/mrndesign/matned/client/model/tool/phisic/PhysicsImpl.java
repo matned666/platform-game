@@ -36,23 +36,31 @@ public class PhysicsImpl implements Physics {
             return;
         }
         Element collider = game.collideBackgroundElement(element);
+        Bounds2D bounds = element.getBounds();
+        Point2D center = bounds.getCenter();
         if (collider == null) {
-            p.copy(element.getBounds().getCenter());
+            p.copy(center);
         } else {
             verticalSpeed = 0;
         }
 
         Vector2D fallVector = getFallVector();
         move(fallVector);
+        rollBackCheck(bounds.getVector().rotated(180));
         Vector2D realMoveVector = getMoveVector(moveVector, moveForce);
         move(realMoveVector);
+        if (center.containsNaN()) {
+            center.copy(p);
+        }
+        logger.info(center +"");
+
     }
 
     private Vector2D getMoveVector(Vector2D moveVector, double moveForce) {
         final Vector2D moveVNorm = moveVector.newNormalized();
         final Vector2D elementVNorm = element.getBounds().getVector().newNormalized();
         final Vector2D realMoveNorm = moveVNorm.added(elementVNorm);
-        logger.info("mV:"+moveVNorm + ",nV:"+elementVNorm + ",rMV:"+realMoveNorm);
+//        logger.info("mV:"+moveVNorm + ",nV:"+elementVNorm + ",rMV:"+realMoveNorm);
         return realMoveNorm.magnituded(moveForce);
     }
 
@@ -69,14 +77,17 @@ public class PhysicsImpl implements Physics {
     private void move(Vector2D moveVector) {
         if (!Vector2D.ZERO.equals(moveVector)) {
             element.move(moveVector, moveVector.magnitude());
-            doNotFallBelowScene();
             doNotGoOverScene();
-            Element collider = game.collideBackgroundElement(element);
-            if (collider != null) {
-                element.getBounds().setVector(collider.getBounds().getVector());
-                verticalSpeed = 0;
-                rollBack(moveVector.newNormalized(), collider.getBounds());
-            }
+            rollBackCheck(moveVector);
+        }
+    }
+
+    private void rollBackCheck(Vector2D moveVector) {
+        Element collider = game.collideBackgroundElement(element);
+        if (collider != null) {
+            element.getBounds().setVector(collider.getBounds().getVector());
+            verticalSpeed = 0;
+            rollBack(moveVector.newNormalized(), collider.getBounds());
         }
     }
 
@@ -90,16 +101,19 @@ public class PhysicsImpl implements Physics {
         }
     }
 
-    private void doNotFallBelowScene() {
+    private boolean doNotFallBelowScene() {
         Bounds2D bounds = element.getBounds();
         if (bounds.getCenter().getY() + bounds.getHeight() > PANEL_HEIGHT_INT) {
             element.getBounds().setVector(new Vector2D(0,-1));
             bounds.getCenter().setY(PANEL_HEIGHT_INT - bounds.getHeight());
             verticalSpeed = 0;
+            return true;
         }
+        return false;
     }
 
     private void rollBack(Vector2D rollBackV, Bounds2D colliderBounds) {
+        if (verticalSpeed > 0) verticalSpeed = 0;
         element.move(rollBackV, -1);
         if (element.getBounds().touchedBy(colliderBounds)) {
             rollBack(rollBackV, colliderBounds);

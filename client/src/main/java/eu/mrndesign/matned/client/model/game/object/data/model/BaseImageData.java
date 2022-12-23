@@ -16,12 +16,10 @@ public class BaseImageData implements BoundsData {
     private final List<ActionData> actions = new ArrayList<>();
     private double width;
     private double height;
-    private int startXPos;
-    private int startYPos;
+    private double startXPos;
+    private double startYPos;
     private double directionX = 0;
     private double directionY = -1;
-    private String horizontalPos = "CENTER";
-    private String verticalPos = "CENTER";
 
     public static BaseImageData parseBase(JSONObject image) {
         BaseImageData baseImageData = new BaseImageData();
@@ -35,14 +33,12 @@ public class BaseImageData implements BoundsData {
         for (int i = 0; i < actions.size(); i++) {
             baseImageData.getActions().add(ActionData.parse(actions.get(i).isObject()));
         }
-        baseImageData.setHorizontalPos(image.get("horizontalPos").isString().stringValue());
-        baseImageData.setVerticalPos(image.get("verticalPos").isString().stringValue());
         baseImageData.setWidth(image.get("width").isNumber().doubleValue());
         baseImageData.setHeight(image.get("height").isNumber().doubleValue());
         baseImageData.setDirectionX(image.get("directionX").isNumber().doubleValue());
         baseImageData.setDirectionY(image.get("directionY").isNumber().doubleValue());
-        baseImageData.setStartXPos((int) image.get("startXPos").isNumber().doubleValue());
-        baseImageData.setStartYPos((int) image.get("startYPos").isNumber().doubleValue());
+        baseImageData.setStartXPos(image.get("startXPos").isNumber().doubleValue());
+        baseImageData.setStartYPos(image.get("startYPos").isNumber().doubleValue());
     }
 
     public String getName() {
@@ -60,23 +56,13 @@ public class BaseImageData implements BoundsData {
     }
 
     @Override
-    public int getStartXPos() {
+    public double getStartXPos() {
         return startXPos;
     }
 
     @Override
-    public int getStartYPos() {
+    public double getStartYPos() {
         return startYPos;
-    }
-
-    @Override
-    public String getHorizontalPos() {
-        return horizontalPos;
-    }
-
-    @Override
-    public String getVerticalPos() {
-        return verticalPos;
     }
 
     @Override
@@ -109,14 +95,6 @@ public class BaseImageData implements BoundsData {
         this.directionY = directionY;
     }
 
-    public void setHorizontalPos(String horizontalPos) {
-        this.horizontalPos = horizontalPos;
-    }
-
-    public void setVerticalPos(String verticalPos) {
-        this.verticalPos = verticalPos;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -129,11 +107,11 @@ public class BaseImageData implements BoundsData {
         this.height = height;
     }
 
-    public void setStartXPos(int startXPos) {
+    public void setStartXPos(double startXPos) {
         this.startXPos = startXPos;
     }
 
-    public void setStartYPos(int startYPos) {
+    public void setStartYPos(double startYPos) {
         this.startYPos = startYPos;
     }
 
@@ -148,8 +126,6 @@ public class BaseImageData implements BoundsData {
                 ", startYPos=" + startYPos +
                 ", directionX=" + directionX +
                 ", directionY=" + directionY +
-                ", horizontalPos='" + horizontalPos + '\'' +
-                ", verticalPos='" + verticalPos + '\'' +
                 '}';
     }
 }

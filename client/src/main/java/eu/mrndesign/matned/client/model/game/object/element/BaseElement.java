@@ -4,6 +4,7 @@ import eu.mrndesign.matned.client.model.game.object.ActionType;
 import eu.mrndesign.matned.client.model.game.object.Game;
 import eu.mrndesign.matned.client.model.game.object.data.model.ActionData;
 import eu.mrndesign.matned.client.model.game.object.data.model.BoundsData;
+import eu.mrndesign.matned.client.model.game.object.element.character.Character;
 import eu.mrndesign.matned.client.model.tool.math.Bounds2D;
 import eu.mrndesign.matned.client.model.tool.math.Math2D;
 import eu.mrndesign.matned.client.model.tool.math.Point2D;
@@ -85,7 +86,9 @@ public abstract class BaseElement implements Element {
     public void action(ActionType actionType, boolean shiftDown, boolean ctrlDown) {
         if (actionType == null) {
             move.vector.setY(0);
-            ActionTypeHolder.getInstance().put(id, move.getAction());
+            ActionType actionTypeGenerated = move.getAction();
+            ActionTypeHolder.getInstance().put(id, actionTypeGenerated);
+            move.force = boundsData.getAction(actionTypeGenerated, shiftDown, ctrlDown).getForce();
             return;
         }
         ActionData action = boundsData.getAction(actionType, shiftDown, ctrlDown);
@@ -96,7 +99,8 @@ public abstract class BaseElement implements Element {
                 break;
             case JUMP:
                 if (physics.getVerticalSpeed() != 0d) return;
-                physics.setGravityMod(action.getForce());
+                physics.setGravityMod(action.getForce() * (move.force != 0 ? 0.5 : 1));
+                move.force = action.getForce() / 2 * -Math.signum(move.force);
                 move.vector.setY(action.getVectorY());
                 move.vector.setX(move.vector.getX()*2);
                 break;
@@ -119,6 +123,11 @@ public abstract class BaseElement implements Element {
         }
         move.vector.setY(action.getVectorY());
         move.vector.setX(action.getVectorX());
+    }
+
+    @Override
+    public boolean toFlip() {
+        return this instanceof Character && move.vector.getX() <0;
     }
 
     private static class Move {

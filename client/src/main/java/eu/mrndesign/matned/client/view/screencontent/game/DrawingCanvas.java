@@ -173,7 +173,9 @@ public class DrawingCanvas extends AbsolutePanel {
         ImageElement img = value.getImage();
         drawingCanvasContext.translate(rx, ry);
         if (value.getModelElement() instanceof SceneElement) drawingCanvasContext.rotate(actualAngle);
+        if (value.getModelElement().toFlip()) drawingCanvasContext.scale(-1,1);
         drawingCanvasContext.drawImage(img, (double)-img.getWidth() / 2, (double)-img.getHeight() / 2, img.getWidth(), img.getHeight());
+        if (value.getModelElement().toFlip()) drawingCanvasContext.scale(-1,1);
         if (value.getModelElement() instanceof SceneElement) drawingCanvasContext.rotate(-actualAngle);
         drawingCanvasContext.translate(-rx, -ry);
     }

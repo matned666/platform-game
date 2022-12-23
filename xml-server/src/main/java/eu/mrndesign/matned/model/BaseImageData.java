@@ -11,14 +11,12 @@ import java.util.List;
 public class BaseImageData implements Serializable {
 
     private String name = "";
-    private int startXPos;
-    private int startYPos;
+    private double startXPos;
+    private double startYPos;
     private double width;
     private double height;
     private double directionX;
     private double directionY = -1;
-    private String horizontalPos = "CENTER";
-    private String verticalPos = "CENTER";
     private final List<ActionData> actions = new ArrayList<>();
 
 
@@ -44,23 +42,13 @@ public class BaseImageData implements Serializable {
     }
 
     @XmlElement(name = "startXPos")
-    public int getStartXPos() {
+    public double getStartXPos() {
         return startXPos;
     }
 
     @XmlElement(name = "startYPos")
-    public int getStartYPos() {
+    public double getStartYPos() {
         return startYPos;
-    }
-
-    @XmlElement(name = "hPos", defaultValue = "CENTER")
-    public String getHorizontalPos() {
-        return horizontalPos;
-    }
-
-    @XmlElement(name = "vPos", defaultValue = "CENTER")
-    public String getVerticalPos() {
-        return verticalPos;
     }
 
     @XmlElement(name = "vectorX", defaultValue = "0")
@@ -81,14 +69,6 @@ public class BaseImageData implements Serializable {
         this.directionY = directionY;
     }
 
-    public void setHorizontalPos(String horizontalPos) {
-        this.horizontalPos = horizontalPos;
-    }
-
-    public void setVerticalPos(String verticalPos) {
-        this.verticalPos = verticalPos;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -101,11 +81,11 @@ public class BaseImageData implements Serializable {
         this.height = height;
     }
 
-    public void setStartXPos(int startXPos) {
+    public void setStartXPos(double startXPos) {
         this.startXPos = startXPos;
     }
 
-    public void setStartYPos(int startYPos) {
+    public void setStartYPos(double startYPos) {
         this.startYPos = startYPos;
     }
 
@@ -120,8 +100,6 @@ public class BaseImageData implements Serializable {
                 ", startYPos=" + startYPos +
                 ", directionX=" + directionX +
                 ", directionY=" + directionY +
-                ", horizontalPos='" + horizontalPos + '\'' +
-                ", verticalPos='" + verticalPos + '\'' +
                 '}';
     }
 }

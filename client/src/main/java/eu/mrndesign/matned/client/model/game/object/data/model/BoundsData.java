@@ -12,13 +12,9 @@ public interface BoundsData {
 
     double getDirectionY();
 
-    int getStartXPos();
+    double getStartXPos();
 
-    int getStartYPos();
-
-    String getHorizontalPos();
-
-    String getVerticalPos();
+    double getStartYPos();
 
     ActionData getAction(ActionType actionType, boolean shiftDown, boolean ctrlDown);
 }

@@ -132,4 +132,8 @@ public class Point2D {
         this.x = x;
         this.y = y;
     }
+
+    public boolean containsNaN() {
+        return Double.isNaN(x) || Double.isNaN(y);
+    }
 }

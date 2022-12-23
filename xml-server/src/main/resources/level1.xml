@@ -19,15 +19,15 @@
         <name>starship</name>
         <width>30</width>
         <height>75</height>
-        <startXPos>0</startXPos>
-        <startYPos>0</startYPos>
+        <startXPos>50</startXPos>
+        <startYPos>50</startYPos>
         <hp>100</hp>
         <hostile>false</hostile>
         <actions>
             <action>
                 <name>STAND</name>
                 <images>
-                    <image>walk1.png</image>
+                    <image>stand1.png</image>
                 </images>
             </action>
             <action>
@@ -41,12 +41,18 @@
                 <force>5</force>
                 <images>
                     <image>walk1.png</image>
-                    <image>moveL2.png</image>
-                    <image>moveL3.png</image>
-                    <image>moveL4.png</image>
-                    <image>moveL5.png</image>
-                    <image>moveL6.png</image>
-                    <image>moveL7.png</image>
+                    <image>walk3.png</image>
+                    <image>walk4.png</image>
+                    <image>walk5.png</image>
+                    <image>walk6.png</image>
+                    <image>walk7.png</image>
+                    <image>walk8.png</image>
+                    <image>walk9.png</image>
+                    <image>walk10.png</image>
+                    <image>walk11.png</image>
+                    <image>walk12.png</image>
+                    <image>walk13.png</image>
+                    <image>walk14.png</image>
                 </images>
             </action>
             <action>
@@ -60,12 +66,18 @@
                 <force>5</force>
                 <images>
                     <image>walk1.png</image>
-                    <image>move2.png</image>
-                    <image>move3.png</image>
-                    <image>move4.png</image>
-                    <image>move5.png</image>
-                    <image>move6.png</image>
-                    <image>move7.png</image>
+                    <image>walk3.png</image>
+                    <image>walk4.png</image>
+                    <image>walk5.png</image>
+                    <image>walk6.png</image>
+                    <image>walk7.png</image>
+                    <image>walk8.png</image>
+                    <image>walk9.png</image>
+                    <image>walk10.png</image>
+                    <image>walk11.png</image>
+                    <image>walk12.png</image>
+                    <image>walk13.png</image>
+                    <image>walk14.png</image>
                 </images>
             </action>
             <action>
@@ -75,7 +87,7 @@
                     <keyCode>87</keyCode>
                     <keyCode>38</keyCode>
                 </keyCodes>
-                <force>-40</force>
+                <force>-30</force>
                 <images>
                     <image>jump1.png</image>
                 </images>
@@ -103,16 +115,29 @@
                 <action>
                     <name>STAND</name>
                     <images>
-                        <image>ground-black.jpg</image>
+                        <image>ground-black-1200.png</image>
                     </images>
                 </action>
             </actions>
-            <hPos>CENTER</hPos>
-            <vPos>CENTER</vPos>
+            <width>1200</width>
+            <height>5</height>
+            <startXPos>900</startXPos>
+            <startYPos>450</startYPos>
+        </ground>
+        <ground>
+            <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>ground-black.png</image>
+                    </images>
+                </action>
+            </actions>
             <width>100</width>
             <height>5</height>
-            <startXPos>0</startXPos>
-            <startYPos>2</startYPos>
+            <startXPos>200</startXPos>
+            <startYPos>580</startYPos>
         </ground>
         <ground>
             <name>ground</name>
@@ -120,16 +145,63 @@
                 <action>
                     <name>STAND</name>
                     <images>
-                        <image>ground-black.jpg</image>
+                        <image>ground-black-1200.png</image>
                     </images>
                 </action>
             </actions>
-            <hPos>CENTER</hPos>
-            <vPos>CENTER</vPos>
+            <width>1200</width>
+            <height>5</height>
+            <startXPos>400</startXPos>
+            <startYPos>700</startYPos>
+        </ground>
+        <ground>
+            <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>ground-black-1200.png</image>
+                    </images>
+                </action>
+            </actions>
+            <width>1180</width>
+            <height>5</height>
+            <startXPos>500</startXPos>
+            <startYPos>700</startYPos>
+        </ground>
+        <ground>
+            <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>ground-black-1200.png</image>
+                    </images>
+                </action>
+            </actions>
+            <vectorX>-0.21</vectorX>
+            <vectorY>-1</vectorY>
+            <width>1200</width>
+            <height>5</height>
+            <startXPos>1100</startXPos>
+            <startYPos>700</startYPos>
+        </ground>
+        <ground>
+            <name>ground</name>
+            <actions>
+                <action>
+                    <name>STAND</name>
+                    <images>
+                        <image>ground-black.png</image>
+                    </images>
+                </action>
+            </actions>
+            <vectorX>-1</vectorX>
+            <vectorY>0</vectorY>
             <width>100</width>
             <height>5</height>
-            <startXPos>5</startXPos>
-            <startYPos>2</startYPos>
+            <startXPos>1480</startXPos>
+            <startYPos>500</startYPos>
         </ground>
         <ground>
             <name>ground</name>
@@ -137,16 +209,16 @@
                 <action>
                     <name>STAND</name>
                     <images>
-                        <image>ground-black-1200.jpg</image>
+                        <image>ground-black.png</image>
                     </images>
                 </action>
             </actions>
-            <hPos>CENTER</hPos>
-            <vPos>CENTER</vPos>
-            <width>1180</width>
+            <vectorX>-1</vectorX>
+            <vectorY>0</vectorY>
+            <width>100</width>
             <height>5</height>
-            <startXPos>0</startXPos>
-            <startYPos>3</startYPos>
+            <startXPos>1480</startXPos>
+            <startYPos>570</startYPos>
         </ground>
         <ground>
             <name>ground</name>
@@ -154,51 +226,16 @@
                 <action>
                     <name>STAND</name>
                     <images>
-                        <image>ground-black-1200.jpg</image>
+                        <image>ground-black.png</image>
                     </images>
                 </action>
             </actions>
-            <hPos>CENTER</hPos>
-            <vPos>CENTER</vPos>
-            <width>1180</width>
+            <vectorX>-1</vectorX>
+            <vectorY>0</vectorY>
+            <width>100</width>
             <height>5</height>
-            <startXPos>4</startXPos>
-            <startYPos>4</startYPos>
-        </ground>
-        <ground>
-            <name>ground</name>
-            <actions>
-                <action>
-                    <name>STAND</name>
-                    <images>
-                        <image>ground-black-1200.jpg</image>
-                    </images>
-                </action>
-            </actions>
-            <hPos>CENTER</hPos>
-            <vPos>CENTER</vPos>
-            <width>1180</width>
-            <height>5</height>
-            <startXPos>3</startXPos>
-            <startYPos>5</startYPos>
-        </ground>
-
-        <ground>
-            <name>ground</name>
-            <actions>
-                <action>
-                    <name>STAND</name>
-                    <images>
-                        <image>ground-black-1200.jpg</image>
-                    </images>
-                </action>
-            </actions>
-            <hPos>CENTER</hPos>
-            <vPos>CENTER</vPos>
-            <width>1180</width>
-            <height>5</height>
-            <startXPos>0</startXPos>
-            <startYPos>1</startYPos>
+            <startXPos>1480</startXPos>
+            <startYPos>500</startYPos>
         </ground>
 
     </grounds>

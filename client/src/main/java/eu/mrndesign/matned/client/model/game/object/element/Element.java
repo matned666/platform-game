@@ -54,4 +54,6 @@ public interface Element {
     void action(ActionType actionType, boolean shiftDown, boolean ctrlDown);
 
     void move(Vector2D moveVector, double moveForce);
+
+    boolean toFlip();
 }

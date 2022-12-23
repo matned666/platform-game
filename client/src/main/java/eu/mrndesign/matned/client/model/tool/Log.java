@@ -7,7 +7,7 @@ public class Log {
 
     private static final Logger logger = Logger.getLogger("Logger");
 
-    public static void log(String message) {
+    public static void info(String message) {
         logger.log(Level.SEVERE, message);
     }
 

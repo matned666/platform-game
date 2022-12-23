@@ -114,9 +114,9 @@ public class Game {
     }
 
     private void createGameElements() {
-        createHero();
         createGrounds();
         createItems();
+        createHero();
     }
 
     private void createHero() {

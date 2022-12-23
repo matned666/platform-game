@@ -1,22 +1,16 @@
 package eu.mrndesign.matned.client.model.tool.math;
 
 import eu.mrndesign.matned.client.model.game.object.data.model.BoundsData;
-import eu.mrndesign.matned.client.model.game.object.element.BaseElement;
-import eu.mrndesign.matned.client.model.tool.position.PositionResolver;
 
-import java.util.*;
+import java.util.Arrays;
 import java.util.logging.Logger;
-
-import static eu.mrndesign.matned.client.controller.Constants.*;
-import static eu.mrndesign.matned.client.controller.Constants.PANEL_HEIGHT_SQUARES;
 
 public class Bounds2D {
     protected static final Logger logger = Logger.getLogger(Bounds2D.class.getName());
 
     public static Bounds2D generateFrom(BoundsData data){
             final Bounds2D bounds;
-            final PositionResolver positionResolver = new PositionResolver(PANEL_WIDTH_INT, PANEL_HEIGHT_INT, PANEL_WIDTH_SQUARES, PANEL_HEIGHT_SQUARES);
-            Point2D center = positionResolver.resolve(data);
+            Point2D center = new Point2D(data.getStartXPos(), data.getStartYPos());
             Vector2D vector = new Vector2D(data.getDirectionX(), data.getDirectionY());
             bounds = new Bounds2D(vector, data.getWidth(), data.getHeight(), center);
             return bounds;
